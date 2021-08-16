@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fav Sites</title>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="The_Internet.png">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <H1>
+            Fav Sites
+            <span id="showtime"></span>
+            <hr>
+        </H1>
+
+        <div class="searchbar">
+            <span class="bing">
+                <a href="https://www.bing.com">Bing</a>
+            </span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="google">
+                <a href="https://www.google.com">Google</a>
+            </span>
+        </div>
+
+        <div class="portals">
+            <div class="aaa">
+                <h2>
+                    A
+                </h2>
+                <ul>
+                    <li><a href="http://cloud.feedly.com/#latest">                  Feedly            </a></li>
+                    <li><a href="http://sspai.com/">                                少数派             </a></li>
+                    <li><a href="https://www.v2ex.com/">                            V2EX              </a></li>
+                    <li><a href="https://www.macstories.net/">                      MacStories        </a></li>
+                    <li><a href="http://www.zhihu.com/">                            知乎               </a></li>
+                </ul>
+            </div>
+
+            
+            <div class="bbb">
+                <h2>
+                    B
+                </h2>
+                <ul>
+                    <li><a href="https://t.bilibili.com/">                          Bilibili      </a></li>
+                    <li><a href="https://mingle.infor.com">                         Mingle        </a></li>
+                    <li><a href="https://cmdbadmin.infor.com/">                     CMDB Portal   </a></li>
+                    <li><a href="https://usea1wbfixbes1.infor.com:8083/webreports"> BF Web Report </a></li>
+                    <li><a href="https://usea1wbfixwebui.infor.com/login">          BF Web UI     </a></li>
+                </ul>
+            </div>
+
+            <div class="ccc">
+                <h2>
+                    C
+                </h2>
+                <ul>
+                    <li><a href="http://192.168.13.20:8081/">                                               AdGuard Home                </a></li>
+                    <li><a href="http://192.168.13.12:9000/">                                               Portainer                         </a></li>
+                    <li><a href="https://glapd.infor.com/">                       Admin Password      </a></li>
+                    <li><a href="https://endpoint.microsoft.com/#home">           MS Endpoint         </a></li>
+                    <li><a href="https://usalvwmbamliv02.infor.com/KeyRecoveryPage.aspx">
+                                                                                  On-Prem BitLocker   </a></li>
+                </ul>
+            </div>
+
+            <div class="ppp">
+                <h2>
+                    P
+                </h2>
+                <ul>
+                    <li><a href="https://getpocket.com/my-list?s=ext_rc_open">              Pocket      </a></li>
+                    <li><a href="https://www.youtube.com">                                  Youtube     </a></li>
+                    <li><a href="https://www.twitter.com">                                  Twitter     </a></li>
+                    <li><a href="https://support.microsoft.com/en-us/windows/start-your-pc-in-safe-mode-in-windows-10-92c27cff-db89-8644-1ce4-b3e5e56fe234">
+                                                                                                Win 10 SafeMode     </a></li>           
+					<li><a href="https://www.catalog.update.microsoft.com/Search.aspx">         MS Update Catalog   </a></li>																		
+                </ul>
+            </div>
+        </div>
+
+        <div class="time">
+            <a href="https://time.is/China_Standard_Time" id="time_is_link" rel="nofollow" style="font-size:16px"></a>
+            <span id="China_Standard_Time_z429" style="font-size:16px"></span>
+            <script src="./en.js"></script>
+            <script>
+                time_is_widget.init({China_Standard_Time_z429:{template:"TIME&nbsp;DATE", date_format:"year-monthnum-daynum"}});
+            </script>
+        </div>
+
+        <!-- <script>
+            let today = new Date();
+
+            function keepUpdating () {
+                let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                let showtime = date; //+ " " + time;
+                document.getElementById('showtime').innerHTML = showtime;
+            }
+
+            keepUpdating ();
+        </script> -->
+    </body>
+</html>
