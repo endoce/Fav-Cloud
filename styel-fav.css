@@ -30,6 +30,12 @@ a:visited {
     line-height: 150%;
 }
 
+.icons {
+    width: 24px;
+    height: auto;
+    margin-bottom: 0;
+}
+
 .aaa {
     grid-column: 2;
 
