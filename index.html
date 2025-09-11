@@ -1,28 +1,166 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Fav Sites</title>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="The_Internet.png">
-        <link rel="stylesheet" href="styles-index.css">
+        <style>
+            /* Basic Reset & Body */
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                background-color: #f4f7f9;
+                color: #333;
+                margin: 0;
+                padding: 1.5rem;
+                line-height: 1.6;
+            }
+
+            /* Header */
+            H1 {
+                text-align: center;
+                font-size: 2.5rem;
+                color: #2c3e50;
+                margin-bottom: 1.5rem;
+                border-bottom: 2px solid #e0e0e0;
+                padding-bottom: 1rem;
+            }
+
+            /* Search Area */
+            .search-container {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+            .search-container form {
+                display: flex;
+                width: 100%;
+                max-width: 300px;
+            }
+            .search-container input[type="text"] {
+                flex-grow: 1;
+                border: 1px solid #ccc;
+                padding: 0.75rem;
+                font-size: 1rem;
+                border-radius: 6px 0 0 6px;
+                outline: none;
+                transition: border-color 0.2s;
+            }
+            .search-container input[type="text"]:focus {
+                border-color: #3498db;
+            }
+            .search-container button {
+                padding: 0.75rem 1.25rem;
+                border: 1px solid #ccc;
+                border-left: none;
+                background-color: #f0f0f0;
+                cursor: pointer;
+                border-radius: 0 6px 6px 0;
+                transition: background-color 0.2s;
+            }
+            .search-container button:hover {
+                background-color: #e0e0e0;
+            }
+
+            /* Link Portals Grid */
+            .portals {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 1.5rem;
+                max-width: 1200px;
+                margin: 0 auto 3rem auto;
+            }
+
+            /* Individual Portal Card */
+            .portals > div {
+                background-color: #fff;
+                border-radius: 8px;
+                padding: 1.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                border: 1px solid #e0e0e0;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+
+            .portals > div:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08);
+            }
+
+            .portals h2 {
+                margin-top: 0;
+                font-size: 1.25rem;
+                color: #3498db;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .portals ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .portals li {
+                margin-bottom: 0.5rem;
+            }
+
+            .portals a {
+                text-decoration: none;
+                color: #2980b9;
+                transition: color 0.2s;
+                font-weight: 500;
+                word-break: break-all;
+                display: flex;
+                align-items: center;
+            }
+
+            .portals a:hover {
+                color: #1f618d;
+                text-decoration: underline;
+            }
+
+            .favicon {
+                width: 16px;
+                height: 16px;
+                margin-right: 0.5rem;
+                flex-shrink: 0;
+            }
+
+            /* Bottom Widgets */
+            .time, .ipadd {
+                max-width: 1200px;
+                margin: 2rem auto;
+                text-align: center;
+                background: #fff;
+                padding: 1rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            }
+
+            .ipadd iframe {
+                min-height: 40px;
+            }
+        </style>
     </head>
 
     <body>
         <H1>
             Fav Sites
             <span id="showtime"></span>
-            <hr>
         </H1>
 
 
 <div class="search-container">
-  <form class="google-form" action="https://www.google.com/search" method="GET">
-    <input type="text" name="q" placeholder="Google Search">
+  <form class="google-form" action="https://www.google.com/search" method="GET" target="_blank">
+    <input type="text" name="q" placeholder="Google Search" aria-label="Google Search">
     <button type="submit">Search</button>
   </form>
   <div class="spacer"></div>
-  <form class="bing-form" action="https://www.bing.com/search" method="GET">
-    <input type="text" name="q" placeholder="Bing Search">
+  <form class="bing-form" action="https://www.bing.com/search" method="GET" target="_blank">
+    <input type="text" name="q" placeholder="Bing Search" aria-label="Bing Search">
     <button type="submit">Search</button>
   </form>
 </div>
@@ -34,13 +172,14 @@
             News
         </h2>
         <ul> 
-            <li><a href="http://www.zhihu.com">知乎</a></li> 
-            <li><a href="http://sspai.com/">少数派</a></li> 
-            <li><a href="https://www.macstories.net/">MacStories</a></li> 
-            <li><a href="https://news.ycombinator.com/">Hacker News</a>/<a href="https://zeli.app/">中文</a></li>
-            <li><a href="https://www.v2ex.com/">V2EX</a></li>         
-            <li><a href="https://www.lifeweek.com.cn/">三联中读</a></li>
-            <li><a href="https://www.caixin.com/">财新</a></li>
+            <li><a href="http://www.zhihu.com"><img src="http://www.zhihu.com/favicon.ico" alt="知乎 favicon" class="favicon">知乎</a></li> 
+            <li><a href="http://sspai.com/"><img src="http://sspai.com/favicon.ico" alt="少数派 favicon" class="favicon">少数派</a></li> 
+            <li><a href="https://www.macstories.net/"><img src="https://www.macstories.net/favicon.ico" alt="MacStories favicon" class="favicon">MacStories</a></li> 
+            <li><a href="https://news.ycombinator.com/"><img src="https://news.ycombinator.com/favicon.ico" alt="Hacker News favicon" class="favicon">Hacker News</a></li>
+            <li><a href="https://zeli.app/"><img src="https://zeli.app/favicon.ico" alt="HN_CN favicon" class="favicon">HN_CN</a></li>
+            <li><a href="https://www.v2ex.com/"><img src="https://www.v2ex.com/favicon.ico" alt="V2EX favicon" class="favicon">V2EX</a></li>         
+            <li><a href="https://www.lifeweek.com.cn/"><img src="https://www.lifeweek.com.cn/favicon.ico" alt="三联中读 favicon" class="favicon">三联中读</a></li>
+            <li><a href="https://www.caixin.com/"><img src="https://www.caixin.com/favicon.ico" alt="财新 favicon" class="favicon">财新</a></li>
         </ul>
     </div> 
      <div class="entertain">
@@ -48,14 +187,14 @@
             Entertain
         </h2>
         <ul> 
-            <li><a href="https://youtube.com">Youtube</a></li> 
-            <li><a href="https://t.bilibili.com/">BiliBili</a></li> 
-            <li><a href="https://music.apple.com/cn/browse">Apple Music</a></li> 
-            <li><a href="https://open.spotify.com/">Spotify</a></li>
-            <li><a href="https://www.bohaishibei.com/">博海拾贝</a></li> 
-            <li><a href="https://www.x.com">X.com</a></li> 
-            <li><a href="https://www.amazon.com">AmazonUS</a></li>
-            <li><a href="https://weread.qq.com/">微信读书</a></li>
+            <li><a href="https://youtube.com"><img src="https://youtube.com/favicon.ico" alt="Youtube favicon" class="favicon">Youtube</a></li> 
+            <li><a href="https://t.bilibili.com/"><img src="https://t.bilibili.com/favicon.ico" alt="BiliBili favicon" class="favicon">BiliBili</a></li> 
+            <li><a href="https://music.apple.com/cn/browse"><img src="https://music.apple.com/favicon.ico" alt="Apple Music favicon" class="favicon">Apple Music</a></li> 
+            <li><a href="https://open.spotify.com/"><img src="https://open.spotify.com/favicon.ico" alt="Spotify favicon" class="favicon">Spotify</a></li>
+            <li><a href="https://www.bohaishibei.com/"><img src="https://www.bohaishibei.com/favicon.ico" alt="博海拾贝 favicon" class="favicon">博海拾贝</a></li> 
+            <li><a href="https://www.x.com"><img src="https://www.x.com/favicon.ico" alt="X.com favicon" class="favicon">X.com</a></li> 
+            <li><a href="https://www.amazon.com"><img src="https://www.amazon.com/favicon.ico" alt="AmazonUS favicon" class="favicon">AmazonUS</a></li>
+            <li><a href="https://weread.qq.com/"><img src="https://weread.qq.com/favicon.ico" alt="微信读书 favicon" class="favicon">微信读书</a></li>
         </ul>
     </div> 
      <div class="essential">
@@ -63,13 +202,14 @@
             Essential
         </h2>
         <ul> 
-            <li><a href="https://ankiweb.net/decks/">Anki</a></li>
-            <li><a href="https://dailydictation.com/">DailyDictation</a></li>
-            <li><a href="https://chat.openai.com/auth/login">ChatGPT</a></li>  
-            <li><a href="https://api.oaipro.com/">OaiPro</a></li>
-            <li><a href="https://www.deepseek.com/">deepdeek</a></li>
-            <li><a href="https://grok.com/">Grok</a></li>
-            <li><a href="https://www.msdmanuals.cn/home">默沙东诊疗手册</a></li>
+            <li><a href="https://ankiweb.net/decks/"><img src="https://ankiweb.net/favicon.ico" alt="Anki favicon" class="favicon">Anki</a></li>
+            <li><a href="https://dailydictation.com/"><img src="https://dailydictation.com/favicon.ico" alt="DailyDictation favicon" class="favicon">DailyDictation</a></li>
+            <li><a href="https://chat.openai.com/auth/login"><img src="https://chat.openai.com/favicon.ico" alt="ChatGPT favicon" class="favicon">ChatGPT</a></li>  
+            <li><a href="https://api.oaipro.com/"><img src="https://api.oaipro.com/favicon.ico" alt="OaiPro favicon" class="favicon">OaiPro</a></li>
+            <li><a href="https://www.deepseek.com/"><img src="https://www.deepseek.com/favicon.ico" alt="deepdeek favicon" class="favicon">deepdeek</a></li>
+            <li><a href="https://grok.com/"><img src="https://grok.com/favicon.ico" alt="Grok favicon" class="favicon">Grok</a></li>
+            <li><a href="https://www.msdmanuals.cn/home"><img src="https://www.msdmanuals.cn/favicon.ico" alt="默沙东诊疗手册 favicon" class="favicon">默沙东诊疗手册</a></li>
+            <li><a href="https://www.deepl.com/translator"><img src="https://www.deepl.com/favicon.ico" alt="DeepL favicon" class="favicon">DeepL</a></li>
         </ul>
     </div> 
      <div class="printing">
@@ -77,19 +217,9 @@
             Printing
         </h2>
         <ul> 
-            <li><a href="https://192.168.13.211">OctoPrint_Pi</a></li>
-            <li><a href="https://www.thingiverse.com/">Thingiverse</a></li>   
-            <li><a href="https://makerworld.com/">Make World</a></li>
-        </ul>
-    </div> 
-     <div class="tools">
-        <h2>
-            Tools
-        </h2>
-        <ul>
-            <li><a href="https://web.baimiaoapp.com/">白描</a></li>
-            <li><a href="https://www.deepl.com/translator">DeepL</a></li>
-            <li><a href="./essential_tools.html">Installers</a></li>
+            <li><a href="https://192.168.13.211"><img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMzMzIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCA0OTQuMzU3IDQ5NC4zNTciIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGQ9Ik00ODIuMjEzLDk5LjVoLTU0Ljg1N1YyMi44NTdDNDI3LjM1NiwxMC4yNDgsNDE3LjEwOCwwLDQwNC41LDBIODkuODU2Yy0xMi42MDksMC0yMi44NTcsMTAuMjQ4LTIyLjg1NywyMi44NTd2NzYuNjQzSDEyLjE0M0M1LjQzOCw5OS41LDAsMTA0LjkzOCwwLDExMS42NDN2MTkzLjcxNGMwLDYuNzA1LDUuNDM4LDEyLjE0MywxMi4xNDMsMTIuMTQzaDU0Ljg1N3YxNTRjMCwxMi42MDksMTAuMjQ4LDIyLjg1NywyMi44NTcsMjIuODU3aDMxNC42NDNjMTIuNjA5LDAsMjIuODU3LTEwLjI0OCwyMi44NTctMjIuODU3di0xNTRoNTQuODU3YzYuNzA1LDAsMTIuMTQzLTUuNDM4LDEyLjE0My0xMi4xNDNWMTExLjY0M0M0OTQuMzU2LDEwNC45MzgsNDg4LjkxOCw5OS41LDQ4Mi4yMTMsOTkuNXogTTM5NS43ODUsMzQuMjg2aC0yOTcuMjFjLTEuNDEwLDAtMi41NTMsMS4xNDYtMi41NTMsMi41NTN2NjIuNjYxaDMwMi4zMTZWMzYuODM4QzM5OC4zMzgsMzUuNDMxLDM5Ny4xOTUsMzQuMjg2LDM5NS43ODUsMzQuMjg2eiBNMzAxLjkyOCwyNDcuMTc4aC0xMDkuNWMtMy4xNSwwLTUuNzE0LTIuNTY0LTUuNzE0LTUuNzE0czIuNTY0LTUuNzE0LDUuNzE0LTUuNzE0aDEwOS41YzMuMTUsMCw1LjcxNCwyLjU2NCw1LjcxNCw1LjcxNFMzMDUuMDc4LDI0Ny4xNzgsMzAxLjkyOCwyNDcuMTc4eiBNMzk4LjMzOCw0NTkuNzg2YzAsMS40MS0xLjE0NiwyLjU1My0yLjU1MywyLjU1M2gtMzAyLjMxYy0xLjQxLDAtMi41NTMtMS4xNDMtMi41NTMtMi41NTN2LTEyNi44OWgzMDcuNDE3VjQ1OS43ODZ6IE00NjUuNzg1LDI4Ni4wNzFIMjguNTcxdi0xNDJoNDM3LjIxNFYyODYuMDcxeiIvPjwvc3ZnPg==" alt="OctoPrint favicon" class="favicon">OctoPrint_Pi</a></li>
+            <li><a href="https://www.thingiverse.com/"><img src="https://www.thingiverse.com/favicon.ico" alt="Thingiverse favicon" class="favicon">Thingiverse</a></li>   
+            <li><a href="https://makerworld.com/"><img src="https://makerworld.com/favicon.ico" alt="Make World favicon" class="favicon">Make World</a></li>
         </ul>
     </div> 
      <div class="dl">
@@ -97,10 +227,10 @@
             DL
         </h2>
         <ul>
-            <li><a href="https://www.dygang.cc/">电影港</a></li>
-            <li><a href="https://www.zimuxia.cn/">FIX字幕侠主页</a></li> 
-            <li><a href="https://zh.z-library.sk/">Z-Library</a></li> 
-            <li><a href="https://zh.annas-archive.org/">安娜的档案</a></li>         
+            <li><a href="https://www.dygang.cc/"><img src="https://www.dygang.cc/favicon.ico" alt="电影港 favicon" class="favicon">电影港</a></li>
+            <li><a href="https://www.zimuxia.cn/"><img src="https://www.zimuxia.cn/favicon.ico" alt="FIX字幕侠主页 favicon" class="favicon">FIX字幕侠主页</a></li> 
+            <li><a href="https://zh.z-library.sk/"><img src="https://zh.z-library.sk/favicon.ico" alt="Z-Library favicon" class="favicon">Z-Library</a></li> 
+            <li><a href="https://zh.annas-archive.org/"><img src="https://zh.annas-archive.org/favicon.ico" alt="安娜的档案 favicon" class="favicon">安娜的档案</a></li>         
         </ul>
     </div> 
      <div class="cloud">
@@ -108,19 +238,10 @@
             Cloud
         </h2>
         <ul> 
-            <li><a href="https://www.oracle.com/cloud/sign-in.html">Oracle Cloud</a></li> 
-            <li><a href="https://portal.azure.com/?whr=live.com">Azure</a></li>
-            <li><a href="https://github.com">GitHub</a></li>
-            <li><a href="https://dash.cloudflare.com/">Cloudflare</a></li>
-        </ul>
-    </div> 
-     <div class="home">
-        <h2>
-            Home
-        </h2>
-        <ul> 
-            <li><a href="http://192.168.13.211">AdGuard</a></li> 
-            <li><a href="http://192.168.13.12:32400/web/index.html#!/">Plex</a></li>         
+            <li><a href="https://www.oracle.com/cloud/sign-in.html"><img src="https://www.oracle.com/favicon.ico" alt="Oracle Cloud favicon" class="favicon">Oracle Cloud</a></li> 
+            <li><a href="https://portal.azure.com/?whr=live.com"><img src="https://portal.azure.com/favicon.ico" alt="Azure favicon" class="favicon">Azure</a></li>
+            <li><a href="https://github.com"><img src="https://github.com/favicon.ico" alt="GitHub favicon" class="favicon">GitHub</a></li>
+            <li><a href="https://dash.cloudflare.com/"><img src="https://dash.cloudflare.com/favicon.ico" alt="Cloudflare favicon" class="favicon">Cloudflare</a></li>
         </ul>
     </div> 
 
@@ -129,7 +250,7 @@
         <div class="time">
             <a href="https://time.is/China_Standard_Time" id="time_is_link" rel="nofollow" style="font-size:16px"></a>
             <span id="China_Standard_Time_z429" style="font-size:16px"></span>
-            <script src="./en.js"></script>
+            <script src="https://time.is/en.js"></script>
             <script>
                 time_is_widget.init({China_Standard_Time_z429:{template:"TIME&nbsp;DATE", date_format:"year-monthnum-daynum"}});
             </script>
@@ -140,5 +261,3 @@
         </div>
     </body>
 </html>
-
-
