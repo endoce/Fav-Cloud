@@ -6,9 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="The_Internet.png">
         <style>
+            /* Font Definition */
+            @font-face {
+                font-family: 'Fira Code';
+                src: url('./FiraCode-Regular.woff2') format('woff2');
+                font-weight: normal;
+                font-style: normal;
+            }
+
             /* Basic Reset & Body */
             body {
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                font-family: 'Fira Code', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
                 background-color: #f4f7f9;
                 color: #333;
                 margin: 0;
@@ -237,7 +245,7 @@
             Printing
         </h2>
         <ul> 
-            <li><a href="https://192.168.13.211"><img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMzMzIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCA0OTQuMzU3IDQ5NC4zNTciIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGQ9Ik00ODIuMjEzLDk5LjVoLTU0Ljg1N1YyMi44NTdDNDI3LjM1NiwxMC4yNDgsNDE3LjEwOCwwLDQwNC41LDBIODkuODU2Yy0xMi42MDksMC0yMi44NTcsMTAuMjQ4LTIyLjg1NywyMi44NTd2NzYuNjQzSDEyLjE0M0M1LjQzOCw5OS41LDAsMTA0LjkzOCwwLDExMS42NDN2MTkzLjcxNGMwLDYuNzA1LDUuNDM4LDEyLjE0MywxMi4xNDMsMTIuMTQzaDU0Ljg1N3YxNTRjMCwxMi42MDksMTAuMjQ4LDIyLjg1NywyMi44NTcsMjIuODU3aDMxNC42NDNjMTIuNjA5LDAsMjIuODU3LTEwLjI0OCwyMi44NTctMjIuODU3di0xNTRoNTQuODU3YzYuNzA1LDAsMTIuMTQzLTUuNDM4LDEyLjE0My0xMi4xNDNWMTExLjY0M0M0OTQuMzU2LDEwNC45MzgsNDg4LjkxOCw5OS41LDQ4Mi4yMTMsOTkuNXogTTM5NS43ODUsMzQuMjg2aC0yOTcuMjFjLTEuNDEwLDAtMi41NTMsMS4xNDYtMi41NTMsMi41NTN2NjIuNjYxaDMwMi4zMTZWMzYuODM4QzM5OC4zMzgsMzUuNDMxLDM5Ny4xOTUsMzQuMjg2LDM5NS43ODUsMzQuMjg2eiBNMzAxLjkyOCwyNDcuMTc4aC0xMDkuNWMtMy4xNSwwLTUuNzE0LTIuNTY0LTUuNzE0LTUuNzE0czIuNTY0LTUuNzE0LDUuNzE0LTUuNzE0aDEwOS41YzMuMTUsMCw1LjcxNCwyLjU2NCw1LjcxNCw1LjcxNFMzMDUuMDc4LDI0Ny4xNzgsMzAxLjkyOCwyNDcuMTc4eiBNMzk4LjMzOCw0NTkuNzg2YzAsMS40MS0xLjE0NiwyLjU1My0yLjU1MywyLjU1M2gtMzAyLjMxYy0xLjQxLDAtMi41NTMtMS4xNDMtMi41NTMtMi41NTN2LTEyNi44OWgzMDcuNDE3VjQ1OS43ODZ6IE00NjUuNzg1LDI4Ni4wNzFIMjguNTcxdi0xNDJoNDM3LjIxNFYyODYuMDcxeiIvPjwvc3ZnPg==" alt="OctoPrint favicon" class="favicon">OctoPrint_Pi</a></li>
+            <li><a href="https://192.168.13.211"><img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMzMzIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCA0OTQuMzU3IDQ5NC4zNTciIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGQ9Ik00ODIuMjEzLDk5LjVoLTU0Ljg1N1YyMi44NTdDNDI3LjM1NiwxMC4yNDgsNDE3LjEwOCwwLDQwNC41LDBIODkuODU2Yy0xMi42MDksMC0yMi44NTcsMTAuMjQ4LTIyLjg1NywyMi44NTd2NzYuNjQzSDEyLjE0M0M1LjQzOCw5OS41LDAsMTA0LjkzOCwwLDExMS42NDN2MTkzLjcxNGMwLDYuNzA1LDUuNDM4LDEyLjE0MywxMi4xNDMsMTIuMTQzaDU0Ljg1N3YxNTRjMCwxMi42MDksMTAuMjQ4LDIyLjg1NywyMi44NTcsMjIuODU3aDMxNC42NDNjMTIuNjA5LDAsMjIuODU3LTEwLjI0OCwyMi44NTctMjIuODU3di0xNTRoNTQuODU3YzYuNzA1LDAsMTIuMTQzLTUuNDM4LDEyLjE0My0xMi4xNDNWMTExLjY0M0M0OTQuMzU2LDEwNC45MzgsNDg4LjkxOCw5OS41LDQ4Mi4yMTMsOTkuNXogTTM5NS43ODUsMzQuMjg2aC0yOTcuMjFjLTEuNDEwLDAtMi41NTMsMS4xNDYtMi41NTMsMi41NTN2NjIuNjYxaDMwMi4zMTZWMzYuODM4QzM5OC4zMzgsMzUuNDMxLDM5Ny4xOTUsMzQuMjg2LDM5NS43ODUsMzQuMjg2eiBNMzAxLjkyOCwyNDcuMTc4aC0xMDkuNWMtMy4xNSwwLTUuNzE0LTIuNTY0LTUuNzE0LTUuNzE0czIuNTY0LTUuNzE0LDUuNzE0LTUuNzE0aDEwOS41YzMuMTUsMCw1LjcxNCwyLjU2NCw1LjcxNCw1LjcxNFMzM1LjA3OCwyNDcuMTc4LDMwMS45MjgsMjQ3LjE3OHogTTM5OC4zMzgsNDU5Ljc4NmMwLDEuNDEtMS4xNDYsMi41NTMtMi41NTMsMi41NTNoLTMwMi4zMWMtMS40MSwwLTIuNTUzLTEuMTQzLTIuNTUzLTIuNTUzdi0xMjYuODloMzA3LjQxN1Y0NTkuNzg2eiBNNDY1Ljc4NSwyODYuMDcxSDI4LjU3MXYtMTQySDQ2NS43ODVWMjg2LjA3MXoiLz48L3N2Zz4=" alt="OctoPrint favicon" class="favicon">OctoPrint_Pi</a></li>
             <li><a href="https://www.thingiverse.com/"><img src="https://www.google.com/s2/favicons?domain=thingiverse.com" alt="Thingiverse favicon" class="favicon">Thingiverse</a></li>   
             <li><a href="https://makerworld.com/"><img src="https://www.google.com/s2/favicons?domain=makerworld.com" alt="Make World favicon" class="favicon">Make World</a></li>
         </ul>
