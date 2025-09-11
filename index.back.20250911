@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fav Sites</title>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="The_Internet.png">
+        <link rel="stylesheet" href="styles-index.css">
+    </head>
+
+    <body>
+        <H1>
+            Fav Sites
+            <span id="showtime"></span>
+            <hr>
+        </H1>
+
+
+<div class="search-container">
+  <form class="google-form" action="https://www.google.com/search" method="GET">
+    <input type="text" name="q" placeholder="Google Search">
+    <button type="submit">Search</button>
+  </form>
+  <div class="spacer"></div>
+  <form class="bing-form" action="https://www.bing.com/search" method="GET">
+    <input type="text" name="q" placeholder="Bing Search">
+    <button type="submit">Search</button>
+  </form>
+</div>
+
+
+        <div class="portals">
+           <div class="fav">
+        <h2>
+            News
+        </h2>
+        <ul> 
+            <li><a href="http://www.zhihu.com">知乎</a></li> 
+            <li><a href="http://sspai.com/">少数派</a></li> 
+            <li><a href="https://www.macstories.net/">MacStories</a></li> 
+            <li><a href="https://news.ycombinator.com/">Hacker News</a>/<a href="https://zeli.app/">中文</a></li>
+            <li><a href="https://www.v2ex.com/">V2EX</a></li>         
+            <li><a href="https://www.lifeweek.com.cn/">三联中读</a></li>
+            <li><a href="https://www.caixin.com/">财新</a></li>
+        </ul>
+    </div> 
+     <div class="entertain">
+        <h2>
+            Entertain
+        </h2>
+        <ul> 
+            <li><a href="https://youtube.com">Youtube</a></li> 
+            <li><a href="https://t.bilibili.com/">BiliBili</a></li> 
+            <li><a href="https://music.apple.com/cn/browse">Apple Music</a></li> 
+            <li><a href="https://open.spotify.com/">Spotify</a></li>
+            <li><a href="https://www.bohaishibei.com/">博海拾贝</a></li> 
+            <li><a href="https://www.x.com">X.com</a></li> 
+            <li><a href="https://www.amazon.com">AmazonUS</a></li>
+            <li><a href="https://weread.qq.com/">微信读书</a></li>
+        </ul>
+    </div> 
+     <div class="essential">
+        <h2>
+            Essential
+        </h2>
+        <ul> 
+            <li><a href="https://ankiweb.net/decks/">Anki</a></li>
+            <li><a href="https://dailydictation.com/">DailyDictation</a></li>
+            <li><a href="https://chat.openai.com/auth/login">ChatGPT</a></li>  
+            <li><a href="https://api.oaipro.com/">OaiPro</a></li>
+            <li><a href="https://www.deepseek.com/">deepdeek</a></li>
+            <li><a href="https://grok.com/">Grok</a></li>
+            <li><a href="https://www.msdmanuals.cn/home">默沙东诊疗手册</a></li>
+        </ul>
+    </div> 
+     <div class="printing">
+        <h2>
+            Printing
+        </h2>
+        <ul> 
+            <li><a href="https://192.168.13.211">OctoPrint_Pi</a></li>
+            <li><a href="https://www.thingiverse.com/">Thingiverse</a></li>   
+            <li><a href="https://makerworld.com/">Make World</a></li>
+        </ul>
+    </div> 
+     <div class="tools">
+        <h2>
+            Tools
+        </h2>
+        <ul>
+            <li><a href="https://web.baimiaoapp.com/">白描</a></li>
+            <li><a href="https://www.deepl.com/translator">DeepL</a></li>
+            <li><a href="./essential_tools.html">Installers</a></li>
+        </ul>
+    </div> 
+     <div class="dl">
+        <h2>
+            DL
+        </h2>
+        <ul>
+            <li><a href="https://www.dygang.cc/">电影港</a></li>
+            <li><a href="https://www.zimuxia.cn/">FIX字幕侠主页</a></li> 
+            <li><a href="https://zh.z-library.sk/">Z-Library</a></li> 
+            <li><a href="https://zh.annas-archive.org/">安娜的档案</a></li>         
+        </ul>
+    </div> 
+     <div class="cloud">
+        <h2>
+            Cloud
+        </h2>
+        <ul> 
+            <li><a href="https://www.oracle.com/cloud/sign-in.html">Oracle Cloud</a></li> 
+            <li><a href="https://portal.azure.com/?whr=live.com">Azure</a></li>
+            <li><a href="https://github.com">GitHub</a></li>
+            <li><a href="https://dash.cloudflare.com/">Cloudflare</a></li>
+        </ul>
+    </div> 
+     <div class="home">
+        <h2>
+            Home
+        </h2>
+        <ul> 
+            <li><a href="http://192.168.13.211">AdGuard</a></li> 
+            <li><a href="http://192.168.13.12:32400/web/index.html#!/">Plex</a></li>         
+        </ul>
+    </div> 
+
+      </div>
+
+        <div class="time">
+            <a href="https://time.is/China_Standard_Time" id="time_is_link" rel="nofollow" style="font-size:16px"></a>
+            <span id="China_Standard_Time_z429" style="font-size:16px"></span>
+            <script src="./en.js"></script>
+            <script>
+                time_is_widget.init({China_Standard_Time_z429:{template:"TIME&nbsp;DATE", date_format:"year-monthnum-daynum"}});
+            </script>
+        </div>
+
+        <div class="ipadd">
+            <iframe src="https://ip.skk.moe/simple" style="width: 100%; border: 0"></iframe>
+        </div>
+    </body>
+</html>
+
