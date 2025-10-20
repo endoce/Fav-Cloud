@@ -140,7 +140,21 @@
   <main id="listContainer"></main>
 
   <script>
+    const today = new Date();
+    const formatDate = date => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+    const daysAgo = (base, days) => {
+      const d = new Date(base);
+      d.setDate(d.getDate() - days);
+      return d;
+    };
+    const safeLower = value => String(value ?? '').toLowerCase();
 
+    const baseData = [
       {category: '书籍', title: '入关', creator: '张明杨', year: '', status: '想读', notes: '关中崛起与世界变局', link: 'https://book.douban.com/subject/36613048/'},
       {category: '电影', title: '银翼杀手2049', creator: 'Denis Villeneuve', year: 2017, status: '已看', notes: '赛博朋克美学巅峰', link: 'https://movie.douban.com/subject/10512661/'},
       {category: '音乐', title: 'Dark Side of the Moon', creator: 'Pink Floyd', year: 1973, status: '已听', notes: '经典混音与概念专辑', link: 'https://music.apple.com/album/dark-side-of-the-moon/1065973692'},
@@ -165,6 +179,7 @@
 
     const data = spreadAcrossPastMonth;
 
+
     const container = document.getElementById('listContainer');
     const searchInput = document.getElementById('searchInput');
     const categoryFilter = document.getElementById('categoryFilter');
@@ -179,13 +194,13 @@
     });
 
     function renderList() {
-      const keyword = searchInput.value.toLowerCase();
+      const keyword = safeLower(searchInput.value);
       const selected = categoryFilter.value;
       container.innerHTML = '';
       data
         .filter(item => {
           const matchCat = selected === 'all' || item.category === selected;
-          const matchSearch = item.title.toLowerCase().includes(keyword) || item.notes.toLowerCase().includes(keyword);
+          const matchSearch = safeLower(item.title).includes(keyword) || safeLower(item.notes).includes(keyword);
           return matchCat && matchSearch;
         })
         .forEach(item => {
