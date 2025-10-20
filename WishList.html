@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wish List · 废土版</title>
+  <style>
+    body {
+      background-color: #1b1b1b;
+      color: #d0d0c0;
+      font-family: "Courier New", monospace;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      padding: 1.5rem 2rem 1rem;
+      border-bottom: 1px solid #444;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #e6e6d8;
+      letter-spacing: 0.2rem;
+    }
+    .tab-links {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-self: center;
+      border: 1px solid #555;
+      border-radius: 999px;
+      padding: 0.2rem;
+      background-color: #222;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+    .tab-link {
+      color: #b0b0a0;
+      text-decoration: none;
+      padding: 0.35rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .tab-link:hover {
+      background-color: #333;
+      color: #f0f0d0;
+    }
+    .tab-link.is-active {
+      background-color: #9acd32;
+      color: #111;
+    }
+    .search-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    input[type="text"], select {
+      background-color: #262626;
+      color: #e0e0d0;
+      border: 1px solid #555;
+      padding: 0.45rem 0.6rem;
+      border-radius: 3px;
+    }
+    main {
+      padding: 1.5rem 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background-color: #222;
+      border: 1px solid #555;
+      padding: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 0 5px #000;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.02);
+      border-color: #888;
+    }
+    .title {
+      font-weight: bold;
+      color: #f0f0d0;
+      margin-bottom: 0.3rem;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 0.5rem;
+    }
+    .notes {
+      font-size: 0.9rem;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    a {
+      color: #9acd32;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>WISH LIST</h1>
+    <div class="tab-links" aria-label="页面导航">
+      <a class="tab-link" href="index.html">Terminal</a>
+      <a class="tab-link is-active" href="WishList.html" aria-current="page">WishList</a>
+    </div>
+    <div class="search-area">
+      <select id="categoryFilter" aria-label="类别筛选">
+        <option value="all">全部类别</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="搜索标题或备注..." aria-label="搜索标题或备注" />
+    </div>
+  </header>
+
+  <main id="listContainer"></main>
+
+  <script>
+    const data = [
+      {category: '书籍', title: '人类简史', creator: '尤瓦尔·赫拉利', year: 2014, status: '想读', notes: '宏观视角看文明演化', link: 'https://book.douban.com/subject/25985021/'},
+      {category: '电影', title: '银翼杀手2049', creator: 'Denis Villeneuve', year: 2017, status: '想看', notes: '赛博朋克美学巅峰', link: 'https://movie.douban.com/subject/10512661/'},
+      {category: '音乐', title: 'Dark Side of the Moon', creator: 'Pink Floyd', year: 1973, status: '已听', notes: '经典混音与概念专辑', link: 'https://music.apple.com/album/dark-side-of-the-moon/1065973692'},
+      {category: '旅行', title: '日本·奈良', creator: '', year: '', status: '计划中', notes: '鹿与古寺的城市', link: 'https://www.japan.travel/zh/spot/24/'},
+      {category: '待办', title: '完成ESP32天气显示器项目', creator: '自己', year: '', status: '进行中', notes: '接入API + 优化e-ink刷新', link: ''}
+    ];
+
+    const container = document.getElementById('listContainer');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+
+    // 初始化类别筛选
+    const categories = [...new Set(data.map(item => item.category))];
+    categories.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      opt.textContent = cat;
+      categoryFilter.appendChild(opt);
+    });
+
+    function renderList() {
+      const keyword = searchInput.value.toLowerCase();
+      const selected = categoryFilter.value;
+      container.innerHTML = '';
+      data
+        .filter(item => {
+          const matchCat = selected === 'all' || item.category === selected;
+          const matchSearch = item.title.toLowerCase().includes(keyword) || item.notes.toLowerCase().includes(keyword);
+          return matchCat && matchSearch;
+        })
+        .forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          const metaParts = [item.category, item.year, item.status].filter(Boolean);
+          card.innerHTML = [
+            `<div class="title">${item.title}</div>`,
+            `<div class="meta">${metaParts.join(' · ')}</div>`,
+            `<div class="notes">${item.notes}</div>`,
+            item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">🔗 查看</a>` : ''
+          ].join('');
+          container.appendChild(card);
+        });
+    }
+
+    searchInput.addEventListener('input', renderList);
+    categoryFilter.addEventListener('change', renderList);
+
+    renderList();
+  </script>
+</body>
+</html>
