@@ -140,14 +140,26 @@
   <main id="listContainer"></main>
 
   <script>
+    const today = new Date();
+    const formatDate = date => date.toISOString().split('T')[0];
+    const daysAgo = (base, days) => {
+      const d = new Date(base);
+      d.setDate(d.getDate() - days);
+      return d;
+    };
+
     const data = [
-      {category: '书籍', title: '入关', creator: '张明杨', year: '', status: '想读', notes: '关中崛起与世界变局', link: 'https://book.douban.com/subject/36613048/', createdAt: '2025-09-22', completedAt: '2025-10-20'},
-      {category: '电影', title: '银翼杀手2049', creator: 'Denis Villeneuve', year: 2017, status: '已看', notes: '赛博朋克美学巅峰', link: 'https://movie.douban.com/subject/10512661/', createdAt: '2025-09-26', completedAt: '2025-10-20'},
-      {category: '音乐', title: 'Dark Side of the Moon', creator: 'Pink Floyd', year: 1973, status: '已听', notes: '经典混音与概念专辑', link: 'https://music.apple.com/album/dark-side-of-the-moon/1065973692', createdAt: '2025-09-30', completedAt: '2025-10-20'},
-      {category: '旅行', title: '日本·奈良', creator: '', year: '', status: '计划中', notes: '鹿与古寺的城市', link: 'https://www.japan.travel/zh/spot/24/', createdAt: '2025-10-05', completedAt: '2025-10-20'},
-      {category: '旅行', title: '山西·岩山寺', creator: '', year: '', status: '想去', notes: '山崖间的北齐遗存', link: 'https://www.douban.com/location/10511750/', createdAt: '2025-10-12', completedAt: '2025-10-20'},
-      {category: '待办', title: '完成ESP32天气显示器项目', creator: '自己', year: '', status: '进行中', notes: '接入API + 优化e-ink刷新', link: '', createdAt: '2025-10-17', completedAt: '2025-10-20'}
-    ];
+      {category: '书籍', title: '入关', creator: '张明杨', year: '', status: '想读', notes: '关中崛起与世界变局', link: 'https://book.douban.com/subject/36613048/', createdOffset: 28},
+      {category: '电影', title: '银翼杀手2049', creator: 'Denis Villeneuve', year: 2017, status: '已看', notes: '赛博朋克美学巅峰', link: 'https://movie.douban.com/subject/10512661/', createdOffset: 24},
+      {category: '音乐', title: 'Dark Side of the Moon', creator: 'Pink Floyd', year: 1973, status: '已听', notes: '经典混音与概念专辑', link: 'https://music.apple.com/album/dark-side-of-the-moon/1065973692', createdOffset: 20},
+      {category: '旅行', title: '日本·奈良', creator: '', year: '', status: '计划中', notes: '鹿与古寺的城市', link: 'https://www.japan.travel/zh/spot/24/', createdOffset: 14},
+      {category: '旅行', title: '山西·岩山寺', creator: '', year: '', status: '想去', notes: '山崖间的北齐遗存', link: 'https://www.douban.com/location/10511750/', createdOffset: 7},
+      {category: '待办', title: '完成ESP32天气显示器项目', creator: '自己', year: '', status: '进行中', notes: '接入API + 优化e-ink刷新', link: '', createdOffset: 2}
+    ].map(({ createdOffset, ...rest }) => ({
+      ...rest,
+      createdAt: formatDate(daysAgo(today, createdOffset)),
+      completedAt: formatDate(today)
+    }));
 
     const container = document.getElementById('listContainer');
     const searchInput = document.getElementById('searchInput');
@@ -176,15 +188,20 @@
           const card = document.createElement('div');
           card.className = 'card';
           const metaParts = [item.category, item.year, item.status].filter(Boolean);
+          const metaHtml = metaParts.length ? `<div class="meta">${metaParts.join(' · ')}</div>` : '';
           const timelineParts = [
-            item.createdAt ? `创建：${item.createdAt}` : '',
-            item.completedAt ? `完成：${item.completedAt}` : ''
+            item.createdAt ? { label: '创建', value: item.createdAt } : null,
+            item.completedAt ? { label: '完成', value: item.completedAt } : null
           ].filter(Boolean);
 
           card.innerHTML = [
             `<div class="title">${item.title}</div>`,
-            `<div class="meta">${metaParts.join(' · ')}</div>`,
-            timelineParts.length ? `<div class="timeline">${timelineParts.map(text => `<span>${text}</span>`).join('')}</div>` : '',
+            metaHtml,
+            timelineParts.length
+              ? `<div class="timeline">${timelineParts
+                  .map(({ label, value }) => `<span>${label}：<time datetime="${value}">${value}</time></span>`)
+                  .join('')}</div>`
+              : '',
             `<div class="notes">${item.notes}</div>`,
             item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">🔗 查看</a>` : ''
           ].join('');
