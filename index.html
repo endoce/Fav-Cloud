@@ -113,6 +113,35 @@
                 gap: 2rem;
                 margin-bottom: 1rem;
             }
+            .tab-links {
+                display: inline-flex;
+                gap: 1rem;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid var(--border-color);
+                border-radius: 999px;
+                padding: 0.25rem;
+                margin: 0 auto 1.5rem;
+                background-color: var(--card-bg-color);
+                box-shadow: 0 2px 6px var(--shadow-color);
+            }
+            .tab-link {
+                display: inline-block;
+                padding: 0.4rem 1.2rem;
+                border-radius: 999px;
+                color: var(--text-color);
+                text-decoration: none;
+                font-size: 0.95rem;
+                transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+            }
+            .tab-link:hover {
+                background-color: var(--border-color);
+            }
+            .tab-link.is-active {
+                background-color: var(--accent-color);
+                color: #ffffff;
+                box-shadow: 0 4px 10px rgba(74, 105, 189, 0.25);
+            }
             .search-container form {
                 display: flex;
                 width: 100%;
@@ -266,6 +295,11 @@
                 </svg>
             </button>
         </div>
+
+        <nav class="tab-links" aria-label="Page navigation">
+            <a class="tab-link is-active" href="index.html">Terminal</a>
+            <a class="tab-link" href="WishList.html">WishList</a>
+        </nav>
 
         <div class="search-container">
             <form class="google-form" action="https://www.google.com/search" method="GET" target="_blank">
