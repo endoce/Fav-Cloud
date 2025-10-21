@@ -199,6 +199,20 @@
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
                 color: var(--muted-color);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+
+            .category-count {
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--accent-color);
+                background: rgba(47, 115, 255, 0.12);
+                border-radius: 999px;
+                padding: 0.1rem 0.55rem;
+                letter-spacing: 0.08em;
             }
 
             .portals ul {
@@ -248,8 +262,7 @@
                 color: var(--muted-color);
             }
 
-            .time,
-            .ipadd {
+            .time {
                 max-width: 1080px;
                 margin: 1.75rem auto;
                 text-align: center;
@@ -258,12 +271,15 @@
                 border-radius: 12px;
                 padding: 1rem 1.5rem;
                 box-shadow: var(--shadow);
+                display: flex;
+                flex-direction: column;
+                gap: 0.35rem;
+                font-size: 1rem;
+                color: var(--heading-color);
             }
 
-            .ipadd iframe {
-                width: 100%;
-                min-height: 40px;
-                border: 0;
+            .time div {
+                letter-spacing: 0.08em;
             }
         </style>
     </head>
@@ -307,11 +323,11 @@
 
         <div class="portals">
            <div class="fav">
-                <h2>Reading <span class="section-count" aria-live="polite"></span></h2>
-                <ul>
-                    <li><a href="http://www.zhihu.com"><span class="link-dot"></span>知乎</a></li>
-                    <li><a href="http://sspai.com/"><span class="link-dot"></span>少数派</a></li>
-                    <li><a href="https://www.macstories.net/"><span class="link-dot"></span>MacStories</a></li>
+                <h2>Reading <span class="category-count" aria-hidden="true"></span></h2>
+                <ul> 
+                    <li><a href="http://www.zhihu.com"><span class="link-dot"></span>知乎</a></li> 
+                    <li><a href="http://sspai.com/"><span class="link-dot"></span>少数派</a></li> 
+                    <li><a href="https://www.macstories.net/"><span class="link-dot"></span>MacStories</a></li> 
                     <li class="multi-link">
                         <span class="link-dot"></span>
                         <a href="https://news.ycombinator.com/">Hacker News</a>
@@ -324,7 +340,7 @@
                 </ul>
             </div>
             <div class="ai">
-                <h2>AI</h2>
+                <h2>AI <span class="category-count" aria-hidden="true"></span></h2>
                 <ul>
                     <li><a href="https://chat.openai.com/"><span class="link-dot"></span>ChatGPT</a></li>
                     <li><a href="https://openai.com/blog/openai-codex"><span class="link-dot"></span>Codex</a></li>
@@ -336,10 +352,10 @@
                 </ul>
             </div>
             <div class="entertain">
-                <h2>Media <span class="section-count" aria-live="polite"></span></h2>
-                <ul>
-                    <li><a href="https://youtube.com"><span class="link-dot"></span>Youtube</a></li>
-                    <li><a href="https://t.bilibili.com/"><span class="link-dot"></span>BiliBili</a></li>
+                <h2>Media <span class="category-count" aria-hidden="true"></span></h2>
+                <ul> 
+                    <li><a href="https://youtube.com"><span class="link-dot"></span>Youtube</a></li> 
+                    <li><a href="https://t.bilibili.com/"><span class="link-dot"></span>BiliBili</a></li> 
                     <li><a href="https://music.apple.com/cn/browse"><span class="link-dot"></span>Apple Music</a></li> 
                     <li><a href="https://open.spotify.com/"><span class="link-dot"></span>Spotify</a></li>
                     <li><a href="https://www.bohaishibei.com/"><span class="link-dot"></span>博海拾贝</a></li> 
@@ -349,8 +365,8 @@
                 </ul>
             </div> 
             <div class="cloud">
-                <h2>Cloud <span class="section-count" aria-live="polite"></span></h2>
-                <ul>
+                <h2>Cloud <span class="category-count" aria-hidden="true"></span></h2>
+                <ul> 
                     <li><a href="https://github.com"><span class="link-dot"></span>GitHub</a></li>
                     <li><a href="https://dash.cloudflare.com/"><span class="link-dot"></span>Cloudflare</a></li>
                     <li><a href="https://www.oracle.com/cloud/sign-in.html"><span class="link-dot"></span>Oracle Cloud</a></li> 
@@ -359,8 +375,8 @@
                 </ul>
             </div>
             <div class="printing">
-                <h2>Maker <span class="section-count" aria-live="polite"></span></h2>
-                <ul>
+                <h2>Maker <span class="category-count" aria-hidden="true"></span></h2>
+                <ul> 
                     <li><a href="https://192.168.13.211"><span class="link-dot"></span>OctoPrint_Pi</a></li>
                     <li><a href="https://www.thingiverse.com/"><span class="link-dot"></span>Thingiverse</a></li>   
                     <li><a href="https://makerworld.com/"><span class="link-dot"></span>Make World</a></li>
@@ -368,7 +384,7 @@
                 </ul>
             </div> 
             <div class="dl">
-                <h2>Resources <span class="section-count" aria-live="polite"></span></h2>
+                <h2>Resources <span class="category-count" aria-hidden="true"></span></h2>
                 <ul>
                     <li><a href="https://www.deepl.com/translator"><span class="link-dot"></span>DeepL</a></li>
                     <li><a href="https://www.dygang.cc/"><span class="link-dot"></span>电影港</a></li>
@@ -379,26 +395,53 @@
             </div>
         </div>
 
-        <p id="no-results" class="no-results" hidden>没有匹配的链接。请尝试其他关键词或清除筛选。</p>
-
-        <div class="time">
-            <a href="https://time.is/China_Standard_Time" id="time_is_link" rel="nofollow" style="font-size:16px"></a>
-            <span id="China_Standard_Time_z429" style="font-size:16px"></span>
-            <script src="https://time.is/en.js"></script>
-            <script>
-                time_is_widget.init({China_Standard_Time_z429:{template:"TIME&nbsp;DATE", date_format:"year-monthnum-daynum"}});
-            </script>
-        </div>
-
-        <div class="ipadd">
-            <iframe src="https://ip.skk.moe/simple" style="width: 100%; border: 0"></iframe>
+        <div class="time" aria-live="polite">
+            <div id="time-display"></div>
+            <div id="date-display"></div>
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Add link counts to each portal section
+                document.querySelectorAll('.portals > div').forEach((section) => {
+                    const links = section.querySelectorAll('li');
+                    const badge = section.querySelector('.category-count');
+                    if (badge) {
+                        badge.textContent = links.length;
+                    }
+                });
+
+                // Local time widget
+                const timeDisplay = document.getElementById('time-display');
+                const dateDisplay = document.getElementById('date-display');
+
+                const updateClock = () => {
+                    const now = new Date();
+                    const timeFormatter = new Intl.DateTimeFormat(undefined, {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                        timeZoneName: 'short',
+                    });
+                    const dateFormatter = new Intl.DateTimeFormat(undefined, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                    });
+
+                    timeDisplay.textContent = timeFormatter.format(now);
+                    dateDisplay.textContent = dateFormatter.format(now);
+                };
+
+                updateClock();
+                setInterval(updateClock, 1000);
+            });
+
             // Theme switcher logic
             const themeToggle = document.getElementById('theme-toggle');
             const preferDark = window.matchMedia("(prefers-color-scheme: dark)");
-            
+
             // Function to set theme
             function setTheme(theme) {
                 document.documentElement.setAttribute('data-theme', theme);
@@ -418,67 +461,6 @@
                 setTheme(savedTheme);
             } else {
                 setTheme(preferDark.matches ? 'dark' : 'light');
-            }
-
-            const filterInput = document.getElementById('portal-filter');
-            const portalSections = Array.from(document.querySelectorAll('.portals > div'));
-            const noResultsMessage = document.getElementById('no-results');
-
-            function initializeSectionCounts() {
-                portalSections.forEach(section => {
-                    const items = Array.from(section.querySelectorAll('li'));
-                    const countEl = section.querySelector('.section-count');
-                    if (countEl && !countEl.dataset.total) {
-                        countEl.dataset.total = items.length;
-                        countEl.textContent = items.length;
-                        countEl.setAttribute('aria-label', `Total links: ${items.length}`);
-                    }
-                });
-            }
-
-            function applyPortalFilter() {
-                const rawValue = filterInput ? filterInput.value : '';
-                const query = rawValue.trim().toLowerCase();
-                let totalVisible = 0;
-
-                portalSections.forEach(section => {
-                    const items = Array.from(section.querySelectorAll('li'));
-                    let visibleCount = 0;
-
-                    items.forEach(item => {
-                        const text = item.textContent.toLowerCase();
-                        const matches = !query || text.includes(query);
-                        item.style.display = matches ? '' : 'none';
-                        if (matches) {
-                            visibleCount++;
-                        }
-                    });
-
-                    const countEl = section.querySelector('.section-count');
-                    if (countEl) {
-                        const total = Number(countEl.dataset.total || items.length);
-                        const ariaLabel = query
-                            ? `Visible links: ${visibleCount} of ${total}`
-                            : `Total links: ${total}`;
-                        countEl.textContent = query ? `${visibleCount}/${total}` : total;
-                        countEl.setAttribute('aria-label', ariaLabel);
-                    }
-
-                    section.style.display = visibleCount === 0 ? 'none' : '';
-                    totalVisible += visibleCount;
-                });
-
-                if (noResultsMessage) {
-                    noResultsMessage.hidden = totalVisible > 0;
-                }
-            }
-
-            initializeSectionCounts();
-            applyPortalFilter();
-
-            if (filterInput) {
-                filterInput.addEventListener('input', applyPortalFilter);
-                filterInput.addEventListener('search', applyPortalFilter);
             }
         </script>
     </body>
