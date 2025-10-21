@@ -392,12 +392,13 @@
                     <li><a href="https://zh.annas-archive.org/"><span class="link-dot"></span>安娜的档案</a></li>
                     <li><a href="https://www.msdmanuals.cn/home"><span class="link-dot"></span>默沙东诊疗手册</a></li>
                 </ul>
-            </div>
+            </div> 
         </div>
 
         <div class="time" aria-live="polite">
             <div id="time-display"></div>
             <div id="date-display"></div>
+            <div id="ip-display">Fetching public IP…</div>
         </div>
 
         <script>
@@ -414,6 +415,7 @@
                 // Local time widget
                 const timeDisplay = document.getElementById('time-display');
                 const dateDisplay = document.getElementById('date-display');
+                const ipDisplay = document.getElementById('ip-display');
 
                 const updateClock = () => {
                     const now = new Date();
@@ -436,6 +438,17 @@
 
                 updateClock();
                 setInterval(updateClock, 1000);
+
+                if (ipDisplay) {
+                    fetch('https://api.ipify.org?format=json')
+                        .then((response) => response.json())
+                        .then((data) => {
+                            ipDisplay.textContent = `Public IP: ${data.ip}`;
+                        })
+                        .catch(() => {
+                            ipDisplay.textContent = 'Public IP: unavailable';
+                        });
+                }
             });
 
             // Theme switcher logic
