@@ -399,6 +399,7 @@
             <div id="time-display"></div>
             <div id="date-display"></div>
             <div id="ip-display">Fetching public IP…</div>
+            <div id="location-display">Fetching location…</div>
         </div>
 
         <script>
@@ -416,6 +417,7 @@
                 const timeDisplay = document.getElementById('time-display');
                 const dateDisplay = document.getElementById('date-display');
                 const ipDisplay = document.getElementById('ip-display');
+                const locationDisplay = document.getElementById('location-display');
 
                 const updateClock = () => {
                     const now = new Date();
@@ -440,13 +442,34 @@
                 setInterval(updateClock, 1000);
 
                 if (ipDisplay) {
-                    fetch('https://api.ipify.org?format=json')
-                        .then((response) => response.json())
+                    fetch('https://ipapi.co/json/')
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
                         .then((data) => {
-                            ipDisplay.textContent = `Public IP: ${data.ip}`;
+                            if (data && data.ip) {
+                                ipDisplay.textContent = `Public IP: ${data.ip}`;
+                            } else {
+                                ipDisplay.textContent = 'Public IP: unavailable';
+                            }
+
+                            if (locationDisplay) {
+                                const parts = [data.city, data.region, data.country_name].filter(Boolean);
+                                if (parts.length > 0) {
+                                    locationDisplay.textContent = `Location: ${parts.join(', ')}`;
+                                } else {
+                                    locationDisplay.textContent = 'Location: unavailable';
+                                }
+                            }
                         })
                         .catch(() => {
                             ipDisplay.textContent = 'Public IP: unavailable';
+                            if (locationDisplay) {
+                                locationDisplay.textContent = 'Location: unavailable';
+                            }
                         });
                 }
             });
