@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="The_Internet.png">
         <style>
-            /* Font Definition */
             @font-face {
                 font-family: 'Fira Code';
                 src: url('./FiraCode-Regular.woff2') format('woff2');
@@ -14,37 +13,35 @@
                 font-style: normal;
             }
 
-            /* CSS Variables for Theming */
             :root {
                 --font-family-main: 'Fira Code', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-                --bg-color: #f8f9fa;
+                --bg-color: #f6f7fb;
+                --text-color: #1b1f24;
+                --muted-color: #626d7a;
+                --heading-color: #111827;
                 --card-bg-color: #ffffff;
-                --text-color: #212529;
-                --heading-color: #343a40;
-                --accent-color: #4a69bd;
-                --link-color: #1e3799;
-                --link-hover-color: #0c2461;
-                --border-color: #dee2e6;
-                --shadow-color: rgba(0, 0, 0, 0.075);
-                --dot-color: #8293b7;
-                --header-border-color: #e9ecef;
+                --border-color: #d5d9e0;
+                --accent-color: #2f73ff;
+                --accent-hover: #1d4ed8;
+                --link-color: #1f3d73;
+                --link-hover-color: #2f73ff;
+                --shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
             }
 
             [data-theme="dark"] {
-                --bg-color: #121212;
-                --card-bg-color: #1e1e1e;
-                --text-color: #e0e0e0;
-                --heading-color: #ffffff;
-                --accent-color: #6a89cc;
-                --link-color: #82aaff;
-                --link-hover-color: #a8c1ff;
-                --border-color: #3a3a3a;
-                --shadow-color: rgba(0, 0, 0, 0.2);
-                --dot-color: #6a89cc;
-                --header-border-color: #2c2c2c;
+                --bg-color: #0f141b;
+                --text-color: #e5ecf5;
+                --muted-color: #94a3b8;
+                --heading-color: #f8fafc;
+                --card-bg-color: #141b23;
+                --border-color: #252f3b;
+                --accent-color: #60a5fa;
+                --accent-hover: #3b82f6;
+                --link-color: #cbd5f5;
+                --link-hover-color: #f8fafc;
+                --shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
             }
 
-            /* Basic Reset & Body */
             *, *::before, *::after {
                 box-sizing: border-box;
             }
@@ -54,186 +51,201 @@
                 background-color: var(--bg-color);
                 color: var(--text-color);
                 margin: 0;
-                padding: 1.5rem;
-                line-height: 1.6;
+                padding: 1.75rem;
+                line-height: 1.65;
                 transition: background-color 0.3s ease, color 0.3s ease;
+                min-height: 100vh;
             }
 
-            /* Header */
             .header-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                gap: 1rem;
                 text-align: center;
-                margin-bottom: 1rem;
-                padding-bottom: 1rem;
-                border-bottom: 2px solid var(--header-border-color);
+                margin-bottom: 2.5rem;
                 position: relative;
             }
-            
+
             h1 {
-                font-size: 2.25rem;
-                color: var(--heading-color);
+                font-size: clamp(2.1rem, 4vw, 3rem);
+                letter-spacing: 0.04em;
                 margin: 0;
+                color: var(--heading-color);
+                font-weight: 600;
             }
 
-            /* Theme Toggle */
             .theme-toggle {
                 position: absolute;
                 right: 0;
                 top: 50%;
                 transform: translateY(-50%);
                 cursor: pointer;
-                background: none;
-                border: none;
-                padding: 8px;
-                border-radius: 50%;
+                background: var(--card-bg-color);
+                border: 1px solid var(--border-color);
+                padding: 0.45rem;
+                border-radius: 999px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 color: var(--text-color);
+                box-shadow: var(--shadow);
+                transition: border-color 0.2s ease, transform 0.2s ease;
             }
+
             .theme-toggle:hover {
-                background-color: var(--header-border-color);
+                transform: translateY(-50%) scale(1.03);
+                border-color: var(--accent-color);
             }
+
             .theme-toggle .icon {
-                width: 24px;
-                height: 24px;
+                width: 22px;
+                height: 22px;
             }
+
             #icon-radiation { display: none; }
             [data-theme="dark"] #icon-radiation { display: block; }
             [data-theme="dark"] #icon-gasmask { display: none; }
 
-
-            /* Search Area */
             .search-container {
                 display: flex;
                 justify-content: center;
                 flex-wrap: wrap;
-                gap: 2rem;
-                margin-bottom: 1rem;
-            }
-            .tab-links {
-                display: inline-flex;
-                gap: 1rem;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid var(--border-color);
-                border-radius: 999px;
-                padding: 0.25rem;
-                margin: 0 auto 1.5rem;
-                background-color: var(--card-bg-color);
-                box-shadow: 0 2px 6px var(--shadow-color);
-            }
-            .tab-link {
-                display: inline-block;
-                padding: 0.4rem 1.2rem;
-                border-radius: 999px;
-                color: var(--text-color);
-                text-decoration: none;
-                font-size: 0.95rem;
-                transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-            }
-            .tab-link:hover {
-                background-color: var(--border-color);
-            }
-            .tab-link.is-active {
-                background-color: var(--accent-color);
-                color: #ffffff;
-                box-shadow: 0 4px 10px rgba(74, 105, 189, 0.25);
-            }
-            .search-container form {
-                display: flex;
-                width: 100%;
-                max-width: 300px;
-            }
-            .search-container input[type="text"] {
-                flex-grow: 1;
-                border: 1px solid var(--border-color);
-                padding: 0.75rem;
-                font-size: 1rem;
-                border-radius: 6px 0 0 6px;
-                outline: none;
-                background-color: var(--card-bg-color);
-                color: var(--text-color);
-                transition: border-color 0.2s, box-shadow 0.2s;
-            }
-            .search-container input[type="text"]:focus {
-                border-color: var(--accent-color);
-                box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.25);
-            }
-            .search-container button {
-                padding: 0.75rem 1rem;
-                border: 1px solid var(--border-color);
-                border-left: none;
-                background-color: var(--bg-color);
-                cursor: pointer;
-                border-radius: 0 6px 6px 0;
-                transition: background-color 0.2s;
-                display: flex;
-                align-items: center;
-            }
-            .search-container button svg {
-                 width: 18px;
-                 height: 18px;
-                 fill: var(--text-color);
-            }
-            .search-container button:hover {
-                background-color: var(--border-color);
+                gap: 1.5rem;
+                margin-bottom: 2.5rem;
             }
 
-            /* Link Portals Grid */
+            .search-container form {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                max-width: 320px;
+                background: var(--card-bg-color);
+                border-radius: 999px;
+                border: 1px solid var(--border-color);
+                box-shadow: var(--shadow);
+                padding: 0.35rem 0.35rem 0.35rem 0.9rem;
+                transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .search-container form:focus-within {
+                border-color: var(--accent-color);
+                box-shadow: 0 0 0 3px rgba(47, 115, 255, 0.12);
+            }
+
+            .search-container input[type="text"] {
+                flex: 1 1 auto;
+                border: none;
+                background: transparent;
+                color: var(--text-color);
+                font-size: 0.95rem;
+                padding: 0.55rem 0.25rem;
+                outline: none;
+                min-width: 0;
+            }
+
+            .search-container input::placeholder {
+                color: var(--muted-color);
+            }
+
+            .search-container button {
+                border: none;
+                background: var(--accent-color);
+                color: #fff;
+                border-radius: 999px;
+                padding: 0.45rem 0.8rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.2s ease;
+            }
+
+            .search-container button:hover {
+                background: var(--accent-hover);
+            }
+
+            .search-container button svg {
+                width: 18px;
+                height: 18px;
+                fill: currentColor;
+            }
+
             .portals {
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-                gap: 1.5rem;
-                max-width: 1200px;
+                gap: 1.6rem;
+                max-width: 1080px;
                 margin: 0 auto 3rem auto;
             }
 
-            /* Individual Portal Card */
             .portals > div {
-                background-color: var(--card-bg-color);
-                border-radius: 8px;
+                background: var(--card-bg-color);
+                border-radius: 14px;
                 padding: 1.5rem;
                 border: 1px solid var(--border-color);
-                box-shadow: 0 1px 2px var(--shadow-color), 0 2px 4px var(--shadow-color);
-                transition: transform 0.2s ease, box-shadow 0.2s ease;
-                border-top: 4px solid var(--accent-color);
+                box-shadow: var(--shadow);
+                transition: border-color 0.2s ease, transform 0.2s ease;
             }
 
             .portals > div:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 2px 4px var(--shadow-color), 0 8px 16px var(--shadow-color);
+                border-color: var(--accent-color);
+                transform: translateY(-4px);
             }
 
             .portals h2 {
-                margin-top: 0;
-                font-size: 1.25rem;
+                margin: 0 0 0.85rem;
+                font-size: 1rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--muted-color);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+
+            .category-count {
+                font-size: 0.75rem;
                 font-weight: 600;
-                color: var(--heading-color);
-                padding-bottom: 0.5rem;
-                margin-bottom: 1rem;
+                color: var(--accent-color);
+                background: rgba(47, 115, 255, 0.12);
+                border-radius: 999px;
+                padding: 0.1rem 0.55rem;
+                letter-spacing: 0.08em;
             }
 
             .portals ul {
-                list-style-type: none;
+                list-style: none;
                 padding: 0;
                 margin: 0;
             }
 
             .portals li {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
                 margin-bottom: 0.65rem;
+            }
+
+            .portals li:last-child {
+                margin-bottom: 0;
+            }
+
+            .link-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent-color);
+                flex-shrink: 0;
             }
 
             .portals a {
                 text-decoration: none;
                 color: var(--link-color);
-                transition: color 0.2s;
                 font-weight: 500;
-                word-break: break-all;
-                display: flex;
-                align-items: center;
+                word-break: break-word;
+                transition: color 0.2s ease;
             }
 
             .portals a:hover {
@@ -243,34 +255,31 @@
             .portals .multi-link {
                 display: flex;
                 align-items: center;
-            }
-            .portals .multi-link a { display: inline; }
-            .portals .multi-link span:not(.link-dot) { margin: 0 0.25em; }
-
-            .link-dot {
-                width: 6px;
-                height: 6px;
-                margin-right: 0.85rem;
-                flex-shrink: 0;
-                background-color: var(--dot-color);
-                border-radius: 50%;
-                display: inline-block;
+                gap: 0.3rem;
             }
 
-            /* Bottom Widgets */
-            .time, .ipadd {
-                max-width: 1200px;
-                margin: 2rem auto;
+            .portals .multi-link span:not(.link-dot) {
+                color: var(--muted-color);
+            }
+
+            .time {
+                max-width: 1080px;
+                margin: 1.75rem auto;
                 text-align: center;
                 background: var(--card-bg-color);
-                padding: 1rem;
-                border-radius: 8px;
                 border: 1px solid var(--border-color);
-                box-shadow: 0 1px 2px var(--shadow-color);
+                border-radius: 12px;
+                padding: 1rem 1.5rem;
+                box-shadow: var(--shadow);
+                display: flex;
+                flex-direction: column;
+                gap: 0.35rem;
+                font-size: 1rem;
+                color: var(--heading-color);
             }
 
-            .ipadd iframe {
-                min-height: 40px;
+            .time div {
+                letter-spacing: 0.08em;
             }
         </style>
     </head>
@@ -296,11 +305,6 @@
             </button>
         </div>
 
-        <nav class="tab-links" aria-label="Page navigation">
-            <a class="tab-link is-active" href="index.html">Terminal</a>
-            <a class="tab-link" href="WishList.html">WishList</a>
-        </nav>
-
         <div class="search-container">
             <form class="google-form" action="https://www.google.com/search" method="GET" target="_blank">
                 <input type="text" name="q" placeholder="Google Search" aria-label="Google Search">
@@ -318,7 +322,7 @@
 
         <div class="portals">
            <div class="fav">
-                <h2>Reading</h2>
+                <h2>Reading <span class="category-count" aria-hidden="true"></span></h2>
                 <ul> 
                     <li><a href="http://www.zhihu.com"><span class="link-dot"></span>知乎</a></li> 
                     <li><a href="http://sspai.com/"><span class="link-dot"></span>少数派</a></li> 
@@ -335,9 +339,10 @@
                 </ul>
             </div>
             <div class="ai">
-                <h2>AI</h2>
-                <ul> 
-                    <li><a href="https://chat.openai.com/"><span class="link-dot"></span>ChatGPT</a></li>  
+                <h2>AI <span class="category-count" aria-hidden="true"></span></h2>
+                <ul>
+                    <li><a href="https://chat.openai.com/"><span class="link-dot"></span>ChatGPT</a></li>
+                    <li><a href="https://openai.com/blog/openai-codex"><span class="link-dot"></span>Codex</a></li>
                     <li><a href="https://gemini.google.com/"><span class="link-dot"></span>Gemini</a></li>
                     <li><a href="https://claude.ai/"><span class="link-dot"></span>Claude</a></li>
                     <li><a href="https://api.oaipro.com/"><span class="link-dot"></span>OaiPro</a></li>
@@ -346,7 +351,7 @@
                 </ul>
             </div>
             <div class="entertain">
-                <h2>Media</h2>
+                <h2>Media <span class="category-count" aria-hidden="true"></span></h2>
                 <ul> 
                     <li><a href="https://youtube.com"><span class="link-dot"></span>Youtube</a></li> 
                     <li><a href="https://t.bilibili.com/"><span class="link-dot"></span>BiliBili</a></li> 
@@ -359,7 +364,7 @@
                 </ul>
             </div> 
             <div class="cloud">
-                <h2>Cloud</h2>
+                <h2>Cloud <span class="category-count" aria-hidden="true"></span></h2>
                 <ul> 
                     <li><a href="https://github.com"><span class="link-dot"></span>GitHub</a></li>
                     <li><a href="https://dash.cloudflare.com/"><span class="link-dot"></span>Cloudflare</a></li>
@@ -369,7 +374,7 @@
                 </ul>
             </div>
             <div class="printing">
-                <h2>Maker</h2>
+                <h2>Maker <span class="category-count" aria-hidden="true"></span></h2>
                 <ul> 
                     <li><a href="https://192.168.13.211"><span class="link-dot"></span>OctoPrint_Pi</a></li>
                     <li><a href="https://www.thingiverse.com/"><span class="link-dot"></span>Thingiverse</a></li>   
@@ -378,7 +383,7 @@
                 </ul>
             </div> 
             <div class="dl">
-                <h2>Resources</h2>
+                <h2>Resources <span class="category-count" aria-hidden="true"></span></h2>
                 <ul>
                     <li><a href="https://www.deepl.com/translator"><span class="link-dot"></span>DeepL</a></li>
                     <li><a href="https://www.dygang.cc/"><span class="link-dot"></span>电影港</a></li>
@@ -389,24 +394,66 @@
             </div> 
         </div>
 
-        <div class="time">
-            <a href="https://time.is/China_Standard_Time" id="time_is_link" rel="nofollow" style="font-size:16px"></a>
-            <span id="China_Standard_Time_z429" style="font-size:16px"></span>
-            <script src="https://time.is/en.js"></script>
-            <script>
-                time_is_widget.init({China_Standard_Time_z429:{template:"TIME&nbsp;DATE", date_format:"year-monthnum-daynum"}});
-            </script>
-        </div>
-
-        <div class="ipadd">
-            <iframe src="https://ip.skk.moe/simple" style="width: 100%; border: 0"></iframe>
+        <div class="time" aria-live="polite">
+            <div id="time-display"></div>
+            <div id="date-display"></div>
+            <div id="ip-display">Fetching public IP…</div>
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Add link counts to each portal section
+                document.querySelectorAll('.portals > div').forEach((section) => {
+                    const links = section.querySelectorAll('li');
+                    const badge = section.querySelector('.category-count');
+                    if (badge) {
+                        badge.textContent = links.length;
+                    }
+                });
+
+                // Local time widget
+                const timeDisplay = document.getElementById('time-display');
+                const dateDisplay = document.getElementById('date-display');
+                const ipDisplay = document.getElementById('ip-display');
+
+                const updateClock = () => {
+                    const now = new Date();
+                    const timeFormatter = new Intl.DateTimeFormat(undefined, {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                        timeZoneName: 'short',
+                    });
+                    const dateFormatter = new Intl.DateTimeFormat(undefined, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                    });
+
+                    timeDisplay.textContent = timeFormatter.format(now);
+                    dateDisplay.textContent = dateFormatter.format(now);
+                };
+
+                updateClock();
+                setInterval(updateClock, 1000);
+
+                if (ipDisplay) {
+                    fetch('https://api.ipify.org?format=json')
+                        .then((response) => response.json())
+                        .then((data) => {
+                            ipDisplay.textContent = `Public IP: ${data.ip}`;
+                        })
+                        .catch(() => {
+                            ipDisplay.textContent = 'Public IP: unavailable';
+                        });
+                }
+            });
+
             // Theme switcher logic
             const themeToggle = document.getElementById('theme-toggle');
             const preferDark = window.matchMedia("(prefers-color-scheme: dark)");
-            
+
             // Function to set theme
             function setTheme(theme) {
                 document.documentElement.setAttribute('data-theme', theme);
