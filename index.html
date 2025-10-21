@@ -118,7 +118,8 @@
                 width: 100%;
                 max-width: 300px;
             }
-            .search-container input[type="text"] {
+            .search-container input[type="text"],
+            .search-container input[type="search"] {
                 flex-grow: 1;
                 border: 1px solid var(--border-color);
                 padding: 0.75rem;
@@ -129,7 +130,8 @@
                 color: var(--text-color);
                 transition: border-color 0.2s, box-shadow 0.2s;
             }
-            .search-container input[type="text"]:focus {
+            .search-container input[type="text"]:focus,
+            .search-container input[type="search"]:focus {
                 border-color: var(--accent-color);
                 box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.25);
             }
@@ -151,6 +153,12 @@
             }
             .search-container button:hover {
                 background-color: var(--border-color);
+            }
+
+            .filter-input {
+                width: 100%;
+                max-width: 280px;
+                border-radius: 6px;
             }
 
             /* Link Portals Grid */
@@ -185,6 +193,32 @@
                 color: var(--heading-color);
                 padding-bottom: 0.5rem;
                 margin-bottom: 1rem;
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+            }
+
+            .section-count {
+                font-size: 0.85rem;
+                color: var(--accent-color);
+                background-color: rgba(74, 105, 189, 0.12);
+                border-radius: 999px;
+                padding: 0.1rem 0.55rem;
+                line-height: 1.4;
+                letter-spacing: 0.03em;
+            }
+
+            .no-results {
+                max-width: 1200px;
+                margin: 1.5rem auto 0;
+                padding: 1rem 1.25rem;
+                border-radius: 8px;
+                background: var(--card-bg-color);
+                border: 1px dashed var(--border-color);
+                color: var(--text-color);
+                text-align: center;
+                font-size: 0.95rem;
+                box-shadow: 0 1px 2px var(--shadow-color);
             }
 
             .portals ul {
@@ -280,15 +314,16 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path></svg>
                 </button>
             </form>
+            <input class="filter-input" type="search" id="portal-filter" placeholder="Filter portal links" aria-label="Filter links on this page">
         </div>
 
         <div class="portals">
            <div class="fav">
-                <h2>Reading</h2>
-                <ul> 
-                    <li><a href="http://www.zhihu.com"><span class="link-dot"></span>知乎</a></li> 
-                    <li><a href="http://sspai.com/"><span class="link-dot"></span>少数派</a></li> 
-                    <li><a href="https://www.macstories.net/"><span class="link-dot"></span>MacStories</a></li> 
+                <h2>Reading <span class="section-count" aria-live="polite"></span></h2>
+                <ul>
+                    <li><a href="http://www.zhihu.com"><span class="link-dot"></span>知乎</a></li>
+                    <li><a href="http://sspai.com/"><span class="link-dot"></span>少数派</a></li>
+                    <li><a href="https://www.macstories.net/"><span class="link-dot"></span>MacStories</a></li>
                     <li class="multi-link">
                         <span class="link-dot"></span>
                         <a href="https://news.ycombinator.com/">Hacker News</a>
@@ -300,6 +335,7 @@
                     <li><a href="https://www.caixin.com/"><span class="link-dot"></span>财新</a></li>
                 </ul>
             </div>
+
             <div class="ai">
                 <h2>AI</h2>
                 <ul>
@@ -313,10 +349,10 @@
                 </ul>
             </div>
             <div class="entertain">
-                <h2>Media</h2>
-                <ul> 
-                    <li><a href="https://youtube.com"><span class="link-dot"></span>Youtube</a></li> 
-                    <li><a href="https://t.bilibili.com/"><span class="link-dot"></span>BiliBili</a></li> 
+                <h2>Media <span class="section-count" aria-live="polite"></span></h2>
+                <ul>
+                    <li><a href="https://youtube.com"><span class="link-dot"></span>Youtube</a></li>
+                    <li><a href="https://t.bilibili.com/"><span class="link-dot"></span>BiliBili</a></li>
                     <li><a href="https://music.apple.com/cn/browse"><span class="link-dot"></span>Apple Music</a></li> 
                     <li><a href="https://open.spotify.com/"><span class="link-dot"></span>Spotify</a></li>
                     <li><a href="https://www.bohaishibei.com/"><span class="link-dot"></span>博海拾贝</a></li> 
@@ -326,8 +362,8 @@
                 </ul>
             </div> 
             <div class="cloud">
-                <h2>Cloud</h2>
-                <ul> 
+                <h2>Cloud <span class="section-count" aria-live="polite"></span></h2>
+                <ul>
                     <li><a href="https://github.com"><span class="link-dot"></span>GitHub</a></li>
                     <li><a href="https://dash.cloudflare.com/"><span class="link-dot"></span>Cloudflare</a></li>
                     <li><a href="https://www.oracle.com/cloud/sign-in.html"><span class="link-dot"></span>Oracle Cloud</a></li> 
@@ -336,8 +372,8 @@
                 </ul>
             </div>
             <div class="printing">
-                <h2>Maker</h2>
-                <ul> 
+                <h2>Maker <span class="section-count" aria-live="polite"></span></h2>
+                <ul>
                     <li><a href="https://192.168.13.211"><span class="link-dot"></span>OctoPrint_Pi</a></li>
                     <li><a href="https://www.thingiverse.com/"><span class="link-dot"></span>Thingiverse</a></li>   
                     <li><a href="https://makerworld.com/"><span class="link-dot"></span>Make World</a></li>
@@ -345,16 +381,18 @@
                 </ul>
             </div> 
             <div class="dl">
-                <h2>Resources</h2>
+                <h2>Resources <span class="section-count" aria-live="polite"></span></h2>
                 <ul>
                     <li><a href="https://www.deepl.com/translator"><span class="link-dot"></span>DeepL</a></li>
                     <li><a href="https://www.dygang.cc/"><span class="link-dot"></span>电影港</a></li>
-                    <li><a href="https://zh.z-library.sk/"><span class="link-dot"></span>Z-Library</a></li> 
+                    <li><a href="https://zh.z-library.sk/"><span class="link-dot"></span>Z-Library</a></li>
                     <li><a href="https://zh.annas-archive.org/"><span class="link-dot"></span>安娜的档案</a></li>
                     <li><a href="https://www.msdmanuals.cn/home"><span class="link-dot"></span>默沙东诊疗手册</a></li>
                 </ul>
-            </div> 
+            </div>
         </div>
+
+        <p id="no-results" class="no-results" hidden>没有匹配的链接。请尝试其他关键词或清除筛选。</p>
 
         <div class="time">
             <a href="https://time.is/China_Standard_Time" id="time_is_link" rel="nofollow" style="font-size:16px"></a>
@@ -393,6 +431,67 @@
                 setTheme(savedTheme);
             } else {
                 setTheme(preferDark.matches ? 'dark' : 'light');
+            }
+
+            const filterInput = document.getElementById('portal-filter');
+            const portalSections = Array.from(document.querySelectorAll('.portals > div'));
+            const noResultsMessage = document.getElementById('no-results');
+
+            function initializeSectionCounts() {
+                portalSections.forEach(section => {
+                    const items = Array.from(section.querySelectorAll('li'));
+                    const countEl = section.querySelector('.section-count');
+                    if (countEl && !countEl.dataset.total) {
+                        countEl.dataset.total = items.length;
+                        countEl.textContent = items.length;
+                        countEl.setAttribute('aria-label', `Total links: ${items.length}`);
+                    }
+                });
+            }
+
+            function applyPortalFilter() {
+                const rawValue = filterInput ? filterInput.value : '';
+                const query = rawValue.trim().toLowerCase();
+                let totalVisible = 0;
+
+                portalSections.forEach(section => {
+                    const items = Array.from(section.querySelectorAll('li'));
+                    let visibleCount = 0;
+
+                    items.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        const matches = !query || text.includes(query);
+                        item.style.display = matches ? '' : 'none';
+                        if (matches) {
+                            visibleCount++;
+                        }
+                    });
+
+                    const countEl = section.querySelector('.section-count');
+                    if (countEl) {
+                        const total = Number(countEl.dataset.total || items.length);
+                        const ariaLabel = query
+                            ? `Visible links: ${visibleCount} of ${total}`
+                            : `Total links: ${total}`;
+                        countEl.textContent = query ? `${visibleCount}/${total}` : total;
+                        countEl.setAttribute('aria-label', ariaLabel);
+                    }
+
+                    section.style.display = visibleCount === 0 ? 'none' : '';
+                    totalVisible += visibleCount;
+                });
+
+                if (noResultsMessage) {
+                    noResultsMessage.hidden = totalVisible > 0;
+                }
+            }
+
+            initializeSectionCounts();
+            applyPortalFilter();
+
+            if (filterInput) {
+                filterInput.addEventListener('input', applyPortalFilter);
+                filterInput.addEventListener('search', applyPortalFilter);
             }
         </script>
     </body>
