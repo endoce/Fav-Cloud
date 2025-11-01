@@ -5,7 +5,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="The_Internet.png">
+        <!-- 页面核心样式 -->
         <style>
+            /* 字体资源设置 */
             @font-face {
                 font-family: 'Fira Code';
                 src: url('./FiraCode-Regular.woff2') format('woff2');
@@ -13,6 +15,7 @@
                 font-style: normal;
             }
 
+            /* 亮色模式配色变量 */
             :root {
                 --font-family-main: 'Fira Code', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
                 --bg-color: #f6f7fb;
@@ -28,6 +31,7 @@
                 --shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
             }
 
+            /* 暗色模式变量覆盖 */
             [data-theme="dark"] {
                 --bg-color: #0f141b;
                 --text-color: #e5ecf5;
@@ -42,10 +46,12 @@
                 --shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
             }
 
+            /* 统一盒模型 */
             *, *::before, *::after {
                 box-sizing: border-box;
             }
 
+            /* 页面主体排版 */
             body {
                 font-family: var(--font-family-main);
                 background-color: var(--bg-color);
@@ -57,6 +63,7 @@
                 min-height: 100vh;
             }
 
+            /* 顶部标题容器样式 */
             .header-container {
                 display: flex;
                 justify-content: center;
@@ -67,6 +74,7 @@
                 position: relative;
             }
 
+            /* 主标题样式 */
             h1 {
                 font-size: clamp(2.1rem, 4vw, 3rem);
                 letter-spacing: 0.04em;
@@ -75,6 +83,7 @@
                 font-weight: 600;
             }
 
+            /* 主题切换按钮容器 */
             .theme-toggle {
                 position: absolute;
                 right: 0;
@@ -93,20 +102,24 @@
                 transition: border-color 0.2s ease, transform 0.2s ease;
             }
 
+            /* 悬停时的主题按钮效果 */
             .theme-toggle:hover {
                 transform: translateY(-50%) scale(1.03);
                 border-color: var(--accent-color);
             }
 
+            /* 主题按钮内图标尺寸 */
             .theme-toggle .icon {
                 width: 22px;
                 height: 22px;
             }
 
+            /* 默认显示防毒面具图标，暗色模式切换 */
             #icon-radiation { display: none; }
             [data-theme="dark"] #icon-radiation { display: block; }
             [data-theme="dark"] #icon-gasmask { display: none; }
 
+            /* 搜索区域外层布局 */
             .search-container {
                 display: flex;
                 justify-content: center;
@@ -115,6 +128,7 @@
                 margin-bottom: 2.5rem;
             }
 
+            /* 搜索表单样式 */
             .search-container form {
                 display: flex;
                 align-items: center;
@@ -128,11 +142,13 @@
                 transition: border-color 0.2s ease, box-shadow 0.2s ease;
             }
 
+            /* 输入框聚焦时高亮 */
             .search-container form:focus-within {
                 border-color: var(--accent-color);
                 box-shadow: 0 0 0 3px rgba(47, 115, 255, 0.12);
             }
 
+            /* 搜索输入框基础样式 */
             .search-container input[type="text"] {
                 flex: 1 1 auto;
                 border: none;
@@ -144,10 +160,12 @@
                 min-width: 0;
             }
 
+            /* 搜索输入框占位符 */
             .search-container input::placeholder {
                 color: var(--muted-color);
             }
 
+            /* 搜索按钮样式 */
             .search-container button {
                 border: none;
                 background: var(--accent-color);
@@ -161,16 +179,19 @@
                 transition: background 0.2s ease;
             }
 
+            /* 搜索按钮悬停效果 */
             .search-container button:hover {
                 background: var(--accent-hover);
             }
 
+            /* 搜索按钮内图标尺寸 */
             .search-container button svg {
                 width: 18px;
                 height: 18px;
                 fill: currentColor;
             }
 
+            /* 链接分组网格容器 */
             .portals {
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -179,6 +200,7 @@
                 margin: 0 auto 3rem auto;
             }
 
+            /* 单个链接分组卡片 */
             .portals > div {
                 background: var(--card-bg-color);
                 border-radius: 14px;
@@ -188,11 +210,13 @@
                 transition: border-color 0.2s ease, transform 0.2s ease;
             }
 
+            /* 卡片悬停动效 */
             .portals > div:hover {
                 border-color: var(--accent-color);
                 transform: translateY(-4px);
             }
 
+            /* 分组标题排版 */
             .portals h2 {
                 margin: 0 0 0.85rem;
                 font-size: 1rem;
@@ -205,6 +229,7 @@
                 gap: 0.5rem;
             }
 
+            /* 分组计数徽章 */
             .category-count {
                 font-size: 0.75rem;
                 font-weight: 600;
@@ -215,12 +240,14 @@
                 letter-spacing: 0.08em;
             }
 
+            /* 链接列表重置样式 */
             .portals ul {
                 list-style: none;
                 padding: 0;
                 margin: 0;
             }
 
+            /* 单个链接行布局 */
             .portals li {
                 display: flex;
                 align-items: center;
@@ -228,10 +255,12 @@
                 margin-bottom: 0.65rem;
             }
 
+            /* 去除末项外边距 */
             .portals li:last-child {
                 margin-bottom: 0;
             }
 
+            /* 链接前导圆点 */
             .link-dot {
                 width: 6px;
                 height: 6px;
@@ -240,6 +269,7 @@
                 flex-shrink: 0;
             }
 
+            /* 链接文本样式 */
             .portals a {
                 text-decoration: none;
                 color: var(--link-color);
@@ -248,20 +278,24 @@
                 transition: color 0.2s ease;
             }
 
+            /* 链接悬停颜色 */
             .portals a:hover {
                 color: var(--link-hover-color);
             }
 
+            /* 多链接横向排版 */
             .portals .multi-link {
                 display: flex;
                 align-items: center;
                 gap: 0.3rem;
             }
 
+            /* 多链接辅助文字色彩 */
             .portals .multi-link span:not(.link-dot) {
                 color: var(--muted-color);
             }
 
+            /* 时间与网络信息面板 */
             .time {
                 max-width: 1080px;
                 margin: 1.75rem auto;
@@ -278,6 +312,7 @@
                 color: var(--heading-color);
             }
 
+            /* 时间面板内文字间距 */
             .time div {
                 letter-spacing: 0.08em;
             }
@@ -285,6 +320,7 @@
     </head>
 
     <body>
+        <!-- 顶部标题与主题切换 -->
         <div class="header-container">
             <h1>终末频段 Terminal Frequency</h1>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
@@ -305,6 +341,7 @@
             </button>
         </div>
 
+        <!-- 搜索入口区域 -->
         <div class="search-container">
             <form class="google-form" action="https://www.google.com/search" method="GET" target="_blank">
                 <input type="text" name="q" placeholder="Google Search" aria-label="Google Search">
@@ -321,7 +358,9 @@
             <input class="filter-input" type="search" id="portal-filter" placeholder="Filter portal links" aria-label="Filter links on this page">
         </div>
 
+        <!-- 常用站点分组 -->
         <div class="portals">
+           <!-- 阅读收藏分组 -->
            <div class="fav">
                 <h2>Reading <span class="category-count" aria-hidden="true"></span></h2>
                 <ul> 
@@ -339,6 +378,7 @@
                     <li><a href="https://www.caixin.com/"><span class="link-dot"></span>财新</a></li>
                 </ul>
             </div>
+            <!-- 人工智能工具分组 -->
             <div class="ai">
                 <h2>AI <span class="category-count" aria-hidden="true"></span></h2>
                 <ul>
@@ -351,6 +391,7 @@
                     <li><a href="https://grok.com/"><span class="link-dot"></span>Grok</a></li>
                 </ul>
             </div>
+            <!-- 媒体娱乐分组 -->
             <div class="entertain">
                 <h2>Media <span class="category-count" aria-hidden="true"></span></h2>
                 <ul> 
@@ -364,6 +405,7 @@
                     <li><a href="https://weread.qq.com/"><span class="link-dot"></span>微信读书</a></li>
                 </ul>
             </div> 
+            <!-- 云服务与运维分组 -->
             <div class="cloud">
                 <h2>Cloud <span class="category-count" aria-hidden="true"></span></h2>
                 <ul> 
@@ -374,6 +416,7 @@
                     <li><a href="https://www.bagevm.com/index.php"><span class="link-dot"></span>Bage</a></li>
                 </ul>
             </div>
+            <!-- 创客与效率工具分组 -->
             <div class="printing">
                 <h2>Maker <span class="category-count" aria-hidden="true"></span></h2>
                 <ul> 
@@ -383,6 +426,7 @@
                     <li><a href="https://ankiweb.net/decks/"><span class="link-dot"></span>Anki</a></li>
                 </ul>
             </div> 
+            <!-- 资源下载与资料分组 -->
             <div class="dl">
                 <h2>Resources <span class="category-count" aria-hidden="true"></span></h2>
                 <ul>
@@ -395,6 +439,7 @@
             </div> 
         </div>
 
+        <!-- 时间、IP 与位置信息 -->
         <div class="time" aria-live="polite">
             <div id="time-display"></div>
             <div id="date-display"></div>
@@ -402,9 +447,11 @@
             <div id="location-display">Fetching location…</div>
         </div>
 
+        <!-- 页面交互脚本 -->
         <script>
+            // 等待 DOM 结构加载完成
             document.addEventListener('DOMContentLoaded', () => {
-                // Add link counts to each portal section
+                // 统计每个分组的链接数量
                 document.querySelectorAll('.portals > div').forEach((section) => {
                     const links = section.querySelectorAll('li');
                     const badge = section.querySelector('.category-count');
@@ -413,12 +460,13 @@
                     }
                 });
 
-                // Local time widget
+                // 本地时间与信息面板
                 const timeDisplay = document.getElementById('time-display');
                 const dateDisplay = document.getElementById('date-display');
                 const ipDisplay = document.getElementById('ip-display');
                 const locationDisplay = document.getElementById('location-display');
 
+                // 更新时间与日期文本
                 const updateClock = () => {
                     const now = new Date();
                     const timeFormatter = new Intl.DateTimeFormat(undefined, {
@@ -442,6 +490,7 @@
                 setInterval(updateClock, 1000);
 
                 if (ipDisplay) {
+                    // 请求公网 IP 与地理位置
                     fetch('https://ipapi.co/json/')
                         .then((response) => {
                             if (!response.ok) {
@@ -474,24 +523,24 @@
                 }
             });
 
-            // Theme switcher logic
+            // 主题切换逻辑
             const themeToggle = document.getElementById('theme-toggle');
             const preferDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-            // Function to set theme
+            // 设置主题的函数
             function setTheme(theme) {
                 document.documentElement.setAttribute('data-theme', theme);
                 localStorage.setItem('theme', theme);
             }
 
-            // Toggle theme on button click
+            // 点击按钮切换主题
             themeToggle.addEventListener('click', () => {
                 const currentTheme = localStorage.getItem('theme') || (preferDark.matches ? 'dark' : 'light');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
                 setTheme(newTheme);
             });
 
-            // Set initial theme based on localStorage or OS preference
+            // 初始化时根据存储或系统偏好设置主题
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
                 setTheme(savedTheme);
