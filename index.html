@@ -506,7 +506,17 @@
                             }
 
                             if (locationDisplay) {
-                                const parts = [data.city, data.region, data.country_name].filter(Boolean);
+                                const parts = [];
+                                if (data.city) {
+                                    parts.push(data.city);
+                                }
+                                if (data.region) {
+                                    parts.push(data.region);
+                                }
+                                if (data.country_name) {
+                                    parts.push(data.country_name);
+                                }
+
                                 if (parts.length > 0) {
                                     locationDisplay.textContent = `Location: ${parts.join(', ')}`;
                                 } else {
