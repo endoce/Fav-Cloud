@@ -295,27 +295,6 @@
                 color: var(--muted-color);
             }
 
-            /* 时间与网络信息面板 */
-            .time {
-                max-width: 1080px;
-                margin: 1.75rem auto;
-                text-align: center;
-                background: var(--card-bg-color);
-                border: 1px solid var(--border-color);
-                border-radius: 12px;
-                padding: 1rem 1.5rem;
-                box-shadow: var(--shadow);
-                display: flex;
-                flex-direction: column;
-                gap: 0.35rem;
-                font-size: 1rem;
-                color: var(--heading-color);
-            }
-
-            /* 时间面板内文字间距 */
-            .time div {
-                letter-spacing: 0.08em;
-            }
         </style>
     </head>
 
@@ -439,14 +418,6 @@
             </div> 
         </div>
 
-        <!-- 时间、IP 与位置信息 -->
-        <div class="time" aria-live="polite">
-            <div id="time-display"></div>
-            <div id="date-display"></div>
-            <div id="ip-display">Fetching public IP…</div>
-            <div id="location-display">Fetching location…</div>
-        </div>
-
         <!-- 页面交互脚本 -->
         <script>
             // 等待 DOM 结构加载完成
@@ -459,78 +430,6 @@
                         badge.textContent = links.length;
                     }
                 });
-
-                // 本地时间与信息面板
-                const timeDisplay = document.getElementById('time-display');
-                const dateDisplay = document.getElementById('date-display');
-                const ipDisplay = document.getElementById('ip-display');
-                const locationDisplay = document.getElementById('location-display');
-
-                // 更新时间与日期文本
-                const updateClock = () => {
-                    const now = new Date();
-                    const timeFormatter = new Intl.DateTimeFormat(undefined, {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                        hour12: false,
-                        timeZoneName: 'short',
-                    });
-                    const dateFormatter = new Intl.DateTimeFormat(undefined, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                    });
-
-                    timeDisplay.textContent = timeFormatter.format(now);
-                    dateDisplay.textContent = dateFormatter.format(now);
-                };
-
-                updateClock();
-                setInterval(updateClock, 1000);
-
-                if (ipDisplay) {
-                    // 请求公网 IP 与地理位置
-                    fetch('https://ipapi.co/json/')
-                        .then((response) => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then((data) => {
-                            if (data && data.ip) {
-                                ipDisplay.textContent = `Public IP: ${data.ip}`;
-                            } else {
-                                ipDisplay.textContent = 'Public IP: unavailable';
-                            }
-
-                            if (locationDisplay) {
-                                const parts = [];
-                                if (data.city) {
-                                    parts.push(data.city);
-                                }
-                                if (data.region) {
-                                    parts.push(data.region);
-                                }
-                                if (data.country_name) {
-                                    parts.push(data.country_name);
-                                }
-
-                                if (parts.length > 0) {
-                                    locationDisplay.textContent = `Location: ${parts.join(', ')}`;
-                                } else {
-                                    locationDisplay.textContent = 'Location: unavailable';
-                                }
-                            }
-                        })
-                        .catch(() => {
-                            ipDisplay.textContent = 'Public IP: unavailable';
-                            if (locationDisplay) {
-                                locationDisplay.textContent = 'Location: unavailable';
-                            }
-                        });
-                }
             });
 
             // 主题切换逻辑
