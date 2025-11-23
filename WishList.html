@@ -56,7 +56,7 @@
       flex-wrap: wrap;
       gap: 0.75rem;
     }
-    input[type="text"], select {
+    input[type="text"] {
       background-color: #262626;
       color: #e0e0d0;
       border: 1px solid #555;
@@ -130,9 +130,6 @@
       <a class="tab-link is-active" href="WishList.html" aria-current="page">WishList</a>
     </div>
     <div class="search-area">
-      <select id="categoryFilter" aria-label="类别筛选">
-        <option value="all">全部类别</option>
-      </select>
       <input type="text" id="searchInput" placeholder="搜索标题或备注..." aria-label="搜索标题或备注" />
     </div>
   </header>
@@ -182,26 +179,17 @@
 
     const container = document.getElementById('listContainer');
     const searchInput = document.getElementById('searchInput');
-    const categoryFilter = document.getElementById('categoryFilter');
-
-    // 初始化类别筛选
-    const categories = [...new Set(data.map(item => item.category))];
-    categories.forEach(cat => {
-      const opt = document.createElement('option');
-      opt.value = cat;
-      opt.textContent = cat;
-      categoryFilter.appendChild(opt);
-    });
 
     function renderList() {
       const keyword = safeLower(searchInput.value);
-      const selected = categoryFilter.value;
       container.innerHTML = '';
       data
         .filter(item => {
-          const matchCat = selected === 'all' || item.category === selected;
-          const matchSearch = safeLower(item.title).includes(keyword) || safeLower(item.notes).includes(keyword);
-          return matchCat && matchSearch;
+          const matchSearch =
+            safeLower(item.title).includes(keyword) ||
+            safeLower(item.notes).includes(keyword) ||
+            safeLower(item.category).includes(keyword);
+          return matchSearch;
         })
         .forEach(item => {
           const card = document.createElement('div');
@@ -229,7 +217,6 @@
     }
 
     searchInput.addEventListener('input', renderList);
-    categoryFilter.addEventListener('change', renderList);
 
     renderList();
   </script>
