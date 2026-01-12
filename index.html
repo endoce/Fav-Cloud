@@ -54,13 +54,29 @@
             /* 页面主体排版 */
             body {
                 font-family: var(--font-family-main);
-                background-color: var(--bg-color);
+                background-color: #000;
                 color: var(--text-color);
                 margin: 0;
                 padding: 1.75rem;
                 line-height: 1.65;
                 transition: background-color 0.3s ease, color 0.3s ease;
                 min-height: 100vh;
+                position: relative;
+            }
+
+            /* 背景图片层 */
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background-color: #000;
+                background-image: url('./background.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: contain;
+                opacity: 0.55;
+                filter: blur(8px);
+                z-index: -1;
             }
 
             /* 顶部标题容器样式 */
