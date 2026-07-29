@@ -21,7 +21,6 @@
 ## 项目文件
 
 - `index.html`：页面结构、样式和交互逻辑
-- `background.png`：页面背景图
 - `FiraCode-Regular.woff2`：页面字体
 - `The_Internet.png`：网站图标
 
