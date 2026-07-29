@@ -18,32 +18,32 @@
             /* 亮色模式配色变量 */
             :root {
                 --font-family-main: 'Fira Code', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-                --bg-color: #f6f7fb;
-                --text-color: #1b1f24;
-                --muted-color: #626d7a;
+                --bg-color: #f4f6f8;
+                --text-color: #253041;
+                --muted-color: #697586;
                 --heading-color: #111827;
                 --card-bg-color: #ffffff;
-                --border-color: #d5d9e0;
-                --accent-color: #2f73ff;
+                --border-color: #dfe4ea;
+                --accent-color: #2563eb;
                 --accent-hover: #1d4ed8;
-                --link-color: #1f3d73;
+                --link-color: #344054;
                 --link-hover-color: #2f73ff;
-                --shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+                --shadow: 0 12px 32px rgba(15, 23, 42, 0.07);
             }
 
             /* 暗色模式变量覆盖 */
             [data-theme="dark"] {
-                --bg-color: #0f141b;
-                --text-color: #e5ecf5;
-                --muted-color: #94a3b8;
-                --heading-color: #f8fafc;
-                --card-bg-color: #141b23;
-                --border-color: #252f3b;
-                --accent-color: #60a5fa;
-                --accent-hover: #3b82f6;
-                --link-color: #cbd5f5;
+                --bg-color: #0b0f14;
+                --text-color: #d7dee8;
+                --muted-color: #8491a3;
+                --heading-color: #f3f6fa;
+                --card-bg-color: #121821;
+                --border-color: #222c38;
+                --accent-color: #6ea8fe;
+                --accent-hover: #8ab8ff;
+                --link-color: #c2ccda;
                 --link-hover-color: #f8fafc;
-                --shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+                --shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
             }
 
             /* 统一盒模型 */
@@ -62,21 +62,6 @@
                 transition: background-color 0.3s ease, color 0.3s ease;
                 min-height: 100vh;
                 position: relative;
-            }
-
-            /* 背景图片层 */
-            body::before {
-                content: "";
-                position: fixed;
-                inset: 0;
-                background-color: #000;
-                background-image: url('./background.png');
-                background-repeat: no-repeat;
-                background-position: center;
-                background-size: contain;
-                opacity: 0.55;
-                filter: blur(8px);
-                z-index: -1;
             }
 
             /* 顶部标题容器样式 */
