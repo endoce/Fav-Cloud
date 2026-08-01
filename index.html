@@ -516,7 +516,7 @@
                     <button class="network-refresh" id="network-refresh" type="button">检测网络</button>
                 </div>
             </div>
-            <p class="network-note" id="network-note">点击检测后会向 ipapi.co 查询出口信息；IP 默认脱敏，分流状态仅按出口地区推测。</p>
+            <p class="network-note" id="network-note">点击检测后会向 ipwho.is 查询出口信息；IP 默认脱敏，分流状态仅按出口地区推测。</p>
         </section>
 
         <!-- 页面交互脚本 -->
@@ -573,29 +573,33 @@
 
                 networkRefresh.disabled = true;
                 networkRefresh.textContent = '检测中…';
-                networkNote.textContent = '正在通过 ipapi.co 查询当前出口信息…';
+                networkNote.textContent = '正在通过 ipwho.is 查询当前出口信息…';
 
                 try {
-                    const response = await fetch('https://ipapi.co/json/', {
+                    const response = await fetch('https://ipwho.is/', {
                         cache: 'no-store',
                         signal: controller.signal
                     });
                     if (!response.ok) throw new Error('Network lookup failed');
 
                     const data = await response.json();
+                    if (!data.success) throw new Error(data.message || 'IP lookup failed');
                     const elapsed = Math.round(performance.now() - startedAt);
                     fullNetworkIp = data.ip || '';
                     isNetworkIpVisible = false;
                     renderNetworkIp();
                     networkIpToggle.disabled = !fullNetworkIp;
-                    networkLocation.textContent = [data.city, data.country_name].filter(Boolean).join(', ') || 'Unknown';
-                    networkProvider.textContent = [data.asn, data.org].filter(Boolean).join(' · ') || 'Unknown';
+                    networkLocation.textContent = [data.city, data.country].filter(Boolean).join(', ') || 'Unknown';
+                    const connection = data.connection || {};
+                    const asn = connection.asn ? 'AS' + String(connection.asn).replace(/^AS/i, '') : '';
+                    const provider = connection.org || connection.isp || '';
+                    networkProvider.textContent = [asn, provider].filter(Boolean).join(' · ') || 'Unknown';
 
                     const route = data.country_code === 'CN' ? 'DIRECT' : 'PROXY';
                     networkRoute.textContent = route;
                     networkRouteDot.className = 'network-status-dot ' + route.toLowerCase();
                     networkLatency.textContent = elapsed + ' ms';
-                    networkNote.textContent = '出口信息由 ipapi.co 提供 · ' +
+                    networkNote.textContent = '出口信息由 ipwho.is 提供 · ' +
                         new Date().toLocaleTimeString('zh-CN', { hour12: false }) +
                         ' 更新 · 分流为地区推测';
                 } catch (error) {
