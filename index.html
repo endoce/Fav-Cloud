@@ -225,6 +225,136 @@
                 color: var(--muted-color);
             }
 
+
+            /* 页面底部网络状态栏 */
+            .network-panel {
+                max-width: 1080px;
+                margin: 0 auto 1.5rem;
+                background: var(--card-bg-color);
+                border: 1px solid var(--border-color);
+                border-radius: 16px;
+                box-shadow: var(--shadow);
+                overflow: hidden;
+            }
+
+            .network-grid {
+                display: grid;
+                grid-template-columns: 1.2fr 1fr 1.35fr 0.8fr 0.7fr auto;
+                align-items: stretch;
+            }
+
+            .network-item {
+                min-width: 0;
+                padding: 0.9rem 1rem;
+                border-right: 1px solid var(--border-color);
+            }
+
+            .network-label {
+                display: block;
+                color: var(--muted-color);
+                font-size: 0.68rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                margin-bottom: 0.28rem;
+            }
+
+            .network-value {
+                display: block;
+                color: var(--text-color);
+                font-size: 0.82rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .network-ip-row,
+            .network-route {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .network-status-dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--muted-color);
+                flex-shrink: 0;
+            }
+
+            .network-status-dot.direct { background: #34d399; }
+            .network-status-dot.proxy { background: #60a5fa; }
+            .network-status-dot.unknown { background: #f59e0b; }
+
+            .network-icon-button,
+            .network-refresh {
+                appearance: none;
+                border: 1px solid var(--border-color);
+                background: transparent;
+                color: var(--text-color);
+                cursor: pointer;
+                font: inherit;
+                transition: border-color 0.2s ease, color 0.2s ease;
+            }
+
+            .network-icon-button:hover,
+            .network-refresh:hover {
+                border-color: var(--accent-color);
+                color: var(--accent-color);
+            }
+
+            .network-icon-button {
+                width: 1.75rem;
+                height: 1.75rem;
+                padding: 0;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+
+            .network-actions {
+                display: flex;
+                align-items: center;
+                padding: 0.75rem;
+            }
+
+            .network-refresh {
+                border-radius: 999px;
+                padding: 0.45rem 0.8rem;
+                white-space: nowrap;
+            }
+
+            .network-refresh:disabled {
+                cursor: wait;
+                opacity: 0.6;
+            }
+
+            .network-note {
+                margin: 0;
+                padding: 0.55rem 1rem;
+                color: var(--muted-color);
+                border-top: 1px solid var(--border-color);
+                font-size: 0.68rem;
+                text-align: right;
+            }
+
+            @media (max-width: 900px) {
+                .network-grid { grid-template-columns: repeat(3, 1fr); }
+                .network-item:nth-child(3) { border-right: 0; }
+                .network-item:nth-child(n + 4),
+                .network-actions { border-top: 1px solid var(--border-color); }
+            }
+
+            @media (max-width: 600px) {
+                body { padding: 1rem; }
+                .network-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+                .network-item:nth-child(2n) { border-right: 0; }
+                .network-item:nth-child(3) { border-right: 1px solid var(--border-color); }
+                .network-item:nth-child(n + 3),
+                .network-actions { border-top: 1px solid var(--border-color); }
+                .network-actions { justify-content: center; }
+                .network-note { text-align: left; }
+            }
+
         </style>
     </head>
 
@@ -352,6 +482,43 @@
             </div>
         </div>
 
+
+        <!-- 页面底部网络状态 -->
+        <section class="network-panel" aria-label="网络状态">
+            <div class="network-grid" aria-live="polite">
+                <div class="network-item">
+                    <span class="network-label">Public IP</span>
+                    <div class="network-ip-row">
+                        <span class="network-value" id="network-ip">未检测</span>
+                        <button class="network-icon-button" id="network-ip-toggle" type="button" aria-label="显示完整 IP" disabled>◉</button>
+                    </div>
+                </div>
+                <div class="network-item">
+                    <span class="network-label">Location</span>
+                    <span class="network-value" id="network-location">未检测</span>
+                </div>
+                <div class="network-item">
+                    <span class="network-label">Network</span>
+                    <span class="network-value" id="network-provider">未检测</span>
+                </div>
+                <div class="network-item">
+                    <span class="network-label">Route</span>
+                    <span class="network-value network-route">
+                        <span class="network-status-dot unknown" id="network-route-dot" aria-hidden="true"></span>
+                        <span id="network-route">UNKNOWN</span>
+                    </span>
+                </div>
+                <div class="network-item">
+                    <span class="network-label">Latency</span>
+                    <span class="network-value" id="network-latency">—</span>
+                </div>
+                <div class="network-actions">
+                    <button class="network-refresh" id="network-refresh" type="button">检测网络</button>
+                </div>
+            </div>
+            <p class="network-note" id="network-note">点击检测后会向 ipapi.co 查询出口信息；IP 默认脱敏，分流状态仅按出口地区推测。</p>
+        </section>
+
         <!-- 页面交互脚本 -->
         <script>
             // 等待 DOM 结构加载完成
@@ -365,6 +532,98 @@
                     }
                 });
             });
+
+
+            // 网络状态查询（仅在用户点击后发起）
+            const networkIp = document.getElementById('network-ip');
+            const networkIpToggle = document.getElementById('network-ip-toggle');
+            const networkLocation = document.getElementById('network-location');
+            const networkProvider = document.getElementById('network-provider');
+            const networkRoute = document.getElementById('network-route');
+            const networkRouteDot = document.getElementById('network-route-dot');
+            const networkLatency = document.getElementById('network-latency');
+            const networkRefresh = document.getElementById('network-refresh');
+            const networkNote = document.getElementById('network-note');
+            let fullNetworkIp = '';
+            let isNetworkIpVisible = false;
+
+            function maskIpAddress(ip) {
+                if (!ip) return '—';
+                if (ip.includes(':')) {
+                    const parts = ip.split(':');
+                    const indexes = parts.map((part, index) => part ? index : -1).filter(index => index >= 0);
+                    if (indexes.length) parts[indexes[indexes.length - 1]] = '••••';
+                    return parts.join(':');
+                }
+                const parts = ip.split('.');
+                if (parts.length === 4) parts[3] = '•••';
+                return parts.join('.');
+            }
+
+            function renderNetworkIp() {
+                networkIp.textContent = isNetworkIpVisible ? fullNetworkIp : maskIpAddress(fullNetworkIp);
+                networkIpToggle.setAttribute('aria-label', isNetworkIpVisible ? '隐藏完整 IP' : '显示完整 IP');
+                networkIpToggle.textContent = isNetworkIpVisible ? '◌' : '◉';
+            }
+
+            async function loadNetworkStatus() {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 7000);
+                const startedAt = performance.now();
+
+                networkRefresh.disabled = true;
+                networkRefresh.textContent = '检测中…';
+                networkNote.textContent = '正在通过 ipapi.co 查询当前出口信息…';
+
+                try {
+                    const response = await fetch('https://ipapi.co/json/', {
+                        cache: 'no-store',
+                        signal: controller.signal
+                    });
+                    if (!response.ok) throw new Error('Network lookup failed');
+
+                    const data = await response.json();
+                    const elapsed = Math.round(performance.now() - startedAt);
+                    fullNetworkIp = data.ip || '';
+                    isNetworkIpVisible = false;
+                    renderNetworkIp();
+                    networkIpToggle.disabled = !fullNetworkIp;
+                    networkLocation.textContent = [data.city, data.country_name].filter(Boolean).join(', ') || 'Unknown';
+                    networkProvider.textContent = [data.asn, data.org].filter(Boolean).join(' · ') || 'Unknown';
+
+                    const route = data.country_code === 'CN' ? 'DIRECT' : 'PROXY';
+                    networkRoute.textContent = route;
+                    networkRouteDot.className = 'network-status-dot ' + route.toLowerCase();
+                    networkLatency.textContent = elapsed + ' ms';
+                    networkNote.textContent = '出口信息由 ipapi.co 提供 · ' +
+                        new Date().toLocaleTimeString('zh-CN', { hour12: false }) +
+                        ' 更新 · 分流为地区推测';
+                } catch (error) {
+                    fullNetworkIp = '';
+                    networkIp.textContent = 'Unavailable';
+                    networkIpToggle.disabled = true;
+                    networkLocation.textContent = 'Unavailable';
+                    networkProvider.textContent = 'Unavailable';
+                    networkRoute.textContent = 'UNKNOWN';
+                    networkRouteDot.className = 'network-status-dot unknown';
+                    networkLatency.textContent = '—';
+                    networkNote.textContent = error.name === 'AbortError'
+                        ? '查询超时，请稍后重试'
+                        : '无法获取网络状态，请检查网络或隐私拦截设置';
+                } finally {
+                    clearTimeout(timeout);
+                    networkRefresh.disabled = false;
+                    networkRefresh.textContent = '↻ 刷新';
+                }
+            }
+
+            networkIpToggle.addEventListener('click', () => {
+                if (!fullNetworkIp) return;
+                isNetworkIpVisible = !isNetworkIpVisible;
+                renderNetworkIp();
+            });
+
+            networkRefresh.addEventListener('click', loadNetworkStatus);
 
             // 主题切换逻辑
             const themeToggle = document.getElementById('theme-toggle');
