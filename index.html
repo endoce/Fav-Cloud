@@ -355,7 +355,15 @@
                 .network-note { text-align: left; }
             }
 
-        </style>
+        
+            /* 双出口状态布局 */
+            .network-panel .network-row{display:grid;grid-template-columns:.8fr 1.25fr 1fr 1.35fr .7fr}
+            .network-row+.network-row{border-top:1px solid var(--border-color)}
+            .network-row .network-item:last-child{border-right:0}
+            .network-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.65rem 1rem;border-top:1px solid var(--border-color)}
+            .network-footer .network-note{padding:0;border:0;text-align:left}
+            @media(max-width:800px){.network-panel .network-row{grid-template-columns:repeat(2,minmax(0,1fr))}.network-row .network-item{border-top:1px solid var(--border-color)}.network-row .network-item:nth-child(-n+2){border-top:0}.network-row .network-item:nth-child(2n){border-right:0}.network-row .network-item:last-child{grid-column:1/-1}.network-footer{align-items:flex-start;flex-direction:column}}
+</style>
     </head>
 
     <body>
@@ -483,40 +491,25 @@
         </div>
 
 
-        <!-- 页面底部网络状态 -->
-        <section class="network-panel" aria-label="网络状态">
-            <div class="network-grid" aria-live="polite">
-                <div class="network-item">
-                    <span class="network-label">Public IP</span>
-                    <div class="network-ip-row">
-                        <span class="network-value" id="network-ip">未检测</span>
-                        <button class="network-icon-button" id="network-ip-toggle" type="button" aria-label="显示完整 IP" disabled>◉</button>
-                    </div>
+        <!-- 页面底部双出口网络状态 -->
+        <section class="network-panel" aria-label="网络出口状态">
+            <div aria-live="polite">
+                <div class="network-row">
+                    <div class="network-item"><span class="network-label">Mainland</span><span class="network-value network-route"><span class="network-status-dot direct"></span>DIRECT</span></div>
+                    <div class="network-item"><span class="network-label">Public IP</span><div class="network-ip-row"><span class="network-value" id="cn-ip">未检测</span><button class="network-icon-button" id="cn-ip-toggle" type="button" disabled>◉</button></div></div>
+                    <div class="network-item"><span class="network-label">Location</span><span class="network-value" id="cn-location">未检测</span></div>
+                    <div class="network-item"><span class="network-label">Network</span><span class="network-value" id="cn-provider">未检测</span></div>
+                    <div class="network-item"><span class="network-label">Latency</span><span class="network-value" id="cn-latency">—</span></div>
                 </div>
-                <div class="network-item">
-                    <span class="network-label">Location</span>
-                    <span class="network-value" id="network-location">未检测</span>
-                </div>
-                <div class="network-item">
-                    <span class="network-label">Network</span>
-                    <span class="network-value" id="network-provider">未检测</span>
-                </div>
-                <div class="network-item">
-                    <span class="network-label">Route</span>
-                    <span class="network-value network-route">
-                        <span class="network-status-dot unknown" id="network-route-dot" aria-hidden="true"></span>
-                        <span id="network-route">UNKNOWN</span>
-                    </span>
-                </div>
-                <div class="network-item">
-                    <span class="network-label">Latency</span>
-                    <span class="network-value" id="network-latency">—</span>
-                </div>
-                <div class="network-actions">
-                    <button class="network-refresh" id="network-refresh" type="button">检测网络</button>
+                <div class="network-row">
+                    <div class="network-item"><span class="network-label">Google</span><span class="network-value network-route"><span class="network-status-dot proxy"></span>PROXY</span></div>
+                    <div class="network-item"><span class="network-label">Public IP</span><div class="network-ip-row"><span class="network-value" id="google-ip">未检测</span><button class="network-icon-button" id="google-ip-toggle" type="button" disabled>◉</button></div></div>
+                    <div class="network-item"><span class="network-label">Location</span><span class="network-value" id="google-location">未检测</span></div>
+                    <div class="network-item"><span class="network-label">Network</span><span class="network-value" id="google-provider">未检测</span></div>
+                    <div class="network-item"><span class="network-label">Latency</span><span class="network-value" id="google-latency">—</span></div>
                 </div>
             </div>
-            <p class="network-note" id="network-note">点击检测后会向 ipwho.is 查询出口信息；IP 默认脱敏，分流状态仅按出口地区推测。</p>
+            <div class="network-footer"><p class="network-note" id="network-note">点击检测，同时查询大陆直连与 Google 代理出口；IP 默认脱敏。</p><button class="network-refresh" id="network-refresh" type="button">检测双出口</button></div>
         </section>
 
         <!-- 页面交互脚本 -->
@@ -534,100 +527,15 @@
             });
 
 
-            // 网络状态查询（仅在用户点击后发起）
-            const networkIp = document.getElementById('network-ip');
-            const networkIpToggle = document.getElementById('network-ip-toggle');
-            const networkLocation = document.getElementById('network-location');
-            const networkProvider = document.getElementById('network-provider');
-            const networkRoute = document.getElementById('network-route');
-            const networkRouteDot = document.getElementById('network-route-dot');
-            const networkLatency = document.getElementById('network-latency');
-            const networkRefresh = document.getElementById('network-refresh');
-            const networkNote = document.getElementById('network-note');
-            let fullNetworkIp = '';
-            let isNetworkIpVisible = false;
-
-            function maskIpAddress(ip) {
-                if (!ip) return '—';
-                if (ip.includes(':')) {
-                    const parts = ip.split(':');
-                    const indexes = parts.map((part, index) => part ? index : -1).filter(index => index >= 0);
-                    if (indexes.length) parts[indexes[indexes.length - 1]] = '••••';
-                    return parts.join(':');
-                }
-                const parts = ip.split('.');
-                if (parts.length === 4) parts[3] = '•••';
-                return parts.join('.');
-            }
-
-            function renderNetworkIp() {
-                networkIp.textContent = isNetworkIpVisible ? fullNetworkIp : maskIpAddress(fullNetworkIp);
-                networkIpToggle.setAttribute('aria-label', isNetworkIpVisible ? '隐藏完整 IP' : '显示完整 IP');
-                networkIpToggle.textContent = isNetworkIpVisible ? '◌' : '◉';
-            }
-
-            async function loadNetworkStatus() {
-                const controller = new AbortController();
-                const timeout = setTimeout(() => controller.abort(), 7000);
-                const startedAt = performance.now();
-
-                networkRefresh.disabled = true;
-                networkRefresh.textContent = '检测中…';
-                networkNote.textContent = '正在通过 ipwho.is 查询当前出口信息…';
-
-                try {
-                    const response = await fetch('https://ipwho.is/', {
-                        cache: 'no-store',
-                        signal: controller.signal
-                    });
-                    if (!response.ok) throw new Error('Network lookup failed');
-
-                    const data = await response.json();
-                    if (!data.success) throw new Error(data.message || 'IP lookup failed');
-                    const elapsed = Math.round(performance.now() - startedAt);
-                    fullNetworkIp = data.ip || '';
-                    isNetworkIpVisible = false;
-                    renderNetworkIp();
-                    networkIpToggle.disabled = !fullNetworkIp;
-                    networkLocation.textContent = [data.city, data.country].filter(Boolean).join(', ') || 'Unknown';
-                    const connection = data.connection || {};
-                    const asn = connection.asn ? 'AS' + String(connection.asn).replace(/^AS/i, '') : '';
-                    const provider = connection.org || connection.isp || '';
-                    networkProvider.textContent = [asn, provider].filter(Boolean).join(' · ') || 'Unknown';
-
-                    const route = data.country_code === 'CN' ? 'DIRECT' : 'PROXY';
-                    networkRoute.textContent = route;
-                    networkRouteDot.className = 'network-status-dot ' + route.toLowerCase();
-                    networkLatency.textContent = elapsed + ' ms';
-                    networkNote.textContent = '出口信息由 ipwho.is 提供 · ' +
-                        new Date().toLocaleTimeString('zh-CN', { hour12: false }) +
-                        ' 更新 · 分流为地区推测';
-                } catch (error) {
-                    fullNetworkIp = '';
-                    networkIp.textContent = 'Unavailable';
-                    networkIpToggle.disabled = true;
-                    networkLocation.textContent = 'Unavailable';
-                    networkProvider.textContent = 'Unavailable';
-                    networkRoute.textContent = 'UNKNOWN';
-                    networkRouteDot.className = 'network-status-dot unknown';
-                    networkLatency.textContent = '—';
-                    networkNote.textContent = error.name === 'AbortError'
-                        ? '查询超时，请稍后重试'
-                        : '无法获取网络状态，请检查网络或隐私拦截设置';
-                } finally {
-                    clearTimeout(timeout);
-                    networkRefresh.disabled = false;
-                    networkRefresh.textContent = '↻ 刷新';
-                }
-            }
-
-            networkIpToggle.addEventListener('click', () => {
-                if (!fullNetworkIp) return;
-                isNetworkIpVisible = !isNetworkIpVisible;
-                renderNetworkIp();
-            });
-
-            networkRefresh.addEventListener('click', loadNetworkStatus);
+            // 双出口网络状态查询
+            const networkRefresh=document.getElementById('network-refresh');
+            const networkNote=document.getElementById('network-note');
+            const networkTargets={cn:{endpoint:'https://cn-ip.crownpartnersgroup.com/'},google:{endpoint:'https://google-ip.crownpartnersgroup.com/'}};
+            function maskIpAddress(ip){if(!ip)return '—';if(ip.includes(':')){const p=ip.split(':'),i=p.map((v,n)=>v?n:-1).filter(n=>n>=0);if(i.length)p[i[i.length-1]]='••••';return p.join(':')}const p=ip.split('.');if(p.length===4)p[3]='•••';return p.join('.')}
+            Object.entries(networkTargets).forEach(([key,t])=>{t.ip=document.getElementById(key+'-ip');t.toggle=document.getElementById(key+'-ip-toggle');t.location=document.getElementById(key+'-location');t.provider=document.getElementById(key+'-provider');t.latency=document.getElementById(key+'-latency');t.full='';t.visible=false;t.toggle.addEventListener('click',()=>{if(!t.full)return;t.visible=!t.visible;t.ip.textContent=t.visible?t.full:maskIpAddress(t.full);t.toggle.textContent=t.visible?'◌':'◉'})});
+            async function queryNetworkTarget(t){const c=new AbortController(),timer=setTimeout(()=>c.abort(),8000),start=performance.now();try{const r=await fetch(t.endpoint,{cache:'no-store',signal:c.signal});if(!r.ok)throw new Error();const d=await r.json();if(!d.success||!d.ip)throw new Error();t.full=d.ip;t.visible=false;t.ip.textContent=maskIpAddress(d.ip);t.toggle.disabled=false;t.toggle.textContent='◉';t.location.textContent=[d.city,d.country].filter(Boolean).join(', ')||'Unknown';t.provider.textContent=[d.asn?String(d.asn).toUpperCase():'',d.organization].filter(Boolean).join(' · ')||'Unknown';t.latency.textContent=Math.round(performance.now()-start)+' ms';return true}catch(e){t.full='';t.ip.textContent=e.name==='AbortError'?'Timeout':'Unavailable';t.toggle.disabled=true;t.location.textContent='Unavailable';t.provider.textContent='Unavailable';t.latency.textContent='—';return false}finally{clearTimeout(timer)}}
+            async function loadNetworkStatus(){networkRefresh.disabled=true;networkRefresh.textContent='检测中…';networkNote.textContent='正在同时查询两个出口…';const rs=await Promise.all(Object.values(networkTargets).map(queryNetworkTarget)),n=rs.filter(Boolean).length;networkNote.textContent=n===2?'双出口信息已更新 · '+new Date().toLocaleTimeString('zh-CN',{hour12:false}):'仅成功获取 '+n+'/2 个出口；请检查分流规则或稍后重试';networkRefresh.disabled=false;networkRefresh.textContent='↻ 刷新'}
+            networkRefresh.addEventListener('click',loadNetworkStatus);
 
             // 主题切换逻辑
             const themeToggle = document.getElementById('theme-toggle');
