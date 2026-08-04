@@ -527,15 +527,200 @@
             });
 
 
-            // 双出口网络状态查询
-            const networkRefresh=document.getElementById('network-refresh');
-            const networkNote=document.getElementById('network-note');
-            const networkTargets={cn:{endpoint:'https://cn-ip.crownpartnersgroup.com/'},google:{endpoint:'https://google-ip.crownpartnersgroup.com/'}};
-            function maskIpAddress(ip){if(!ip)return '—';if(ip.includes(':')){const p=ip.split(':'),i=p.map((v,n)=>v?n:-1).filter(n=>n>=0);if(i.length)p[i[i.length-1]]='••••';return p.join(':')}const p=ip.split('.');if(p.length===4)p[3]='•••';return p.join('.')}
-            Object.entries(networkTargets).forEach(([key,t])=>{t.ip=document.getElementById(key+'-ip');t.toggle=document.getElementById(key+'-ip-toggle');t.location=document.getElementById(key+'-location');t.provider=document.getElementById(key+'-provider');t.latency=document.getElementById(key+'-latency');t.full='';t.visible=false;t.toggle.addEventListener('click',()=>{if(!t.full)return;t.visible=!t.visible;t.ip.textContent=t.visible?t.full:maskIpAddress(t.full);t.toggle.textContent=t.visible?'◌':'◉'})});
-            async function queryNetworkTarget(t){const c=new AbortController(),timer=setTimeout(()=>c.abort(),8000),start=performance.now();try{const r=await fetch(t.endpoint,{cache:'no-store',signal:c.signal});if(!r.ok)throw new Error();const d=await r.json();if(!d.success||!d.ip)throw new Error();t.full=d.ip;t.visible=false;t.ip.textContent=maskIpAddress(d.ip);t.toggle.disabled=false;t.toggle.textContent='◉';t.location.textContent=[d.city,d.country].filter(Boolean).join(', ')||'Unknown';t.provider.textContent=[d.asn?String(d.asn).toUpperCase():'',d.organization].filter(Boolean).join(' · ')||'Unknown';t.latency.textContent=Math.round(performance.now()-start)+' ms';return true}catch(e){t.full='';t.ip.textContent=e.name==='AbortError'?'Timeout':'Unavailable';t.toggle.disabled=true;t.location.textContent='Unavailable';t.provider.textContent='Unavailable';t.latency.textContent='—';return false}finally{clearTimeout(timer)}}
-            async function loadNetworkStatus(){networkRefresh.disabled=true;networkRefresh.textContent='检测中…';networkNote.textContent='正在同时查询两个出口…';const rs=await Promise.all(Object.values(networkTargets).map(queryNetworkTarget)),n=rs.filter(Boolean).length;networkNote.textContent=n===2?'双出口信息已更新 · '+new Date().toLocaleTimeString('zh-CN',{hour12:false}):'仅成功获取 '+n+'/2 个出口；请检查分流规则或稍后重试';networkRefresh.disabled=false;networkRefresh.textContent='↻ 刷新'}
-            networkRefresh.addEventListener('click',loadNetworkStatus);
+            // 双出口网络状态查询：大陆线路使用国内 JSONP 接口，国际线路使用 Cloudflare Worker。
+            const networkRefresh = document.getElementById('network-refresh');
+            const networkNote = document.getElementById('network-note');
+            const networkTargets = {
+                cn: {
+                    type: 'jsonp',
+                    endpoint: 'https://whois.pconline.com.cn/ipJson.jsp'
+                },
+                google: {
+                    type: 'fetch',
+                    endpoint: 'https://google-ip.crownpartnersgroup.com/'
+                }
+            };
+
+            function maskIpAddress(ip) {
+                if (!ip) return '—';
+                if (ip.includes(':')) {
+                    const parts = ip.split(':');
+                    const indexes = parts
+                        .map((part, index) => part ? index : -1)
+                        .filter(index => index >= 0);
+                    if (indexes.length) parts[indexes[indexes.length - 1]] = '••••';
+                    return parts.join(':');
+                }
+                const parts = ip.split('.');
+                if (parts.length === 4) parts[3] = '•••';
+                return parts.join('.');
+            }
+
+            Object.entries(networkTargets).forEach(([key, target]) => {
+                target.ip = document.getElementById(key + '-ip');
+                target.toggle = document.getElementById(key + '-ip-toggle');
+                target.location = document.getElementById(key + '-location');
+                target.provider = document.getElementById(key + '-provider');
+                target.latency = document.getElementById(key + '-latency');
+                target.full = '';
+                target.visible = false;
+                target.toggle.setAttribute('aria-label', '显示完整 IP');
+                target.toggle.addEventListener('click', () => {
+                    if (!target.full) return;
+                    target.visible = !target.visible;
+                    target.ip.textContent = target.visible
+                        ? target.full
+                        : maskIpAddress(target.full);
+                    target.toggle.textContent = target.visible ? '◌' : '◉';
+                    target.toggle.setAttribute(
+                        'aria-label',
+                        target.visible ? '隐藏完整 IP' : '显示完整 IP'
+                    );
+                });
+            });
+
+            function renderNetworkTarget(target, data, startedAt) {
+                target.full = data.ip;
+                target.visible = false;
+                target.ip.textContent = maskIpAddress(data.ip);
+                target.toggle.disabled = false;
+                target.toggle.textContent = '◉';
+                target.toggle.setAttribute('aria-label', '显示完整 IP');
+                target.location.textContent = data.location || 'Unknown';
+                target.provider.textContent = data.provider || 'Unknown';
+                target.latency.textContent = Math.round(performance.now() - startedAt) + ' ms';
+            }
+
+            function renderNetworkError(target, timedOut) {
+                target.full = '';
+                target.visible = false;
+                target.ip.textContent = timedOut ? 'Timeout' : 'Unavailable';
+                target.toggle.disabled = true;
+                target.toggle.textContent = '◉';
+                target.location.textContent = 'Unavailable';
+                target.provider.textContent = 'Unavailable';
+                target.latency.textContent = '—';
+            }
+
+            function queryMainlandTarget(target) {
+                return new Promise(resolve => {
+                    const startedAt = performance.now();
+                    const callbackName = '__favCloudMainland_' +
+                        Date.now() + '_' + Math.random().toString(36).slice(2);
+                    const script = document.createElement('script');
+                    let settled = false;
+
+                    const cleanup = () => {
+                        script.remove();
+                        delete window[callbackName];
+                    };
+
+                    const finish = (success, timedOut = false) => {
+                        if (settled) return;
+                        settled = true;
+                        clearTimeout(timer);
+                        if (!success) renderNetworkError(target, timedOut);
+                        cleanup();
+                        resolve(success);
+                    };
+
+                    const timer = setTimeout(() => finish(false, true), 8000);
+
+                    window[callbackName] = data => {
+                        if (!data || !data.ip) {
+                            finish(false);
+                            return;
+                        }
+
+                        const locationParts = [...new Set(
+                            [data.pro, data.city, data.region].filter(Boolean)
+                        )];
+                        renderNetworkTarget(target, {
+                            ip: data.ip,
+                            location: [...locationParts, 'China'].join(', '),
+                            provider: data.addr || ''
+                        }, startedAt);
+                        finish(true);
+                    };
+
+                    script.onerror = () => finish(false);
+                    script.referrerPolicy = 'no-referrer';
+                    script.src = target.endpoint +
+                        '?callback=' + encodeURIComponent(callbackName) +
+                        '&level=2&_=' + Date.now();
+                    document.head.appendChild(script);
+                });
+            }
+
+            async function queryFetchTarget(target) {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 8000);
+                const startedAt = performance.now();
+
+                try {
+                    const response = await fetch(target.endpoint, {
+                        cache: 'no-store',
+                        signal: controller.signal
+                    });
+                    if (!response.ok) throw new Error('Network lookup failed');
+
+                    const data = await response.json();
+                    if (!data.success || !data.ip) throw new Error('Invalid network response');
+
+                    renderNetworkTarget(target, {
+                        ip: data.ip,
+                        location: [data.city, data.country].filter(Boolean).join(', '),
+                        provider: [
+                            data.asn ? String(data.asn).toUpperCase() : '',
+                            data.organization
+                        ].filter(Boolean).join(' · ')
+                    }, startedAt);
+                    return true;
+                } catch (error) {
+                    renderNetworkError(target, error.name === 'AbortError');
+                    return false;
+                } finally {
+                    clearTimeout(timer);
+                }
+            }
+
+            function queryNetworkTarget(target) {
+                return target.type === 'jsonp'
+                    ? queryMainlandTarget(target)
+                    : queryFetchTarget(target);
+            }
+
+            async function loadNetworkStatus() {
+                networkRefresh.disabled = true;
+                networkRefresh.textContent = '检测中…';
+                networkNote.textContent = '正在同时查询大陆与国际出口…';
+
+                try {
+                    const results = await Promise.all(
+                        Object.values(networkTargets).map(queryNetworkTarget)
+                    );
+                    const successCount = results.filter(Boolean).length;
+                    const updatedAt = new Date().toLocaleTimeString('zh-CN', {
+                        hour12: false
+                    });
+
+                    if (successCount === 2) {
+                        const sameExit = networkTargets.cn.full.toLowerCase() ===
+                            networkTargets.google.full.toLowerCase();
+                        networkNote.textContent = sameExit
+                            ? '两个出口相同，未检测到分流 · ' + updatedAt
+                            : '双出口信息已更新，分流正常 · ' + updatedAt;
+                    } else {
+                        networkNote.textContent = '仅成功获取 ' + successCount +
+                            '/2 个出口；请稍后重试';
+                    }
+                } finally {
+                    networkRefresh.disabled = false;
+                    networkRefresh.textContent = '↻ 刷新';
+                }
+            }
+
+            networkRefresh.addEventListener('click', loadNetworkStatus);
 
             // 主题切换逻辑
             const themeToggle = document.getElementById('theme-toggle');
