@@ -4,14 +4,14 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 
 ## Current state
 
-- Last synchronized: 2026-08-26 (Asia/Shanghai)
+- Last synchronized: 2026-08-27 (Asia/Shanghai)
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
-- Published site: https://endoce.github.io/Fav-Cloud/
+- Published sites: https://endoce.github.io/Fav-Cloud/ and https://fav-cloud.pages.dev/
 - Last functional baseline commit: `3d4ddfa0ad267d53af14eb9f6fa08b07f5e7084f`
-- Status: stable and deployed
-- Active work: none
-- Blockers: none
+- Status: deployed on GitHub Pages and Cloudflare Pages
+- Active work: Cloudflare Pages validation
+- Blockers: Google/international exit check fails on the Pages origin until the Worker CORS allowlist includes `https://fav-cloud.pages.dev`
 
 ## Current behavior
 
@@ -31,6 +31,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 ## External resources
 
 - GitHub Pages: https://endoce.github.io/Fav-Cloud/
+- Cloudflare Pages: https://fav-cloud.pages.dev/ (project `fav-cloud`, source `master`, no build command, output directory `/`)
 - Linkding: https://link.crownpartnersgroup.com/
 - Active international IP endpoint: https://google-ip.crownpartnersgroup.com/
 - Cloudflare Worker: `fav-cloud-ip-check`
@@ -73,6 +74,14 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-08-27
+
+- Created Cloudflare Pages project `fav-cloud` from `endoce/Fav-Cloud` branch `master`.
+- Deployed the dependency-free static site with no build command and output directory `/`.
+- Verified that the page and mainland exit check load successfully at https://fav-cloud.pages.dev/.
+- Google/international exit detection currently fails on the Pages origin because the Worker CORS allowlist does not yet include `https://fav-cloud.pages.dev`.
+- Preserved the existing GitHub Pages deployment and made no DNS or custom-domain changes.
 
 ### 2026-08-26
 
