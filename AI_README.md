@@ -97,7 +97,7 @@ The Worker returns JSON containing fields such as:
 - `organization`
 - `colo`
 
-It permits the GitHub Pages origin and sends no-store cache headers. The Cloudflare Pages origin `https://fav-cloud.pages.dev` is not yet in the allowlist, so the Google/international exit check fails there until the Worker CORS configuration is updated. Do not place credentials in the Worker response or repository documentation.
+It permits `https://endoce.github.io` and `https://fav-cloud.pages.dev`, reflects the matching request origin, sends `Vary: Origin`, and uses no-store cache headers. Do not place credentials in the Worker response or repository documentation.
 
 ## Privacy and safety
 
