@@ -49,7 +49,12 @@
 
 ## 部署
 
-在 GitHub 仓库设置中启用 GitHub Pages，并选择 `master` 分支作为发布来源即可。
+当前提供两个自动部署地址：
+
+- GitHub Pages：https://endoce.github.io/Fav-Cloud/
+- Cloudflare Pages：https://fav-cloud.pages.dev/
+
+Cloudflare Pages 项目连接 `master` 分支，框架预设为“无”，不填写构建命令，构建输出目录使用 `/`。
 
 ## License
 
