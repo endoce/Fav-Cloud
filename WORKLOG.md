@@ -7,7 +7,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Last synchronized: 2026-08-27 (Asia/Shanghai)
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
-- Published sites: https://endoce.github.io/Fav-Cloud/ and https://fav-cloud.pages.dev/
+- Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
 - Last functional baseline commit: `3d4ddfa0ad267d53af14eb9f6fa08b07f5e7084f`
 - Status: deployed on GitHub Pages and Cloudflare Pages
 - Active work: none
@@ -32,6 +32,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 
 - GitHub Pages: https://endoce.github.io/Fav-Cloud/
 - Cloudflare Pages: https://fav-cloud.pages.dev/ (project `fav-cloud`, source `master`, no build command, output directory `/`)
+- Cloudflare Pages custom domain: https://fav.ydht.net/ (CNAME `fav` → `fav-cloud.pages.dev`, proxied)
 - Linkding: https://link.crownpartnersgroup.com/
 - Active international IP endpoint: https://google-ip.crownpartnersgroup.com/
 - Cloudflare Worker: `fav-cloud-ip-check`
@@ -82,7 +83,9 @@ At the end of a material task:
 - Verified that the page and mainland exit check load successfully at https://fav-cloud.pages.dev/.
 - Updated Worker `fav-cloud-ip-check` to allow both `https://endoce.github.io` and `https://fav-cloud.pages.dev`, with `Vary: Origin`.
 - Verified both deployments return mainland and Google/international exit data and report split routing as normal.
-- Preserved the existing GitHub Pages deployment and made no DNS or custom-domain changes.
+- Preserved the existing GitHub Pages deployment.
+- Replaced the prior `fav.ydht.net` A record (`1.2.4.8`) with Cloudflare Pages' proxied CNAME to `fav-cloud.pages.dev`.
+- Extended Worker CORS to permit `https://fav.ydht.net`; verified its dual-exit check also reports split routing as normal.
 
 ### 2026-08-26
 
