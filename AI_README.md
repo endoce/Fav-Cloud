@@ -6,7 +6,7 @@ This document gives AI agents durable project context. Read it with `AGENTS.md` 
 
 - Repository: `endoce/Fav-Cloud`
 - Default branch: `master`
-- Published sites: https://endoce.github.io/Fav-Cloud/ and https://fav-cloud.pages.dev/
+- Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
 - Purpose: a personal, fast-loading browser navigation page for frequently used links and lightweight network-route checks
 - Primary language: Simplified Chinese, with short English category labels
 - Deployment: GitHub Pages and Cloudflare Pages (`fav-cloud`, `master`, no build command, output directory `/`)
@@ -97,7 +97,7 @@ The Worker returns JSON containing fields such as:
 - `organization`
 - `colo`
 
-It permits `https://endoce.github.io` and `https://fav-cloud.pages.dev`, reflects the matching request origin, sends `Vary: Origin`, and uses no-store cache headers. Do not place credentials in the Worker response or repository documentation.
+It permits `https://endoce.github.io`, `https://fav-cloud.pages.dev`, and `https://fav.ydht.net`, reflects the matching request origin, sends `Vary: Origin`, and uses no-store cache headers. Do not place credentials in the Worker response or repository documentation.
 
 ## Privacy and safety
 
