@@ -10,8 +10,8 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Published sites: https://endoce.github.io/Fav-Cloud/ and https://fav-cloud.pages.dev/
 - Last functional baseline commit: `3d4ddfa0ad267d53af14eb9f6fa08b07f5e7084f`
 - Status: deployed on GitHub Pages and Cloudflare Pages
-- Active work: Cloudflare Pages validation
-- Blockers: Google/international exit check fails on the Pages origin until the Worker CORS allowlist includes `https://fav-cloud.pages.dev`
+- Active work: none
+- Blockers: none
 
 ## Current behavior
 
@@ -80,7 +80,8 @@ At the end of a material task:
 - Created Cloudflare Pages project `fav-cloud` from `endoce/Fav-Cloud` branch `master`.
 - Deployed the dependency-free static site with no build command and output directory `/`.
 - Verified that the page and mainland exit check load successfully at https://fav-cloud.pages.dev/.
-- Google/international exit detection currently fails on the Pages origin because the Worker CORS allowlist does not yet include `https://fav-cloud.pages.dev`.
+- Updated Worker `fav-cloud-ip-check` to allow both `https://endoce.github.io` and `https://fav-cloud.pages.dev`, with `Vary: Origin`.
+- Verified both deployments return mainland and Google/international exit data and report split routing as normal.
 - Preserved the existing GitHub Pages deployment and made no DNS or custom-domain changes.
 
 ### 2026-08-26
