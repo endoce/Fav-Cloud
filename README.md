@@ -53,6 +53,7 @@
 
 - GitHub Pages：https://endoce.github.io/Fav-Cloud/
 - Cloudflare Pages：https://fav-cloud.pages.dev/
+- Cloudflare Pages 自定义域：https://fav.ydht.net/
 
 Cloudflare Pages 项目连接 `master` 分支，框架预设为“无”，不填写构建命令，构建输出目录使用 `/`。
 
