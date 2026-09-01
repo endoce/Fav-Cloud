@@ -23,6 +23,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Tailscale is listed in `CLOUD`
 - RFCHOST is listed in `OTHERS`
 - Linkding is listed in `PROJECTS`
+- Uptime Kuma is listed in `PROJECTS`
 - Network panel checks mainland and Google/international exits on demand
 - Mainland detection uses the PConline JSONP endpoint
 - International detection uses `google-ip.crownpartnersgroup.com`
@@ -35,6 +36,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Cloudflare Pages: https://fav-cloud.pages.dev/ (project `fav-cloud`, source `master`, no build command, output directory `/`)
 - Cloudflare Pages custom domain: https://fav.ydht.net/ (CNAME `fav` → `fav-cloud.pages.dev`, proxied)
 - Linkding: https://link.crownpartnersgroup.com/
+- Uptime Kuma: https://up.ydht.net/
 - Active international IP endpoint: https://google-ip.crownpartnersgroup.com/
 - Cloudflare Worker: `fav-cloud-ip-check`
 - Legacy, currently unused page endpoint: `cn-ip.crownpartnersgroup.com`
@@ -76,6 +78,13 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-09-01
+
+- Added the self-hosted Uptime Kuma shortcut https://up.ydht.net/ to `PROJECTS`.
+- Verified the HTTPS URL and preserved the automatic category count.
+- Page change commit: `183d4a7533d106ef464c1c6636bbf6aa6354c3ed`.
+
 
 ### 2026-09-01
 
