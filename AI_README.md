@@ -11,6 +11,7 @@ This document gives AI agents durable project context. Read it with `AGENTS.md` 
 - Primary language: Simplified Chinese, with short English category labels
 - Deployment: GitHub Pages and Cloudflare Pages (`fav-cloud`, `master`, no build command, output directory `/`)
 - Architecture: dependency-free static HTML, CSS, and JavaScript
+- Operating boundary: `endoce/Fav-Cloud` is the sole source and handoff authority for Fav Cloud. Do not select or update Fav Cloud through `personal-infra-ops`; Cloudflare resource operations remain separately scoped and require their own explicit authorization.
 
 ## Files
 
