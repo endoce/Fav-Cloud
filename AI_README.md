@@ -48,6 +48,7 @@ There is no dependency installation, build command, package manager, framework, 
 ## Current bookmark decisions
 
 - Linkding is the self-hosted bookmark tool at https://link.crownpartnersgroup.com/.
+- Uptime Kuma is the self-hosted status monitor at https://up.ydht.net/ and is listed in `PROJECTS`.
 - Tailscale is in `CLOUD` and links to its Machines admin console.
 - RFCHOST is retained in `OTHERS`.
 - The private OctoPrint address is intentionally present for use on the corresponding local network.
