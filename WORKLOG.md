@@ -4,12 +4,13 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 
 ## Current state
 
-- Last synchronized: 2026-08-27 (Asia/Shanghai)
+- Last synchronized: 2026-09-01 (Asia/Shanghai)
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
 - Last functional baseline commit: `3d4ddfa0ad267d53af14eb9f6fa08b07f5e7084f`
 - Status: deployed on GitHub Pages and Cloudflare Pages
+- Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
 - Blockers: none
 
@@ -75,6 +76,14 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-09-01
+
+- Established `endoce/Fav-Cloud` as the sole source and cross-device handoff authority for Fav Cloud.
+- Retired the former Fav Cloud workspace and target from `personal-infra-ops`; its retained file there is a migration marker only.
+- No deployment, Cloudflare resource, DNS, or Worker configuration was changed.
+- Documentation commit: `ca3dd66f9fe4cbc242860d12e86ecb0510053b8a`.
+
 
 ### 2026-08-27
 
