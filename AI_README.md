@@ -27,11 +27,11 @@ There is no dependency installation, build command, package manager, framework, 
 
 ## Design decisions
 
-- Default appearance is dark.
+- Default appearance is light, as approved in the September 8 redesign; existing saved dark preferences remain respected.
 - The page uses a clean modern palette without a background image.
 - Cards are responsive and should remain compact, professional, and fast.
 - A light theme remains available through the theme toggle.
-- Fira Code is used locally to avoid a remote font dependency.
+- System sans-serif fonts are used without remote font dependencies. Local SVG brand icons live in `assets/icons`; remaining sites use initials.
 - Bookmark categories are limited to eight:
   - `WEB`
   - `AI`
@@ -42,7 +42,7 @@ There is no dependency installation, build command, package manager, framework, 
   - `RESOURCES`
   - `OTHERS`
 - `OTHERS` contains retained links that are used less frequently.
-- Category counts are derived automatically from the number of list items.
+- Category counts are derived automatically from actual anchors (Hacker News and CN are separate links). Local search filters by category, name, and URL; `/` focuses search and Escape clears it.
 - Avoid adding frameworks, large icon libraries, analytics, trackers, or unnecessary network requests.
 
 ## Current bookmark decisions
@@ -57,14 +57,14 @@ When moving a link, remove the original entry and preserve it in the requested d
 
 ## Network status architecture
 
-The bottom panel checks two browser egress paths only after the user clicks the detection button.
+The bottom panel is collapsed by default and checks two browser egress paths only after the user clicks the detection button. Expanding it does not issue requests.
 
 ### Mainland path
 
 - Endpoint: `https://whois.pconline.com.cn/ipJson.jsp`
 - Method: dynamic JSONP script callback
 - Reason: the endpoint is hosted in mainland China, making it suitable for observing the direct mainland route without depending on a Cloudflare hostname that may follow proxy rules.
-- Displayed information: masked public IP, location/provider data, and observed latency.
+- Displayed information: masked public IP, location/provider data, and query duration.
 
 ### Google/international path
 
@@ -72,11 +72,11 @@ The bottom panel checks two browser egress paths only after the user clicks the 
 - Method: `fetch` returning JSON
 - Backend: Cloudflare Worker `fav-cloud-ip-check`
 - Intended routing: the client proxy configuration should route this hostname through the same proxy path used for Google.
-- Displayed information: masked public IP, city/country, ASN/organization, and observed latency.
+- Displayed information: masked public IP, city/country, ASN/organization, and query duration.
 
 The page compares the two returned IP addresses:
 
-- Different addresses: report that split routing appears normal.
+- Different addresses: report that different exits were observed, without asserting all split-routing rules work.
 - Same address: report that split routing was not detected.
 - One failed request: report a partial result without claiming the route is working.
 

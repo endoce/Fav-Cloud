@@ -1,535 +1,128 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
-    <head>
-        <title>终末频段 Terminal Frequency</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="The_Internet.png">
-        <!-- 页面核心样式 -->
-        <style>
-            /* 字体资源设置 */
-            @font-face {
-                font-family: 'Fira Code';
-                src: url('./FiraCode-Regular.woff2') format('woff2');
-                font-weight: normal;
-                font-style: normal;
-            }
 
-            /* 亮色模式配色变量 */
-            :root {
-                color-scheme: light dark;
-                --font-family-main: 'Fira Code', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-                --bg-color: #f4f6f8;
-                --text-color: #253041;
-                --muted-color: #697586;
-                --heading-color: #111827;
-                --card-bg-color: #ffffff;
-                --border-color: #dfe4ea;
-                --accent-color: #2563eb;
-                --accent-hover: #1d4ed8;
-                --link-color: #344054;
-                --link-hover-color: #2f73ff;
-                --shadow: 0 12px 32px rgba(15, 23, 42, 0.07);
-            }
-
-            /* 暗色模式变量覆盖 */
-            [data-theme="dark"] {
-                --bg-color: #0b0f14;
-                --text-color: #d7dee8;
-                --muted-color: #8491a3;
-                --heading-color: #f3f6fa;
-                --card-bg-color: #121821;
-                --border-color: #222c38;
-                --accent-color: #6ea8fe;
-                --accent-hover: #8ab8ff;
-                --link-color: #c2ccda;
-                --link-hover-color: #f8fafc;
-                --shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
-            }
-
-            /* 统一盒模型 */
-            *, *::before, *::after {
-                box-sizing: border-box;
-            }
-
-            /* 页面主体排版 */
-            body {
-                font-family: var(--font-family-main);
-                background-color: var(--bg-color);
-                color: var(--text-color);
-                margin: 0;
-                padding: 1.75rem;
-                line-height: 1.65;
-                transition: background-color 0.3s ease, color 0.3s ease;
-                min-height: 100vh;
-                position: relative;
-            }
-
-            /* 顶部标题容器样式 */
-            .header-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 1rem;
-                text-align: center;
-                margin-bottom: 2.5rem;
-                position: relative;
-            }
-
-            /* 主标题样式 */
-            h1 {
-                font-size: clamp(2.1rem, 4vw, 3rem);
-                letter-spacing: 0.04em;
-                margin: 0;
-                color: var(--heading-color);
-                font-weight: 600;
-            }
-
-            /* 主题切换按钮容器 */
-            .theme-toggle {
-                position: absolute;
-                right: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                cursor: pointer;
-                background: var(--card-bg-color);
-                border: 1px solid var(--border-color);
-                padding: 0.45rem;
-                border-radius: 999px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: var(--text-color);
-                box-shadow: var(--shadow);
-                transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            }
-
-            /* 悬停时的主题按钮效果 */
-            .theme-toggle:hover {
-                transform: translateY(-50%) scale(1.03);
-                border-color: var(--accent-color);
-            }
-
-            /* 主题按钮内图标尺寸 */
-            .theme-toggle .icon {
-                width: 22px;
-                height: 22px;
-            }
-
-            /* 默认显示防毒面具图标，暗色模式切换 */
-            #icon-radiation { display: none; }
-            [data-theme="dark"] #icon-radiation { display: block; }
-            [data-theme="dark"] #icon-gasmask { display: none; }
-
-            /* 链接分组网格容器 */
-            .portals {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-                gap: 1.6rem;
-                max-width: 1080px;
-                margin: 0 auto 3rem auto;
-            }
-
-            /* 单个链接分组卡片 */
-            .portals > div {
-                background: var(--card-bg-color);
-                border-radius: 14px;
-                padding: 1.5rem;
-                border: 1px solid var(--border-color);
-                box-shadow: var(--shadow);
-                transition: border-color 0.2s ease, transform 0.2s ease;
-            }
-
-            /* 卡片悬停动效 */
-            .portals > div:hover {
-                border-color: var(--accent-color);
-                transform: translateY(-4px);
-            }
-
-            /* 分组标题排版 */
-            .portals h2 {
-                margin: 0 0 0.85rem;
-                font-size: 1rem;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                color: var(--muted-color);
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 0.5rem;
-            }
-
-            /* 分组计数徽章 */
-            .category-count {
-                font-size: 0.75rem;
-                font-weight: 600;
-                color: var(--accent-color);
-                background: rgba(47, 115, 255, 0.12);
-                border-radius: 999px;
-                padding: 0.1rem 0.55rem;
-                letter-spacing: 0.08em;
-            }
-
-            /* 链接列表重置样式 */
-            .portals ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-
-            /* 单个链接行布局 */
-            .portals li {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                margin-bottom: 0.65rem;
-            }
-
-            /* 去除末项外边距 */
-            .portals li:last-child {
-                margin-bottom: 0;
-            }
-
-            /* 链接前导圆点 */
-            .link-dot {
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: var(--accent-color);
-                flex-shrink: 0;
-            }
-
-            /* 链接文本样式 */
-            .portals a {
-                text-decoration: none;
-                color: var(--link-color);
-                font-weight: 500;
-                word-break: break-word;
-                transition: color 0.2s ease;
-            }
-
-            /* 链接悬停颜色 */
-            .portals a:hover {
-                color: var(--link-hover-color);
-            }
-
-            /* 多链接横向排版 */
-            .portals .multi-link {
-                display: flex;
-                align-items: center;
-                gap: 0.3rem;
-            }
-
-            /* 多链接辅助文字色彩 */
-            .portals .multi-link span:not(.link-dot) {
-                color: var(--muted-color);
-            }
-
-
-            /* 页面底部网络状态栏 */
-            .network-panel {
-                max-width: 1080px;
-                margin: 0 auto 1.5rem;
-                background: var(--card-bg-color);
-                border: 1px solid var(--border-color);
-                border-radius: 16px;
-                box-shadow: var(--shadow);
-                overflow: hidden;
-            }
-
-            .network-grid {
-                display: grid;
-                grid-template-columns: 1.2fr 1fr 1.35fr 0.8fr 0.7fr auto;
-                align-items: stretch;
-            }
-
-            .network-item {
-                min-width: 0;
-                padding: 0.9rem 1rem;
-                border-right: 1px solid var(--border-color);
-            }
-
-            .network-label {
-                display: block;
-                color: var(--muted-color);
-                font-size: 0.68rem;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                margin-bottom: 0.28rem;
-            }
-
-            .network-value {
-                display: block;
-                color: var(--text-color);
-                font-size: 0.82rem;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .network-ip-row,
-            .network-route {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .network-status-dot {
-                width: 7px;
-                height: 7px;
-                border-radius: 50%;
-                background: var(--muted-color);
-                flex-shrink: 0;
-            }
-
-            .network-status-dot.direct { background: #34d399; }
-            .network-status-dot.proxy { background: #60a5fa; }
-            .network-status-dot.unknown { background: #f59e0b; }
-
-            .network-icon-button,
-            .network-refresh {
-                appearance: none;
-                border: 1px solid var(--border-color);
-                background: transparent;
-                color: var(--text-color);
-                cursor: pointer;
-                font: inherit;
-                transition: border-color 0.2s ease, color 0.2s ease;
-            }
-
-            .network-icon-button:hover,
-            .network-refresh:hover {
-                border-color: var(--accent-color);
-                color: var(--accent-color);
-            }
-
-            .network-icon-button {
-                width: 1.75rem;
-                height: 1.75rem;
-                padding: 0;
-                border-radius: 50%;
-                flex-shrink: 0;
-            }
-
-            .network-actions {
-                display: flex;
-                align-items: center;
-                padding: 0.75rem;
-            }
-
-            .network-refresh {
-                border-radius: 999px;
-                padding: 0.45rem 0.8rem;
-                white-space: nowrap;
-            }
-
-            .network-refresh:disabled {
-                cursor: wait;
-                opacity: 0.6;
-            }
-
-            .network-note {
-                margin: 0;
-                padding: 0.55rem 1rem;
-                color: var(--muted-color);
-                border-top: 1px solid var(--border-color);
-                font-size: 0.68rem;
-                text-align: right;
-            }
-
-            @media (max-width: 900px) {
-                .network-grid { grid-template-columns: repeat(3, 1fr); }
-                .network-item:nth-child(3) { border-right: 0; }
-                .network-item:nth-child(n + 4),
-                .network-actions { border-top: 1px solid var(--border-color); }
-            }
-
-            @media (max-width: 600px) {
-                body { padding: 1rem; }
-                .network-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-                .network-item:nth-child(2n) { border-right: 0; }
-                .network-item:nth-child(3) { border-right: 1px solid var(--border-color); }
-                .network-item:nth-child(n + 3),
-                .network-actions { border-top: 1px solid var(--border-color); }
-                .network-actions { justify-content: center; }
-                .network-note { text-align: left; }
-            }
-
-        
-            /* 双出口状态布局 */
-            .network-panel .network-row{display:grid;grid-template-columns:.8fr 1.25fr 1fr 1.35fr .7fr}
-            .network-row+.network-row{border-top:1px solid var(--border-color)}
-            .network-row .network-item:last-child{border-right:0}
-            .network-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.65rem 1rem;border-top:1px solid var(--border-color)}
-            .network-footer .network-note{padding:0;border:0;text-align:left}
-            @media(max-width:800px){.network-panel .network-row{grid-template-columns:repeat(2,minmax(0,1fr))}.network-row .network-item{border-top:1px solid var(--border-color)}.network-row .network-item:nth-child(-n+2){border-top:0}.network-row .network-item:nth-child(2n){border-right:0}.network-row .network-item:last-child{grid-column:1/-1}.network-footer{align-items:flex-start;flex-direction:column}}
-</style>
-    </head>
-
-    <body>
-        <!-- 顶部标题与主题切换 -->
-        <div class="header-container">
-            <h1>终末频段 Terminal Frequency</h1>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                <svg id="icon-gasmask" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 3c-3.9 0-7 3.02-7 6.75 0 2.03 1.05 3.82 2.7 4.97V17l-2.7 2v1.5h15V19l-2.7-2v-2.28C17.95 13.57 19 11.78 19 9.75 19 6.02 15.9 3 12 3z"></path>
-                    <circle cx="9" cy="10" r="1.6" fill="none"></circle>
-                    <circle cx="15" cy="10" r="1.6" fill="none"></circle>
-                    <path d="M9.25 14.25h5.5"></path>
-                    <path d="M10.5 17.5h3"></path>
-                </svg>
-                <svg id="icon-radiation" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="1.75" fill="currentColor" stroke="none"></circle>
-                    <circle cx="12" cy="12" r="8.5"></circle>
-                    <path d="M12 3.5l3.5 6H8.5L12 3.5z" fill="currentColor" stroke="none"></path>
-                    <path d="M4.25 17.25l3.25-5.6 3.25 3.6-6.5 2z" fill="currentColor" stroke="none"></path>
-                    <path d="M19.75 17.25l-6.5-2 3.25-3.6 3.25 5.6z" fill="currentColor" stroke="none"></path>
-                </svg>
-            </button>
-        </div>
-
-        <!-- 常用站点分组 -->
-        <div class="portals">
-            <!-- 资讯、社区与常用平台 -->
-            <div class="web">
-                <h2>WEB <span class="category-count" aria-hidden="true"></span></h2>
-                <ul>
-                    <li><a href="https://www.zhihu.com"><span class="link-dot"></span>知乎</a></li>
-                    <li><a href="https://sspai.com/"><span class="link-dot"></span>少数派</a></li>
-                    <li class="multi-link">
-                        <span class="link-dot"></span>
-                        <a href="https://news.ycombinator.com/">Hacker News</a>
-                        <span>/</span>
-                        <a href="https://zeli.app/">CN</a>
-                    </li>
-                    <li><a href="https://www.v2ex.com/"><span class="link-dot"></span>V2EX</a></li>
-                    <li><a href="https://www.x.com"><span class="link-dot"></span>X.com</a></li>
-                    <li><a href="https://www.amazon.com"><span class="link-dot"></span>Amazon US</a></li>
-                    <li><a href="https://www.bohaishibei.com/"><span class="link-dot"></span>博海拾贝</a></li>
-                </ul>
-            </div>
-
-            <!-- 人工智能服务 -->
-            <div class="ai">
-                <h2>AI <span class="category-count" aria-hidden="true"></span></h2>
-                <ul>
-                    <li><a href="https://chat.openai.com/"><span class="link-dot"></span>ChatGPT</a></li>
-                    <li><a href="https://gemini.google.com/"><span class="link-dot"></span>Gemini</a></li>
-                    <li><a href="https://api.oaipro.com/"><span class="link-dot"></span>OaiPro</a></li>
-                    <li><a href="https://www.deepseek.com/"><span class="link-dot"></span>DeepSeek</a></li>
-                    <li><a href="https://grok.com/"><span class="link-dot"></span>Grok</a></li>
-                </ul>
-            </div>
-
-            <!-- 视频、音乐与影视 -->
-            <div class="media">
-                <h2>MEDIA <span class="category-count" aria-hidden="true"></span></h2>
-                <ul>
-                    <li><a href="https://youtube.com"><span class="link-dot"></span>YouTube</a></li>
-                    <li><a href="https://t.bilibili.com/"><span class="link-dot"></span>BiliBili</a></li>
-                    <li><a href="https://www.uhdnow.com/"><span class="link-dot"></span>UHDNOW</a></li>
-                    <li><a href="https://music.apple.com/cn/browse"><span class="link-dot"></span>Apple Music</a></li>
-                    <li><a href="https://www.dygang.cc/"><span class="link-dot"></span>电影港</a></li>
-                </ul>
-            </div>
-
-            <!-- 云服务与基础设施 -->
-            <div class="cloud">
-                <h2>CLOUD <span class="category-count" aria-hidden="true"></span></h2>
-                <ul>
-                    <li><a href="https://github.com"><span class="link-dot"></span>GitHub</a></li>
-                    <li><a href="https://dash.cloudflare.com/"><span class="link-dot"></span>Cloudflare</a></li>
-                    <li><a href="https://www.oracle.com/cloud/sign-in.html"><span class="link-dot"></span>Oracle Cloud</a></li>
-                    <li><a href="https://portal.azure.com/?whr=live.com"><span class="link-dot"></span>Azure</a></li>
-                    <li><a href="https://www.dmit.io"><span class="link-dot"></span>DMIT</a></li>
-                    <li><a href="https://console.tailscale.com/admin/machines"><span class="link-dot"></span>Tailscale</a></li>
-                </ul>
-            </div>
-
-            <!-- 个人项目 -->
-            <div class="projects">
-                <h2>PROJECTS <span class="category-count" aria-hidden="true"></span></h2>
-                <ul>
-                    <li><a href="https://endoce.github.io/Codex-Web/"><span class="link-dot"></span>废土终端</a></li>
-                    <li><a href="https://endoce.github.io/Codex-Web/text-visualizer.html"><span class="link-dot"></span>信号译码</a></li>
-                    <li><a href="https://link.crownpartnersgroup.com/"><span class="link-dot"></span>Linkding</a></li>
-                    <li><a href="https://up.ydht.net/"><span class="link-dot"></span>Uptime Kuma</a></li>
-                </ul>
-            </div>
-
-            <!-- 创客与设备 -->
-            <div class="maker">
-                <h2>MAKER <span class="category-count" aria-hidden="true"></span></h2>
-                <ul>
-                    <li><a href="https://192.168.13.211"><span class="link-dot"></span>OctoPrint Pi</a></li>
-                    <li><a href="https://www.thingiverse.com/"><span class="link-dot"></span>Thingiverse</a></li>
-                    <li><a href="https://makerworld.com/"><span class="link-dot"></span>MakerWorld</a></li>
-                </ul>
-            </div>
-
-            <!-- 工具与知识资源 -->
-            <div class="resources">
-                <h2>RESOURCES <span class="category-count" aria-hidden="true"></span></h2>
-                <ul>
-                    <li><a href="https://www.deepl.com/translator"><span class="link-dot"></span>DeepL</a></li>
-                    <li><a href="https://ankiweb.net/decks/"><span class="link-dot"></span>Anki</a></li>
-                    <li><a href="https://zh.z-library.sk/"><span class="link-dot"></span>Z-Library</a></li>
-                    <li><a href="https://zh.annas-archive.org/"><span class="link-dot"></span>安娜的档案</a></li>
-                    <li><a href="https://www.msdmanuals.cn/home"><span class="link-dot"></span>默沙东诊疗手册</a></li>
-                </ul>
-            </div>
-
-            <!-- 低频使用链接 -->
-            <div class="others">
-                <h2>OTHERS <span class="category-count" aria-hidden="true"></span></h2>
-                <ul>
-                    <li><a href="https://www.macstories.net/"><span class="link-dot"></span>MacStories</a></li>
-                    <li><a href="https://weread.qq.com/"><span class="link-dot"></span>微信读书</a></li>
-                    <li><a href="https://www.netflix.com/"><span class="link-dot"></span>Netflix</a></li>
-                    <li><a href="https://open.spotify.com/"><span class="link-dot"></span>Spotify</a></li>
-                    <li><a href="https://my.rfchost.com/"><span class="link-dot"></span>RFCHOST</a></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <!-- 页面底部双出口网络状态 -->
-        <section class="network-panel" aria-label="网络出口状态">
-            <div aria-live="polite">
-                <div class="network-row">
-                    <div class="network-item"><span class="network-label">Mainland</span><span class="network-value network-route"><span class="network-status-dot direct"></span>DIRECT</span></div>
-                    <div class="network-item"><span class="network-label">Public IP</span><div class="network-ip-row"><span class="network-value" id="cn-ip">未检测</span><button class="network-icon-button" id="cn-ip-toggle" type="button" disabled>◉</button></div></div>
-                    <div class="network-item"><span class="network-label">Location</span><span class="network-value" id="cn-location">未检测</span></div>
-                    <div class="network-item"><span class="network-label">Network</span><span class="network-value" id="cn-provider">未检测</span></div>
-                    <div class="network-item"><span class="network-label">Latency</span><span class="network-value" id="cn-latency">—</span></div>
-                </div>
-                <div class="network-row">
-                    <div class="network-item"><span class="network-label">Google</span><span class="network-value network-route"><span class="network-status-dot proxy"></span>PROXY</span></div>
-                    <div class="network-item"><span class="network-label">Public IP</span><div class="network-ip-row"><span class="network-value" id="google-ip">未检测</span><button class="network-icon-button" id="google-ip-toggle" type="button" disabled>◉</button></div></div>
-                    <div class="network-item"><span class="network-label">Location</span><span class="network-value" id="google-location">未检测</span></div>
-                    <div class="network-item"><span class="network-label">Network</span><span class="network-value" id="google-provider">未检测</span></div>
-                    <div class="network-item"><span class="network-label">Latency</span><span class="network-value" id="google-latency">—</span></div>
-                </div>
-            </div>
-            <div class="network-footer"><p class="network-note" id="network-note">点击检测，同时查询大陆直连与 Google 代理出口；IP 默认脱敏。</p><button class="network-refresh" id="network-refresh" type="button">检测双出口</button></div>
-        </section>
-
-        <!-- 页面交互脚本 -->
-        <script>
-            // 等待 DOM 结构加载完成
-            document.addEventListener('DOMContentLoaded', () => {
-                // 统计每个分组的链接数量
-                document.querySelectorAll('.portals > div').forEach((section) => {
-                    const links = section.querySelectorAll('li');
-                    const badge = section.querySelector('.category-count');
-                    if (badge) {
-                        badge.textContent = links.length;
-                    }
-                });
-            });
-
-
-            // 双出口网络状态查询：大陆线路使用国内 JSONP 接口，国际线路使用 Cloudflare Worker。
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>终末频段 Terminal Frequency</title><meta content="个人常用网址导航：资讯、AI、影音、云服务与创客工具。" name="description"/><link href="The_Internet.png" rel="icon"/><script>try{const t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='dark'?'dark':'light'}catch{}</script><style>
+:root{color-scheme:light;--bg:#f6f8fb;--surface:#fff;--text:#1c293b;--muted:#64748b;--border:#dfe7f1;--accent:#0879f9;--hover:#edf4ff;--icon-bg:#edf2f8}
+[data-theme=dark]{color-scheme:dark;--bg:#101722;--surface:#192332;--text:#e6edf7;--muted:#a5b3c6;--border:#304057;--accent:#71aeff;--hover:#263950;--icon-bg:#304057}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;padding:24px clamp(16px,6vw,96px)}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.55}a{color:inherit;text-decoration:none}button,a,input,summary{touch-action:manipulation}:focus-visible{outline:2px solid var(--accent);outline-offset:4px}svg{width:24px;height:24px;display:block;flex-shrink:0}[hidden]{display:none!important}
+.header-container,main,footer{max-width:1344px;margin-inline:auto}.header-container{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}.brand{display:flex;align-items:center;gap:16px}.brand-mark{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--hover);color:var(--accent);box-shadow:inset 0 0 0 5px color-mix(in srgb,var(--accent) 12%,transparent)}.brand-mark svg{width:30px;height:30px}h1{font-size:24px;letter-spacing:.08em;margin:0;font-weight:650}.brand p{margin:0;color:var(--muted);font-size:14px;letter-spacing:.035em}.header-actions{display:flex;align-items:center;gap:22px}.header-actions>span{font-size:16px}#theme-toggle{display:grid;place-items:center;width:44px;height:44px;color:var(--text);background:none;border:0;border-left:1px solid var(--border);border-radius:0;padding-left:18px}
+.section-header{display:flex;justify-content:space-between;align-items:center;gap:24px;margin:28px 0 22px}.section-header h2{font-size:28px;margin:0;font-weight:650}.section-header p{margin:3px 0 0;color:var(--muted)}.search{display:flex;align-items:center;gap:12px;width:326px;border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:12px 14px;color:var(--muted)}.search svg{width:20px;height:20px}.search input{width:100%;min-width:0;border:0;background:transparent;color:var(--text);outline-offset:6px}.search input::placeholder{color:var(--muted)}
+.portals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.portals>div{min-width:0;padding:22px 16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px}.portals h2{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:600;margin:0 6px 16px}.category-icon{color:var(--accent);display:inline-flex;flex-shrink:0}.category-icon svg{width:28px;height:28px}.category-count{margin-left:auto;color:var(--muted);font-size:14px;font-weight:400}.portals ul{padding:0;margin:0;list-style:none}.portals li{margin:0;min-height:42px}.portals a{display:flex;align-items:center;gap:12px;padding:7px 8px;min-height:42px;border-radius:7px;overflow-wrap:anywhere}.portals a:hover{background:var(--hover);color:var(--accent)}.site-icon{width:28px;height:28px;flex-shrink:0;display:grid;place-items:center;background:var(--icon-bg);color:var(--muted);border-radius:6px;font-size:16px;font-weight:600}.site-icon img{width:25px;height:25px;object-fit:contain}.site-icon:has(img){background:white;padding:2px}.multi-link{display:flex;align-items:center}.multi-link>a:first-child{flex:1;min-width:0}.multi-link>a:last-child{padding-inline:5px}.multi-link>a:last-child .site-icon{display:none}.multi-link>span{color:var(--muted)}
+.network-panel{margin-top:16px;border:1px solid var(--border);border-radius:11px;background:var(--surface);overflow:hidden}.network-panel summary{display:flex;align-items:center;gap:18px;padding:16px 24px;cursor:pointer;list-style:none}.network-panel summary::-webkit-details-marker{display:none}.network-panel summary strong{font-size:16px;font-weight:500}.network-panel summary .category-icon svg{width:23px;height:23px}#network-summary{border-left:1px solid var(--border);padding-left:20px;color:var(--muted);font-size:14px}.network-caption{margin-left:auto;color:var(--muted);font-size:14px}.chevron{color:var(--muted);font-size:24px}.network-panel[open] .chevron{transform:rotate(90deg)}.network-row{display:grid;grid-template-columns:.8fr 1.25fr 1fr 1.35fr .7fr;border-top:1px solid var(--border)}.network-item{padding:14px 18px;min-width:0}.network-label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.network-value{font-size:14px;overflow-wrap:anywhere}.network-ip-row{display:flex;gap:8px;align-items:center}.network-icon-button,.network-refresh{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 12px}.network-icon-button{padding:5px 8px;flex-shrink:0}.network-refresh:hover{color:var(--accent);border-color:var(--accent)}.network-footer{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 18px;border-top:1px solid var(--border)}.network-note{font-size:13px;color:var(--muted);margin:0}.network-refresh{white-space:nowrap}footer{text-align:center;color:var(--muted);letter-spacing:.2em;font-size:12px;padding:20px 0 8px}
+@media(min-width:1400px){.portals li,.portals a{min-height:44px}}
+@media(max-width:1100px){.portals{grid-template-columns:repeat(2,minmax(0,1fr))}.network-row{grid-template-columns:repeat(2,minmax(0,1fr))}.network-item:last-child{grid-column:1/-1}}
+@media(max-width:600px){body{padding:18px 16px}.header-actions>span{display:none}.brand{gap:10px}h1{font-size:22px}.section-header{align-items:stretch;flex-direction:column;gap:16px;margin-top:24px}.search{width:100%}.portals{grid-template-columns:1fr}.portals>div{padding:18px 14px}.portals a{min-height:44px}.network-panel summary{padding:14px;gap:10px;flex-wrap:wrap}.network-caption{display:none}#network-summary{padding-left:10px}.chevron{margin-left:auto}.network-footer{align-items:stretch;flex-direction:column}.network-item{padding:12px}.network-icon-button{min-width:44px;min-height:44px}}
+</style></head><body><header class="header-container"><div class="brand"><span aria-hidden="true" class="brand-mark"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M7 7a7 7 0 0 0 0 10M17 7a7 7 0 0 1 0 10M4 4a11 11 0 0 0 0 16M20 4a11 11 0 0 1 0 16"></path></svg></span><div><h1>终末频段</h1><p>Terminal Frequency</p></div></div><div class="header-actions"><span>个人网址导航</span><button aria-label="切换深色模式" id="theme-toggle" type="button"><span aria-hidden="true"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></svg></span></button></div></header><main><div class="section-header"><div><h2>常用站点</h2><p aria-live="polite" id="link-summary"></p></div><label class="search"><span aria-hidden="true"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"></circle><path d="m16 16 5 5"></path></svg></span><input aria-label="搜索站点或分类" autocomplete="off" id="site-search" placeholder="搜索站点或分类" type="search"/></label></div><div class="portals">
+<!-- 资讯、社区与常用平台 -->
+<div class="web" data-category="资讯社区 web">
+<h2><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><path d="M7 7h4v4H7zM15 7h2m-2 4h2M7 15h10M7 18h10"></path></svg></span><span>资讯社区</span><span aria-hidden="true" class="category-count"></span></h2>
+<ul>
+<li><a href="https://www.zhihu.com"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/zhihu.svg" width="25"/></span>知乎</a></li>
+<li><a href="https://sspai.com/"><span aria-hidden="true" class="site-icon">少</span>少数派</a></li>
+<li class="multi-link">
+<a href="https://news.ycombinator.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/ycombinator.svg" width="25"/></span>Hacker News</a>
+<span>/</span>
+<a href="https://zeli.app/"><span aria-hidden="true" class="site-icon">C</span>CN</a>
+</li>
+<li><a href="https://www.v2ex.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/v2ex.svg" width="25"/></span>V2EX</a></li>
+<li><a href="https://www.x.com"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/x.svg" width="25"/></span>X.com</a></li>
+<li><a href="https://www.amazon.com"><span aria-hidden="true" class="site-icon">A</span>Amazon US</a></li>
+<li><a href="https://www.bohaishibei.com/"><span aria-hidden="true" class="site-icon">博</span>博海拾贝</a></li>
+</ul>
+</div>
+<!-- 人工智能服务 -->
+<div class="ai" data-category="人工智能 ai">
+<h2><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="m12 3 3 6 6 3-6 3-3 6-3-6-6-3 6-3z"></path></svg></span><span>人工智能</span><span aria-hidden="true" class="category-count"></span></h2>
+<ul>
+<li><a href="https://chat.openai.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/openai.svg" width="25"/></span>ChatGPT</a></li>
+<li><a href="https://gemini.google.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/googlegemini.svg" width="25"/></span>Gemini</a></li>
+<li><a href="https://api.oaipro.com/"><span aria-hidden="true" class="site-icon">O</span>OaiPro</a></li>
+<li><a href="https://www.deepseek.com/"><span aria-hidden="true" class="site-icon">D</span>DeepSeek</a></li>
+<li><a href="https://grok.com/"><span aria-hidden="true" class="site-icon">G</span>Grok</a></li>
+</ul>
+</div>
+<!-- 视频、音乐与影视 -->
+<div class="media" data-category="影音媒体 media">
+<h2><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><rect height="18" rx="5" width="18" x="3" y="3"></rect><path d="m10 8 6 4-6 4z"></path></svg></span><span>影音媒体</span><span aria-hidden="true" class="category-count"></span></h2>
+<ul>
+<li><a href="https://youtube.com"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/youtube.svg" width="25"/></span>YouTube</a></li>
+<li><a href="https://t.bilibili.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/bilibili.svg" width="25"/></span>BiliBili</a></li>
+<li><a href="https://www.uhdnow.com/"><span aria-hidden="true" class="site-icon">U</span>UHDNOW</a></li>
+<li><a href="https://music.apple.com/cn/browse"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/applemusic.svg" width="25"/></span>Apple Music</a></li>
+<li><a href="https://www.dygang.cc/"><span aria-hidden="true" class="site-icon">电</span>电影港</a></li>
+</ul>
+</div>
+<!-- 云服务与基础设施 -->
+<div class="cloud" data-category="云与基础设施 cloud">
+<h2><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="M6 19a5 5 0 0 1-1-10 7 7 0 0 1 13-2 6 6 0 0 1 0 12z"></path></svg></span><span>云与基础设施</span><span aria-hidden="true" class="category-count"></span></h2>
+<ul>
+<li><a href="https://github.com"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/github.svg" width="25"/></span>GitHub</a></li>
+<li><a href="https://dash.cloudflare.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/cloudflare.svg" width="25"/></span>Cloudflare</a></li>
+<li><a href="https://www.oracle.com/cloud/sign-in.html"><span aria-hidden="true" class="site-icon">O</span>Oracle Cloud</a></li>
+<li><a href="https://portal.azure.com/?whr=live.com"><span aria-hidden="true" class="site-icon">A</span>Azure</a></li>
+<li><a href="https://www.dmit.io"><span aria-hidden="true" class="site-icon">D</span>DMIT</a></li>
+<li><a href="https://console.tailscale.com/admin/machines"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/tailscale.svg" width="25"/></span>Tailscale</a></li>
+</ul>
+</div>
+<!-- 个人项目 -->
+<div class="projects" data-category="个人项目 projects">
+<h2><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="m7 6-6 6 6 6m10-12 6 6-6 6m-4-15-4 18"></path></svg></span><span>个人项目</span><span aria-hidden="true" class="category-count"></span></h2>
+<ul>
+<li><a href="https://endoce.github.io/Codex-Web/"><span aria-hidden="true" class="site-icon">废</span>废土终端</a></li>
+<li><a href="https://endoce.github.io/Codex-Web/text-visualizer.html"><span aria-hidden="true" class="site-icon">信</span>信号译码</a></li>
+<li><a href="https://link.crownpartnersgroup.com/"><span aria-hidden="true" class="site-icon">L</span>Linkding</a></li>
+<li><a href="https://up.ydht.net/"><span aria-hidden="true" class="site-icon">U</span>Uptime Kuma</a></li>
+</ul>
+</div>
+<!-- 创客与设备 -->
+<div class="maker" data-category="创客设备 maker">
+<h2><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><rect height="12" rx="1" width="12" x="6" y="6"></rect><path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4"></path></svg></span><span>创客设备</span><span aria-hidden="true" class="category-count"></span></h2>
+<ul>
+<li><a href="https://192.168.13.211"><span aria-hidden="true" class="site-icon">O</span>OctoPrint Pi</a></li>
+<li><a href="https://www.thingiverse.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/thingiverse.svg" width="25"/></span>Thingiverse</a></li>
+<li><a href="https://makerworld.com/"><span aria-hidden="true" class="site-icon">M</span>MakerWorld</a></li>
+</ul>
+</div>
+<!-- 工具与知识资源 -->
+<div class="resources" data-category="工具与知识 resources">
+<h2><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="M12 5v16M12 5C9 2 5 3 2 3v16c4 0 7 0 10 2 3-2 6-2 10-2V3c-4 0-7-1-10 2z"></path></svg></span><span>工具与知识</span><span aria-hidden="true" class="category-count"></span></h2>
+<ul>
+<li><a href="https://www.deepl.com/translator"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/deepl.svg" width="25"/></span>DeepL</a></li>
+<li><a href="https://ankiweb.net/decks/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/anki.svg" width="25"/></span>Anki</a></li>
+<li><a href="https://zh.z-library.sk/"><span aria-hidden="true" class="site-icon">Z</span>Z-Library</a></li>
+<li><a href="https://zh.annas-archive.org/"><span aria-hidden="true" class="site-icon">安</span>安娜的档案</a></li>
+<li><a href="https://www.msdmanuals.cn/home"><span aria-hidden="true" class="site-icon">默</span>默沙东诊疗手册</a></li>
+</ul>
+</div>
+<!-- 低频使用链接 -->
+<div class="others" data-category="其他收藏 others">
+<h2><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="m12 2 3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"></path></svg></span><span>其他收藏</span><span aria-hidden="true" class="category-count"></span></h2>
+<ul>
+<li><a href="https://www.macstories.net/"><span aria-hidden="true" class="site-icon">M</span>MacStories</a></li>
+<li><a href="https://weread.qq.com/"><span aria-hidden="true" class="site-icon">微</span>微信读书</a></li>
+<li><a href="https://www.netflix.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/netflix.svg" width="25"/></span>Netflix</a></li>
+<li><a href="https://open.spotify.com/"><span aria-hidden="true" class="site-icon"><img alt="" height="25" src="assets/icons/spotify.svg" width="25"/></span>Spotify</a></li>
+<li><a href="https://my.rfchost.com/"><span aria-hidden="true" class="site-icon">R</span>RFCHOST</a></li>
+</ul>
+</div>
+</div><p hidden="" id="empty-results">没有匹配的站点，请尝试其他关键词。</p><details aria-label="网络出口状态" class="network-panel"><summary><span aria-hidden="true" class="category-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="M2 8a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8 16a6 6 0 0 1 8 0"></path><circle cx="12" cy="20" r="1"></circle></svg></span><strong>网络出口</strong><span id="network-summary">未检测</span><span class="network-caption">大陆直连 / Google 出口</span><span aria-hidden="true" class="chevron">›</span></summary>
+<div aria-live="polite">
+<div class="network-row">
+<div class="network-item"><span class="network-label">大陆出口</span><span class="network-value network-route">DIRECT</span></div>
+<div class="network-item"><span class="network-label">公网 IP</span><div class="network-ip-row"><span class="network-value" id="cn-ip">未检测</span><button class="network-icon-button" disabled="" id="cn-ip-toggle" type="button">◉</button></div></div>
+<div class="network-item"><span class="network-label">位置</span><span class="network-value" id="cn-location">未检测</span></div>
+<div class="network-item"><span class="network-label">网络</span><span class="network-value" id="cn-provider">未检测</span></div>
+<div class="network-item"><span class="network-label">查询耗时</span><span class="network-value" id="cn-latency">—</span></div>
+</div>
+<div class="network-row">
+<div class="network-item"><span class="network-label">Google 出口</span><span class="network-value network-route">PROXY</span></div>
+<div class="network-item"><span class="network-label">公网 IP</span><div class="network-ip-row"><span class="network-value" id="google-ip">未检测</span><button class="network-icon-button" disabled="" id="google-ip-toggle" type="button">◉</button></div></div>
+<div class="network-item"><span class="network-label">位置</span><span class="network-value" id="google-location">未检测</span></div>
+<div class="network-item"><span class="network-label">网络</span><span class="network-value" id="google-provider">未检测</span></div>
+<div class="network-item"><span class="network-label">查询耗时</span><span class="network-value" id="google-latency">—</span></div>
+</div>
+</div>
+<div class="network-footer"><p class="network-note" id="network-note">点击检测，同时查询大陆直连与 Google 代理出口；IP 默认脱敏。</p><button class="network-refresh" id="network-refresh" type="button">检测双出口</button></div>
+</details></main><footer>FAV CLOUD</footer><script>// 双出口网络状态查询：大陆线路使用国内 JSONP 接口，国际线路使用 Cloudflare Worker。
             const networkRefresh = document.getElementById('network-refresh');
             const networkNote = document.getElementById('network-note');
             const networkTargets = {
@@ -696,6 +289,7 @@
                 networkRefresh.disabled = true;
                 networkRefresh.textContent = '检测中…';
                 networkNote.textContent = '正在同时查询大陆与国际出口…';
+                document.getElementById('network-summary').textContent = '检测中…';
 
                 try {
                     const results = await Promise.all(
@@ -711,12 +305,13 @@
                             networkTargets.google.full.toLowerCase();
                         networkNote.textContent = sameExit
                             ? '两个出口相同，未检测到分流 · ' + updatedAt
-                            : '双出口信息已更新，分流正常 · ' + updatedAt;
+                            : '检测到不同出口 · ' + updatedAt;
                     } else {
                         networkNote.textContent = '仅成功获取 ' + successCount +
                             '/2 个出口；请稍后重试';
                     }
                 } finally {
+                    document.getElementById('network-summary').textContent = '检测完成，展开查看';
                     networkRefresh.disabled = false;
                     networkRefresh.textContent = '↻ 刷新';
                 }
@@ -724,33 +319,12 @@
 
             networkRefresh.addEventListener('click', loadNetworkStatus);
 
-            // 主题切换逻辑
-            const themeToggle = document.getElementById('theme-toggle');
-            const preferDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-            // 设置主题的函数
-            function setTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-            }
-
-            // 点击按钮切换主题
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = localStorage.getItem('theme') || (preferDark.matches ? 'dark' : 'light');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                setTheme(newTheme);
-            });
-
-            // 初始化时根据存储或系统偏好设置主题
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                setTheme(savedTheme);
-            } else {
-                setTheme('dark');
-            }
-        </script>
-    </body>
-</html>
-
-
-
+const themeToggle=document.getElementById('theme-toggle');
+function updateThemeLabel(){themeToggle.setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?'切换浅色模式':'切换深色模式')}
+updateThemeLabel();themeToggle.addEventListener('click',()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('theme',t)}catch{}updateThemeLabel()});
+const groups=[...document.querySelectorAll('.portals > div')];
+const search=document.getElementById('site-search');
+function filterLinks(){const q=search.value.trim().toLowerCase();let count=0,categories=0;groups.forEach(group=>{let matches=0;group.querySelectorAll('li').forEach(row=>{const text=group.dataset.category+' '+row.textContent+' '+[...row.querySelectorAll('a')].map(a=>a.href).join(' ');row.hidden=!text.toLowerCase().includes(q);if(!row.hidden)matches+=row.querySelectorAll('a').length});group.hidden=matches===0;group.querySelector('.category-count').textContent=matches;count+=matches;if(matches)categories++});document.getElementById('link-summary').textContent=categories+' 个分类 · '+count+' 个链接';document.getElementById('empty-results').hidden=count!==0}
+search.addEventListener('input',filterLinks);filterLinks();document.addEventListener('keydown',e=>{if(e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();search.focus()}if(e.key==='Escape'&&document.activeElement===search){search.value='';filterLinks();search.blur()}});
+</script></body></html>
