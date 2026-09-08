@@ -4,12 +4,12 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 
 ## Current state
 
-- Last synchronized: 2026-09-01 (Asia/Shanghai)
+- Last synchronized: 2026-09-08 (Asia/Shanghai)
 - Repository: `endoce/Fav-Cloud`
-- Branch: `master`
+- Branch: `design/bright-navigation` (redesign; pending merge into `master`)
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
 - Last functional baseline commit: `3d4ddfa0ad267d53af14eb9f6fa08b07f5e7084f`
-- Status: deployed on GitHub Pages and Cloudflare Pages
+- Status: existing master remains deployed; redesigned branch is ready for review
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
 - Blockers: none
@@ -17,14 +17,16 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 ## Current behavior
 
 - Pure static GitHub Pages site with no build step or runtime dependency
-- Modern responsive card layout
-- Dark theme by default; light theme available
+- Approved bright four-column desktop card layout, two-column tablet and single-column mobile
+- Local name/category/URL search, local brand icons with initial fallbacks
+- All 41 bookmark URLs and their order preserved; counts now use anchors
+- Light theme by default; saved dark preference respected; first-click theme bug fixed
 - Eight bookmark categories
 - Tailscale is listed in `CLOUD`
 - RFCHOST is listed in `OTHERS`
 - Linkding is listed in `PROJECTS`
 - Uptime Kuma is listed in `PROJECTS`
-- Network panel checks mainland and Google/international exits on demand
+- Collapsed network panel checks mainland and Google/international exits on demand; expansion alone does not query
 - Mainland detection uses the PConline JSONP endpoint
 - International detection uses `google-ip.crownpartnersgroup.com`
 - IP addresses are masked by default
@@ -53,11 +55,10 @@ Do not delete or reconfigure external resources without explicit user authorizat
 
 ## Next candidates
 
-No feature is currently approved or in progress. Previously discussed possibilities include:
+Redesign implemented on the review branch. Browser visual testing and live network endpoint testing were not performed. Click analytics are not included.
 
-- fuzzy search and keyboard navigation
+Future unapproved possibilities:
 - selective service-status indicators
-- small improvements inspired by Homer or Homepage
 
 Treat these as ideas, not authorized work.
 
@@ -134,3 +135,10 @@ At the end of a material task:
 - Fixed HTTPS and language details and added the public README.
 - Added Linkding and corrected its displayed name.
 - Added the opt-in network status panel.
+
+## 2026-09-08 — Bright navigation redesign
+
+- Implemented the approved mockup within the dependency-free static page. Added responsive cards, Chinese category labels, local search, local SVG icons and text fallbacks, and a collapsed network panel.
+- Preserved all links, opt-in endpoint behavior, and masked IP defaults. Changed split-route wording to observed different exits and latency label to query duration.
+- Verified original URL order, 8 categories, ID/selector consistency, local icon files, inline JavaScript syntax, and opt-in network invocation. No build step required.
+- Delivered as an independent branch/PR; production deployment awaits merge.

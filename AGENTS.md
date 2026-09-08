@@ -16,7 +16,7 @@ Before changing anything:
 ## Working rules
 
 - Preserve this project as a lightweight, dependency-free static site unless the user explicitly approves an architectural change.
-- Keep the default theme dark and do not restore a background image without explicit approval.
+- Keep the approved light default appearance, preserve saved theme choices, and do not restore a background image without explicit approval.
 - Keep no more than eight bookmark categories. Preserve the `OTHERS` category for lower-frequency links.
 - Keep link counts automatic; do not hard-code category totals.
 - Preserve responsive desktop and mobile layouts.
