@@ -49,6 +49,7 @@ There is no dependency installation, build command, package manager, framework, 
 
 - Linkding is the self-hosted bookmark tool at https://link.crownpartnersgroup.com/.
 - Uptime Kuma is the self-hosted status monitor at https://up.ydht.net/ and is listed in `PROJECTS`.
+- HomeLab Homepage is the family-LAN homepage at http://192.168.13.220:3000/ and is listed in `PROJECTS`.
 - Tailscale is in `CLOUD` and links to its Machines admin console.
 - RFCHOST is retained in `OTHERS`.
 - The private OctoPrint address is intentionally present for use on the corresponding local network.
