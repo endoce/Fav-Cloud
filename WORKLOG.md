@@ -86,6 +86,11 @@ At the end of a material task:
 
 ### 2026-09-28
 
+- Replaced the UHDNOW PNG icon reference with a local SVG tile after the existing image failed to display.
+- Page change commit: `ad01e79f6703d416f5ed575d05ee233f8d1eebfa`.
+
+### 2026-09-28
+
 - Replaced the generic cloud symbols for Resend, Oracle Cloud, and Azure with distinct local brand icons.
 - Added the icon source and license notice; Resend stays legible in dark theme.
 - Page change commit: `475bedbe5f8098eb7044648bb49abb4a74c2608f`.
