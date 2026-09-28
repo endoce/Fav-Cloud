@@ -86,6 +86,12 @@ At the end of a material task:
 
 ### 2026-09-28
 
+- Replaced the generic cloud symbols for Resend, Oracle Cloud, and Azure with distinct local brand icons.
+- Added the icon source and license notice; Resend stays legible in dark theme.
+- Page change commit: `475bedbe5f8098eb7044648bb49abb4a74c2608f`.
+
+### 2026-09-28
+
 - Added Resend's email service dashboard to `CLOUD`.
 - Used the direct Emails dashboard link and the existing cloud service icon; category counts remain automatic.
 - Page change commit: `829a7c5bdc18e3605637607d623a8f787f61433d`.
