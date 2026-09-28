@@ -4,7 +4,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 
 ## Current state
 
-- Last synchronized: 2026-09-15 (Asia/Shanghai)
+- Last synchronized: 2026-09-28 (Asia/Shanghai)
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
@@ -23,6 +23,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Light theme by default; saved dark preference respected; first-click theme bug fixed
 - Eight bookmark categories
 - Tailscale is listed in `CLOUD`
+- Resend is listed in `CLOUD`
 - RFCHOST is listed in `OTHERS`
 - Linkding is listed in `PROJECTS`
 - Uptime Kuma is listed in `PROJECTS`
@@ -38,6 +39,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - GitHub Pages: https://endoce.github.io/Fav-Cloud/
 - Cloudflare Pages: https://fav-cloud.pages.dev/ (project `fav-cloud`, source `master`, no build command, output directory `/`)
 - Cloudflare Pages custom domain: https://fav.ydht.net/ (CNAME `fav` → `fav-cloud.pages.dev`, proxied)
+- Resend: https://resend.com/emails
 - Linkding: https://link.crownpartnersgroup.com/
 - Uptime Kuma: https://up.ydht.net/
 - HomeLab Homepage (family LAN): http://192.168.13.220:3000/
@@ -81,6 +83,12 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-09-28
+
+- Added Resend's email service dashboard to `CLOUD`.
+- Used the direct Emails dashboard link and the existing cloud service icon; category counts remain automatic.
+- Page change commit: `829a7c5bdc18e3605637607d623a8f787f61433d`.
 
 ### 2026-09-15
 
