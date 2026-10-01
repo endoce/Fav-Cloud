@@ -8,10 +8,10 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `e32c02536e2c0f61451e9da46e3eb9affe538221`
+- Last functional baseline commit: `dd1d49e5ea2cfe5e3826fe344c9e9413b71cd2af`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
-- Active work: HomeLab Homepage icon selection awaits user approval; existing server icon remains.
+- Active work: none
 - Blockers: none
 
 ## Current behavior
@@ -27,7 +27,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - RFCHOST is listed in `OTHERS`
 - Linkding is listed in `PROJECTS`
 - Uptime Kuma is listed in `PROJECTS`
-- HomeLab Homepage is listed in `PROJECTS` for use on the family LAN
+- HomeLab Homepage is listed in `PROJECTS` for use on the family LAN, using the approved B dashboard icon
 - Cloudflare Azure Chat links to its Workers deployment from `PROJECTS`
 - Collapsed network panel checks mainland and Google/international exits on demand; expansion alone does not query
 - Mainland detection uses the PConline JSONP endpoint
@@ -84,6 +84,13 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-10-01 — HomeLab Homepage icon
+
+- Applied the user's selected B dashboard design as the local `assets/icons/homelab-homepage.svg`; no external icon requests or dependencies added.
+- Preserved the bookmark port 3001, layout, other icons, and all bookmark URLs.
+- Verified the committed SVG and page reference match the approved design; light/dark 25 px previews were reviewed during selection. Live deployment was not checked.
+- Page change commit: `dd1d49e5ea2cfe5e3826fe344c9e9413b71cd2af`.
 
 ### 2026-10-01
 
