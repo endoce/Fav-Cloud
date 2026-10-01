@@ -4,14 +4,14 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 
 ## Current state
 
-- Last synchronized: 2026-09-29 (Asia/Shanghai)
+- Last synchronized: 2026-10-01 (Asia/Shanghai)
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `bd14bbed76ef31003df6b43e11705ef0c6515dcc`
+- Last functional baseline commit: `e32c02536e2c0f61451e9da46e3eb9affe538221`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
-- Active work: none
+- Active work: HomeLab Homepage icon selection awaits user approval; existing server icon remains.
 - Blockers: none
 
 ## Current behavior
@@ -43,7 +43,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Resend: https://resend.com/emails
 - Linkding: https://link.crownpartnersgroup.com/
 - Uptime Kuma: https://up.ydht.net/
-- HomeLab Homepage (family LAN): http://192.168.13.220:3000/
+- HomeLab Homepage (family LAN): http://192.168.13.220:3001/
 - Active international IP endpoint: https://google-ip.crownpartnersgroup.com/
 - Cloudflare Worker: `fav-cloud-ip-check`
 - Legacy, currently unused page endpoint: `cn-ip.crownpartnersgroup.com`
@@ -84,6 +84,13 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-10-01
+
+- Updated HomeLab Homepage's family-LAN bookmark port from 3000 to 3001; no server configuration was changed.
+- Preserved the existing icon pending the user's choice among three preview designs.
+- Verified the page URL change is limited to this bookmark; category order, counts and static architecture are unchanged. LAN service reachability was not tested.
+- Page change commit: `e32c02536e2c0f61451e9da46e3eb9affe538221`.
 
 ### 2026-09-29
 
