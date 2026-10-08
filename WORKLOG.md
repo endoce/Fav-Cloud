@@ -13,6 +13,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
 - Blockers: none
+- Latest live validation: user reported the online check passed on 2026-10-08; not independently repeated by the agent.
 
 ## Current behavior
 
@@ -63,7 +64,7 @@ Do not delete or reconfigure external resources without explicit user authorizat
 
 ## Next candidates
 
-Redesign implemented on the review branch. Browser visual testing and live network endpoint testing were not performed. Click analytics are not included.
+The approved redesign and category reorganization are on `master`. The user reported the online check passed on 2026-10-08. The agent did not independently repeat that check. Click analytics are not included.
 
 Future unapproved possibilities:
 - selective service-status indicators
@@ -93,7 +94,7 @@ At the end of a material task:
 - Split CLOUD into 云服务 (Cloudflare, Resend, Oracle Cloud, Azure, iCloud) and 托管与网络 (GitHub, DMIT, Tailscale).
 - Removed the maker category and OctoPrint Pi bookmark as requested; appended Thingiverse and MakerWorld to OTHERS without changing its original five entries.
 - Recorded the explicit-instruction requirement for future OTHERS changes.
-- Verified 8 categories and 45 anchors; all remaining bookmark markup, original OTHERS entries, inline CSS and JavaScript are preserved. Live deployment was not checked.
+- Verified 8 categories and 45 anchors; all remaining bookmark markup, original OTHERS entries, inline CSS and JavaScript are preserved. The user subsequently reported the online check passed on 2026-10-08; the agent did not independently repeat it.
 - Page change commit: `f7311249cf653cc9db75131b344c51062dca7050`.
 
 ### 2026-10-08
