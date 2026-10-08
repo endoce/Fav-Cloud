@@ -8,7 +8,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `31288e1ab987c91ae893f00ed97c564b9b61aec1`
+- Last functional baseline commit: `954ad481b113309412bd9466958a810c3d558e45`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
@@ -19,11 +19,12 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Pure static GitHub Pages site with no build step or runtime dependency
 - Approved bright four-column desktop card layout, two-column tablet and single-column mobile
 - Local name/category/URL search, local brand icons with initial fallbacks
-- All 45 bookmark URLs and their order preserved; counts now use anchors
+- All 46 bookmark URLs and their order preserved; counts now use anchors
 - Light theme by default; saved dark preference respected; first-click theme bug fixed
 - Eight bookmark categories
 - Tailscale is listed in `CLOUD`
 - iCloud (China) is listed in `CLOUD`
+- Eastmoney watchlist is listed in `WEB`
 - Resend is listed in `CLOUD`
 - RFCHOST is listed in `OTHERS`
 - Linkding is listed in `PROJECTS`
@@ -85,6 +86,11 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-10-08
+
+- Added the Eastmoney self-selected quotes page to `WEB` using the existing local publication icon.
+- Page change commit: `954ad481b113309412bd9466958a810c3d558e45`.
 
 ### 2026-10-08
 
