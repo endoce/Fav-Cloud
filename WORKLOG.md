@@ -8,7 +8,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `954ad481b113309412bd9466958a810c3d558e45`
+- Last functional baseline commit: `f7311249cf653cc9db75131b344c51062dca7050`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
@@ -19,14 +19,15 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Pure static GitHub Pages site with no build step or runtime dependency
 - Approved bright four-column desktop card layout, two-column tablet and single-column mobile
 - Local name/category/URL search, local brand icons with initial fallbacks
-- All 46 bookmark URLs and their order preserved; counts now use anchors
+- 45 bookmarks after the explicitly requested OctoPrint Pi removal; counts use anchors
 - Light theme by default; saved dark preference respected; first-click theme bug fixed
-- Eight bookmark categories
-- Tailscale is listed in `CLOUD`
+- Eight bookmark categories: WEB 9, AI 5, MEDIA 5, CLOUD 5, HOSTING 3, PROJECTS 6, RESOURCES 5, OTHERS 7 (counts remain automatic in the page)
+- GitHub, DMIT, and Tailscale are listed in `HOSTING` (托管与网络)
 - iCloud (China) is listed in `CLOUD`
 - Eastmoney watchlist is listed in `WEB`
 - Resend is listed in `CLOUD`
-- RFCHOST is listed in `OTHERS`
+- RFCHOST and the other four existing `OTHERS` bookmarks retain their markup and order; Thingiverse and MakerWorld are appended
+- `OTHERS` changes require explicit user instructions; the maker category and OctoPrint Pi shortcut are removed
 - Linkding is listed in `PROJECTS`
 - Uptime Kuma is listed in `PROJECTS`
 - HomeLab Homepage is listed in `PROJECTS` for use on the family LAN, using the approved B dashboard icon
@@ -86,6 +87,14 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-10-08 — Category reorganization
+
+- Split CLOUD into 云服务 (Cloudflare, Resend, Oracle Cloud, Azure, iCloud) and 托管与网络 (GitHub, DMIT, Tailscale).
+- Removed the maker category and OctoPrint Pi bookmark as requested; appended Thingiverse and MakerWorld to OTHERS without changing its original five entries.
+- Recorded the explicit-instruction requirement for future OTHERS changes.
+- Verified 8 categories and 45 anchors; all remaining bookmark markup, original OTHERS entries, inline CSS and JavaScript are preserved. Live deployment was not checked.
+- Page change commit: `f7311249cf653cc9db75131b344c51062dca7050`.
 
 ### 2026-10-08
 
