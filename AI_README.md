@@ -37,11 +37,11 @@ There is no dependency installation, build command, package manager, framework, 
   - `AI`
   - `MEDIA`
   - `CLOUD`
+  - `HOSTING` (托管与网络)
   - `PROJECTS`
-  - `MAKER`
   - `RESOURCES`
   - `OTHERS`
-- `OTHERS` contains retained links that are used less frequently.
+- `OTHERS` contains retained links that are used less frequently. Modify its bookmarks only after explicit user instructions; do not rebalance them automatically.
 - Category counts are derived automatically from actual anchors (Hacker News and CN are separate links). Local search filters by category, name, and URL; `/` focuses search and Escape clears it.
 - Avoid adding frameworks, large icon libraries, analytics, trackers, or unnecessary network requests.
 
@@ -51,9 +51,10 @@ There is no dependency installation, build command, package manager, framework, 
 - Uptime Kuma is the self-hosted status monitor at https://up.ydht.net/ and is listed in `PROJECTS`.
 - HomeLab Homepage is the family-LAN homepage at http://192.168.13.220:3001/ and is listed in `PROJECTS`.
 - Resend is the email service dashboard at https://resend.com/emails and is listed in `CLOUD`.
-- Tailscale is in `CLOUD` and links to its Machines admin console.
+- `CLOUD` (云服务) contains Cloudflare, Resend, Oracle Cloud, Azure, and iCloud.
+- `HOSTING` (托管与网络; HTML class `networking`) contains GitHub, DMIT, and Tailscale. Tailscale links to its Machines admin console.
 - RFCHOST is retained in `OTHERS`.
-- The private OctoPrint address is intentionally present for use on the corresponding local network.
+- The maker category and OctoPrint Pi shortcut were removed at the user’s request. Thingiverse and MakerWorld were moved to `OTHERS`; its five existing bookmarks and their order remain unchanged.
 
 When moving a link, remove the original entry and preserve it in the requested destination. Keep the category total at eight or fewer.
 
