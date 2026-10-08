@@ -18,6 +18,7 @@ Before changing anything:
 - Preserve this project as a lightweight, dependency-free static site unless the user explicitly approves an architectural change.
 - Keep the approved light default appearance, preserve saved theme choices, and do not restore a background image without explicit approval.
 - Keep no more than eight bookmark categories. Preserve the `OTHERS` category for lower-frequency links.
+- Modify bookmarks in `OTHERS` only after explicit user instructions; do not move, remove, or reorder them for automatic category balancing.
 - Keep link counts automatic; do not hard-code category totals.
 - Preserve responsive desktop and mobile layouts.
 - Network detection must run only after an explicit user click.
