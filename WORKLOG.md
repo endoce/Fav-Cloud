@@ -8,7 +8,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `f1106aeebe2573311de89ad0de6e7f356084d10b`
+- Last functional baseline commit: `fca89edef9b63d1adf4c0cb126ac1b23871c31a4`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
@@ -32,8 +32,8 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Linkding is listed in `PROJECTS`
 - Uptime Kuma is listed in `PROJECTS`
 - HomeLab Homepage is listed in `PROJECTS` for use on the family LAN, using the approved B dashboard icon
-- Cloudflare Azure Chat links to its Workers deployment from `PROJECTS`
-- Cloudflare Quick Notebook links to its Workers deployment from `PROJECTS`
+- Cloudflare Azure Chat uses https://chat.ydht.net/ in `PROJECTS`
+- Cloudflare Quick Notebook uses https://notebook.ydht.net/ in `PROJECTS`
 - Collapsed network panel checks mainland and Google/international exits on demand; expansion alone does not query
 - Mainland detection uses the PConline JSONP endpoint
 - International detection uses `google-ip.crownpartnersgroup.com`
@@ -89,6 +89,12 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-10-10 — Project custom domains
+
+- Updated the Notebook bookmark to https://notebook.ydht.net/ and Azure Chat to https://chat.ydht.net/ as requested.
+- Verified exactly two URL substitutions; names, icons, categories, all other page markup and the 46-link total are preserved. Live deployment was not checked for this change.
+- Page change commit: `fca89edef9b63d1adf4c0cb126ac1b23871c31a4`.
 
 ### 2026-10-10
 
