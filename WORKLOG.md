@@ -8,7 +8,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `3bf16079f4da0eedf6e1e0a99b6769a815e84823`
+- Last functional baseline commit: `fc6de50973f4cf42ac62fb64c22189d1312c1f0f`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
@@ -34,6 +34,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - HomeLab Homepage is listed in `PROJECTS` for use on the family LAN, using the approved B dashboard icon
 - CF Chat uses https://chat.ydht.net/ in `PROJECTS`
 - CF Notebook uses https://notebook.ydht.net/ in `PROJECTS`
+- 信号译码 opens the local bilingual `./text-visualizer.html`; text remains in memory, with only the shared theme preference persisted
 - Collapsed network panel checks mainland and Google/international exits on demand; expansion alone does not query
 - Mainland detection uses the PConline JSONP endpoint
 - International detection uses `google-ip.crownpartnersgroup.com`
@@ -89,6 +90,15 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-10-19 — Local bilingual text visualizer
+
+- Added `text-visualizer.html` using the approved bilingual light-card design, dark theme, live character classification, render/clear controls, whitespace markers and a relative home link.
+- Adapted the existing Codex-Web tool; normalized CRLF/lone CR newlines and removed remote fonts and the large source favicon dependency. Source repository is unchanged.
+- Changed exactly one homepage URL to `./text-visualizer.html`; all other homepage markup, category order, OTHERS entries and 46 anchors are unchanged.
+- Passed inline JavaScript syntax and DOM-stub interaction checks: Unicode classification, CRLF/CR/LF, HTML-as-text, live/render/clear/focus, theme persistence and blocked storage. Static checks confirm no upload APIs or remote dependencies.
+- Browser visual/mobile checks could not run: Chromium is absent and its download failed in this environment. Live deployment and visual checks remain pending.
+- Functional baseline commit: `fc6de50973f4cf42ac62fb64c22189d1312c1f0f`.
 
 ### 2026-10-19 — Category position swap
 
