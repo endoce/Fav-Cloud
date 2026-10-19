@@ -61,8 +61,9 @@ When moving a link, remove the original entry and preserve it in the requested d
 
 ## Text visualizer
 
+- The tool bookmark uses the original local `assets/icons/text-visualizer.svg` character tile icon (A/a/0/#), matching the rounded navy HomeLab icon style and the tool’s category colors.
 - The PROJECTS bookmark 信号译码 points to `./text-visualizer.html`; the tool links back to `./` so both root-domain and GitHub Pages subpath hosting work.
-- Adapted from `endoce/Codex-Web/text-visualizer.html`, it is now independently maintained in Fav-Cloud. The source repository and its homepage bookmark are retained.
+- Adapted from `endoce/Codex-Web/text-visualizer.html`, it is now independently maintained in Fav-Cloud. The source repository is retained; its 废土终端 homepage bookmark was removed at the user’s request.
 - UI uses Chinese and English, light by default, and the same `theme` storage key as the homepage. Only the theme is persisted; input text is not stored or uploaded.
 - Classifies Unicode uppercase/lowercase letters, decimal digits, whitespace, and remaining characters. Displays spaces, tabs and newlines; CRLF and lone CR normalize to LF for display.
 - No remote fonts, libraries, backend or build step. Use safe text nodes for all input rendering.
