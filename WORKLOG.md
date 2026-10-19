@@ -8,7 +8,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `370b828a9792c599de9a3554837076623d86303d`
+- Last functional baseline commit: `3bf16079f4da0eedf6e1e0a99b6769a815e84823`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
@@ -22,7 +22,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Local name/category/URL search, local brand icons with initial fallbacks
 - 46 bookmarks; counts use anchors
 - Light theme by default; saved dark preference respected; first-click theme bug fixed
-- Eight bookmark categories: WEB 9, AI 5, MEDIA 5, CLOUD 5, HOSTING 3, PROJECTS 7, RESOURCES 5, OTHERS 7 (counts remain automatic in the page)
+- Eight bookmark categories: WEB 9, AI 5, PROJECTS 7, CLOUD 5, HOSTING 3, MEDIA 5, RESOURCES 5, OTHERS 7 (counts remain automatic in the page)
 - GitHub, DMIT, and Tailscale are listed in `HOSTING` (托管与网络)
 - iCloud (China) is listed in `CLOUD`
 - Eastmoney watchlist is listed in `WEB`
@@ -89,6 +89,12 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-10-19 — Category position swap
+
+- Swapped PROJECTS (个人项目) and MEDIA (影音媒体): PROJECTS is third and MEDIA sixth in page order.
+- Verified every category block and its internal bookmark order are byte-for-byte preserved; 8 categories and 46 links remain. CSS and JavaScript are unchanged. Live deployment was not checked.
+- Page change commit: `3bf16079f4da0eedf6e1e0a99b6769a815e84823`.
 
 ### 2026-10-19 — Short project labels
 
