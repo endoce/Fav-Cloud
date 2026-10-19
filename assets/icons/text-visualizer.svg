@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
+<title>Text Visualizer</title>
+<rect width="64" height="64" rx="15" fill="#172b46"/>
+<rect x="8" y="8" width="22" height="22" rx="5" fill="#dcecff"/>
+<rect x="34" y="8" width="22" height="22" rx="5" fill="#ffe7d4"/>
+<rect x="8" y="34" width="22" height="22" rx="5" fill="#d9f5e4"/>
+<rect x="34" y="34" width="22" height="22" rx="5" fill="#ede1ff"/>
+<g fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="m13 25 6-12 6 12m-9-4h6" stroke="#1556a4"/>
+<path d="M49 19a4 4 0 1 0 0 5m0-7v9" stroke="#934008"/>
+<rect x="15" y="39" width="8" height="12" rx="4" stroke="#17633a"/>
+<path d="m43 39-2 12m8-12-2 12m-7-8h11m-12 4h11" stroke="#6b32a2"/>
+</g>
+</svg>
