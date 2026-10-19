@@ -16,6 +16,7 @@ This document gives AI agents durable project context. Read it with `AGENTS.md` 
 ## Files
 
 - `index.html`: page structure, inline styles, bookmark data, and interaction logic
+- `text-visualizer.html`: standalone bilingual character visualizer with inline styles and scripts, local-only text processing, and shared saved theme preference
 - `README.md`: public user-facing project description
 - `AGENTS.md`: automatic instructions and safety rules for Codex and compatible agents
 - `AI_README.md`: durable architecture and design context
@@ -57,6 +58,14 @@ There is no dependency installation, build command, package manager, framework, 
 - The maker category and OctoPrint Pi shortcut were removed at the user’s request. Thingiverse and MakerWorld were moved to `OTHERS`; its five existing bookmarks and their order remain unchanged.
 
 When moving a link, remove the original entry and preserve it in the requested destination. Keep the category total at eight or fewer.
+
+## Text visualizer
+
+- The PROJECTS bookmark 信号译码 points to `./text-visualizer.html`; the tool links back to `./` so both root-domain and GitHub Pages subpath hosting work.
+- Adapted from `endoce/Codex-Web/text-visualizer.html`, it is now independently maintained in Fav-Cloud. The source repository and its homepage bookmark are retained.
+- UI uses Chinese and English, light by default, and the same `theme` storage key as the homepage. Only the theme is persisted; input text is not stored or uploaded.
+- Classifies Unicode uppercase/lowercase letters, decimal digits, whitespace, and remaining characters. Displays spaces, tabs and newlines; CRLF and lone CR normalize to LF for display.
+- No remote fonts, libraries, backend or build step. Use safe text nodes for all input rendering.
 
 ## Network status architecture
 
