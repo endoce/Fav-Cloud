@@ -4,11 +4,11 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 
 ## Current state
 
-- Last synchronized: 2026-10-19 (Asia/Shanghai)
+- Last synchronized: 2026-11-09 (Asia/Shanghai)
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `2aefbc4931e86f905f31180955fdca552c5da0d5`
+- Last functional baseline commit: `3c6fd564439d8e498ddeb7921826e917c99a10aa`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
@@ -20,9 +20,9 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Pure static GitHub Pages site with no build step or runtime dependency
 - Approved bright four-column desktop card layout, two-column tablet and single-column mobile
 - Local name/category/URL search, local brand icons with initial fallbacks
-- 45 bookmarks; counts use anchors
+- 46 bookmarks; counts use anchors
 - Light theme by default; saved dark preference respected; first-click theme bug fixed
-- Eight bookmark categories: WEB 9, AI 5, PROJECTS 6, CLOUD 5, HOSTING 3, MEDIA 5, RESOURCES 5, OTHERS 7 (counts remain automatic in the page)
+- Eight bookmark categories: WEB 9, AI 5, PROJECTS 7, CLOUD 5, HOSTING 3, MEDIA 5, RESOURCES 5, OTHERS 7 (counts remain automatic in the page)
 - GitHub, DMIT, and Tailscale are listed in `HOSTING` (托管与网络)
 - iCloud (China) is listed in `CLOUD`
 - Eastmoney watchlist is listed in `WEB`
@@ -34,6 +34,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - HomeLab Homepage is listed in `PROJECTS` for use on the family LAN, using the approved B dashboard icon
 - CF Chat uses https://chat.ydht.net/ in `PROJECTS`
 - CF Notebook uses https://notebook.ydht.net/ in `PROJECTS`
+- OpenCode Web UI uses https://code.ydht.net/ in `PROJECTS`
 - 信号译码 opens the local bilingual `./text-visualizer.html`; text remains in memory, with only the shared theme preference persisted
 - Collapsed network panel checks mainland and Google/international exits on demand; expansion alone does not query
 - Mainland detection uses the PConline JSONP endpoint
@@ -90,6 +91,12 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-11-09 — OpenCode Web UI bookmark
+
+- Added OpenCode Web UI (https://code.ydht.net/) to PROJECTS using the existing local server icon.
+- Verified one new anchor, 7 PROJECTS links and 46 links across 8 categories. Live deployment and service access were not checked.
+- Page change commit: `3c6fd564439d8e498ddeb7921826e917c99a10aa`.
 
 ### 2026-10-19 — Remove Wasteland bookmark and add tool icon
 
