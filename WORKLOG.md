@@ -8,7 +8,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `3c6fd564439d8e498ddeb7921826e917c99a10aa`
+- Last functional baseline commit: `24fd95a7281e3cc02eaeb9a3f4a21aed826720c3`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
@@ -91,6 +91,11 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### OpenCode bookmark icon
+
+- Replaced the generic server icon with the [official OpenCode Web UI favicon](https://github.com/anomalyco/opencode/blob/dev/packages/app/public/favicon.svg), stored locally as `assets/icons/opencode.svg`.
+- Page change commit: `24fd95a7281e3cc02eaeb9a3f4a21aed826720c3`.
 
 ### 2026-11-09 — OpenCode Web UI bookmark
 
