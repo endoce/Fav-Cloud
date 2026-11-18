@@ -4,11 +4,11 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 
 ## Current state
 
-- Last synchronized: 2026-11-09 (Asia/Shanghai)
+- Last synchronized: 2026-11-18 (Asia/Shanghai)
 - Repository: `endoce/Fav-Cloud`
 - Branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Last functional baseline commit: `24fd95a7281e3cc02eaeb9a3f4a21aed826720c3`
+- Last functional baseline commit: `baf5de1a99e86f155d2d848a98966e6188ec913e`
 - Status: `master` is the deployment source for GitHub Pages and Cloudflare Pages
 - Handoff authority: `endoce/Fav-Cloud` is independent from `personal-infra-ops`; use this repository's `AGENTS.md`, `AI_README.md`, and `WORKLOG.md` for Fav Cloud work.
 - Active work: none
@@ -36,11 +36,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - CF Notebook uses https://notebook.ydht.net/ in `PROJECTS`
 - OpenCode Web UI uses https://code.ydht.net/ in `PROJECTS`
 - 信号译码 opens the local bilingual `./text-visualizer.html`; text remains in memory, with only the shared theme preference persisted
-- Collapsed network panel checks mainland and Google/international exits on demand; expansion alone does not query
-- Mainland detection uses the PConline JSONP endpoint
-- International detection uses `google-ip.crownpartnersgroup.com`
-- IP addresses are masked by default
-- The panel reports whether the two observed exits differ
+- The homepage no longer performs network exit detection.
 
 ## External resources
 
@@ -51,7 +47,7 @@ This file is the concise cross-device handoff record for humans and AI agents. R
 - Linkding: https://link.crownpartnersgroup.com/
 - Uptime Kuma: https://up.ydht.net/
 - HomeLab Homepage (family LAN): http://192.168.13.220:3001/
-- Active international IP endpoint: https://google-ip.crownpartnersgroup.com/
+- Former international IP endpoint: https://google-ip.crownpartnersgroup.com/
 - Cloudflare Worker: `fav-cloud-ip-check`
 - Legacy, currently unused page endpoint: `cn-ip.crownpartnersgroup.com`
 
@@ -59,8 +55,6 @@ Do not delete or reconfigure external resources without explicit user authorizat
 
 ## Known considerations
 
-- The mainland JSONP service is a third-party dependency and may occasionally time out or change response fields.
-- The split-route result depends on the user's local proxy rules.
 - The legacy `cn-ip` custom domain may still be bound in Cloudflare even though the page no longer calls it.
 - The project intentionally favors speed and simplicity over dashboard-style integrations.
 - Direct edits to `master` from multiple devices can conflict. Fetch the latest version before every write.
@@ -91,6 +85,11 @@ At the end of a material task:
 4. Keep entries factual and omit private chain-of-thought or credentials.
 
 ## Recent changes
+
+### 2026-11-18 — Remove network exit checker
+
+- Removed the homepage panel, styles and request code. Cloudflare and DNS resources were not changed.
+- Verified unchanged bookmark markup and valid JavaScript syntax. Page commit: `baf5de1a99e86f155d2d848a98966e6188ec913e`.
 
 ### OpenCode bookmark icon
 
