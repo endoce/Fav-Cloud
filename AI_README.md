@@ -7,7 +7,7 @@ This document gives AI agents durable project context. Read it with `AGENTS.md` 
 - Repository: `endoce/Fav-Cloud`
 - Default branch: `master`
 - Published sites: https://endoce.github.io/Fav-Cloud/, https://fav-cloud.pages.dev/, and https://fav.ydht.net/
-- Purpose: a personal, fast-loading browser navigation page for frequently used links and lightweight network-route checks
+- Purpose: a personal, fast-loading browser navigation page for frequently used links
 - Primary language: Simplified Chinese, with short English category labels
 - Deployment: GitHub Pages and Cloudflare Pages (`fav-cloud`, `master`, no build command, output directory `/`)
 - Architecture: dependency-free static HTML, CSS, and JavaScript
@@ -68,51 +68,9 @@ When moving a link, remove the original entry and preserve it in the requested d
 - Classifies Unicode uppercase/lowercase letters, decimal digits, whitespace, and remaining characters. Displays spaces, tabs and newlines; CRLF and lone CR normalize to LF for display.
 - No remote fonts, libraries, backend or build step. Use safe text nodes for all input rendering.
 
-## Network status architecture
+## Former network checker
 
-The bottom panel is collapsed by default and checks two browser egress paths only after the user clicks the detection button. Expanding it does not issue requests.
-
-### Mainland path
-
-- Endpoint: `https://whois.pconline.com.cn/ipJson.jsp`
-- Method: dynamic JSONP script callback
-- Reason: the endpoint is hosted in mainland China, making it suitable for observing the direct mainland route without depending on a Cloudflare hostname that may follow proxy rules.
-- Displayed information: masked public IP, location/provider data, and query duration.
-
-### Google/international path
-
-- Endpoint: `https://google-ip.crownpartnersgroup.com/`
-- Method: `fetch` returning JSON
-- Backend: Cloudflare Worker `fav-cloud-ip-check`
-- Intended routing: the client proxy configuration should route this hostname through the same proxy path used for Google.
-- Displayed information: masked public IP, city/country, ASN/organization, and query duration.
-
-The page compares the two returned IP addresses:
-
-- Different addresses: report that different exits were observed, without asserting all split-routing rules work.
-- Same address: report that split routing was not detected.
-- One failed request: report a partial result without claiming the route is working.
-
-Public IP addresses remain masked unless the user explicitly reveals them with the control in the page.
-
-### Legacy Cloudflare resource
-
-`cn-ip.crownpartnersgroup.com` was previously bound to the same Worker for mainland detection. The page no longer uses it. It may still exist in Cloudflare and must not be deleted without explicit user authorization.
-
-## Cloudflare Worker behavior
-
-The Worker returns JSON containing fields such as:
-
-- `success`
-- `ip`
-- `city`
-- `region`
-- `country`
-- `asn`
-- `organization`
-- `colo`
-
-It permits `https://endoce.github.io`, `https://fav-cloud.pages.dev`, and `https://fav.ydht.net`, reflects the matching request origin, sends `Vary: Origin`, and uses no-store cache headers. Do not place credentials in the Worker response or repository documentation.
+The homepage no longer provides network exit detection. Its former Cloudflare Worker and DNS resources are managed separately; do not delete or reconfigure them without explicit authorization.
 
 ## Privacy and safety
 
@@ -126,8 +84,6 @@ Never commit:
 - private keys
 - complete personal IP addresses copied from test results
 - private infrastructure details beyond information already intentionally published
-
-Network checks must remain opt-in. Do not add automatic checks on page load.
 
 ## Change workflow
 
