@@ -48,7 +48,6 @@ There is no dependency installation, build command, package manager, framework, 
 
 ## Current bookmark decisions
 
-- Linkding is the self-hosted bookmark tool at https://link.crownpartnersgroup.com/.
 - Uptime Kuma is the self-hosted status monitor at https://up.ydht.net/ and is listed in `PROJECTS`.
 - HomeLab Homepage is the family-LAN homepage at http://192.168.13.220:3001/ and is listed in `PROJECTS`.
 - Resend is the email service dashboard at https://resend.com/emails and is listed in `CLOUD`.
